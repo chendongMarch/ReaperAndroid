@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00A091</color>
+    <color name="colorPrimaryDark">#00A091</color>
+    <color name="colorAccent">#00A091</color>
+    <color name="Indigo_colorPrimaryDark">#00A091</color>
+    <color name="Indigo_colorPrimary">#00A091</color>
+    <color name="Indigo_nav_color">#00A091</color>
+
+    <color name="black">#000</color>
+    <color name="gray">#888</color>
+    <color name="line_gray">#808080</color>
+    <color name="light_gray">#d3d3d3</color>
+    <color name="white">#fff</color>
+    <color name="transparent">#bf000000</color>
+    <color name="newgray">#eaeaea</color>
+</resources>
