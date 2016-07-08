@@ -2,7 +2,7 @@ package com.march.reaper.mvp.ui.activity;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.view.View;
 import com.march.reaper.R;
-import com.march.reaper.ReaperActivity;
+import com.march.reaper.RootActivity;
 import com.march.reaper.mvp.presenter.impl.OffLineDataPresenterImpl;
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -10,7 +10,7 @@ import butterknife.OnClick;
 /**
  * 离线服务器数据,增量更新
  */
-public class OffLineDataActivity extends ReaperActivity {
+public class OffLineDataActivity extends RootActivity {
 
     @Bind(R.id.offline_albumdetail_process)
     ContentLoadingProgressBar mAlbumDetailProcessBar;

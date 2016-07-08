@@ -10,12 +10,15 @@ import com.march.quickrvlibs.SimpleRvAdapter;
 import com.march.quickrvlibs.inter.OnItemClickListener;
 import com.march.quickrvlibs.module.LoadMoreModule;
 import com.march.reaper.R;
+import com.march.reaper.common.API;
 import com.march.reaper.common.Constant;
 import com.march.reaper.common.DbHelper;
+import com.march.reaper.mvp.model.RecommendAlbumResponse;
 import com.march.reaper.mvp.presenter.FragmentPresenter;
 import com.march.reaper.mvp.ui.activity.AlbumDetailActivity;
 import com.march.reaper.utils.DisplayUtils;
 import com.march.reaper.utils.Lg;
+import com.march.reaper.utils.QueryUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +29,14 @@ import java.util.List;
  */
 public class AlbumQueryPresenterImpl extends FragmentPresenter {
 
-    private static final int mPreLoadNum = 2;
+    private static final int mPreLoadNum = Constant.PRE_LOAD_NUM;
     private Context context;
     private RecyclerView mAlbumsRv;
     private String mRecommendType;
     private List<RecommendAlbumItem> datas;
     private SimpleRvAdapter<RecommendAlbumItem> mAlbumAdapter;
     private int mWidth;
-    private int offset = 0, limit = 40;
+    private int offset = 0, limit = Constant.ONECE_QUERY_DATA_NUM;
 
 
     public AlbumQueryPresenterImpl(Context context, RecyclerView mAlbumsRv, String mRecommendType) {
@@ -57,6 +60,35 @@ public class AlbumQueryPresenterImpl extends FragmentPresenter {
                     return;
                 }
                 datas.addAll(list);
+                if (mAlbumAdapter == null) {
+                    createRvAdapter();
+                    mAlbumsRv.setAdapter(mAlbumAdapter);
+                } else {
+                    mAlbumAdapter.notifyDataSetChanged();
+                }
+                //查询成功,offset增加
+                offset += limit;
+                mAlbumAdapter.finishLoad();
+            }
+        });
+    }
+
+
+    //从网络访问数据
+    public void queryNetDatas() {
+        if (offset == -1)
+            return;
+        StringBuilder sb = new StringBuilder(API.GET_SCAN_RECOMMEND).append("?offset=").append(offset).append("&limit=").append(limit).append("&albumtype=").append(mRecommendType);
+        QueryUtils.get().query(sb.toString(), RecommendAlbumResponse.class, new QueryUtils.OnQueryOverListener<RecommendAlbumResponse>() {
+            @Override
+            public void queryOver(RecommendAlbumResponse rst) {
+                List<RecommendAlbumItem> data = rst.getData();
+                if(data.size()<=0){
+                    offset = -1;
+                    Lg.e("网络已经没有更多数据了");
+                    return;
+                }
+                datas.addAll(data);
                 if (mAlbumAdapter == null) {
                     createRvAdapter();
                     mAlbumsRv.setAdapter(mAlbumAdapter);

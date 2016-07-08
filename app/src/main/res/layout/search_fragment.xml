@@ -8,7 +8,6 @@
 
     <TextView
         android:textColor="@color/black"
-
         android:textSize="15sp"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -16,5 +15,13 @@
         android:gravity="center"/>
     <View
         style="@style/common_line"/>
+
+    <TextView
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="关键字搜索即将上线,搜你想搜"/>
 
 </LinearLayout>

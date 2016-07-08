@@ -1,6 +1,6 @@
 package com.march.reaper.utils;
 
-import com.march.reaper.ReaperApplication;
+import com.march.reaper.RootApplication;
 
 /**
  * Created by march on 16/6/9.
@@ -9,10 +9,10 @@ import com.march.reaper.ReaperApplication;
 public class DisplayUtils {
 
     public static int getScreenWidth(){
-        return ReaperApplication.get().getResources().getDisplayMetrics().widthPixels;
+        return RootApplication.get().getResources().getDisplayMetrics().widthPixels;
     }
     public static int getScreenHeight(){
-        return ReaperApplication.get().getResources().getDisplayMetrics().heightPixels;
+        return RootApplication.get().getResources().getDisplayMetrics().heightPixels;
     }
 
 }

@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.march.bean.AlbumDetail;
 import com.march.reaper.R;
-import com.march.reaper.ReaperActivity;
+import com.march.reaper.RootActivity;
 import com.march.reaper.common.Constant;
 import com.march.reaper.utils.DisplayUtils;
 import com.march.reaper.utils.Lg;
@@ -14,7 +14,10 @@ import com.march.reaper.widget.SwipeFinishLayout;
 
 import butterknife.Bind;
 
-public class ScanImgActivity extends ReaperActivity {
+/**
+ * 图片查看,可以缩放,基于photoview
+ */
+public class ScanImgActivity extends RootActivity {
 
     @Bind(R.id.scan_iv)
     ImageView mScanIv;

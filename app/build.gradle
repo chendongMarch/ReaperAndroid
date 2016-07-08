@@ -26,6 +26,8 @@ android {
 }
 
 dependencies {
+
+    compile 'me.leolin:ShortcutBadger:1.1.4@aar'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.0'
@@ -33,15 +35,11 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.android.support:design:23.1.0'
     compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'com.march.quickrvlibs:quickrvlibs:2.0.4'
+    compile 'com.march.quickrvlibs:quickrvlibs:2.0.6-beta1'
     compile 'com.zhy:okhttputils:2.2.1'
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'org.greenrobot:greendao:2.2.0'
     compile 'com.zhy:flowlayout-lib:1.0.3'
     compile 'com.github.chrisbanes:PhotoView:1.2.6'
-    compile 'me.leolin:ShortcutBadger:1.1.4@aar'
-    compile 'com.github.crosswall:Android-Coverflow:release-v1.0.2'
-    compile 'com.android.support:cardview-v7:23.1.0'
-    compile "com.daimajia.swipelayout:library:1.2.0@aar"
 }

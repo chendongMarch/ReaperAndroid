@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.march.bean.RecommendAlbumItem;
 import com.march.bean.WholeAlbumItem;
 import com.march.bean.WholeAlbumItem;
 import com.march.quickrvlibs.RvViewHolder;
@@ -15,12 +16,16 @@ import com.march.quickrvlibs.SimpleRvAdapter;
 import com.march.quickrvlibs.inter.OnItemClickListener;
 import com.march.quickrvlibs.module.LoadMoreModule;
 import com.march.reaper.R;
+import com.march.reaper.common.API;
 import com.march.reaper.common.Constant;
 import com.march.reaper.common.DbHelper;
+import com.march.reaper.mvp.model.RecommendAlbumResponse;
+import com.march.reaper.mvp.model.WholeAlbumResponse;
 import com.march.reaper.mvp.presenter.FragmentPresenter;
 import com.march.reaper.mvp.ui.activity.AlbumDetailActivity;
 import com.march.reaper.utils.DisplayUtils;
 import com.march.reaper.utils.Lg;
+import com.march.reaper.utils.QueryUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,13 +36,13 @@ import java.util.List;
  */
 public class AlbumQuery4WholePresenterImpl extends FragmentPresenter {
 
-    private static final int mPreLoadNum = 2;
+    private static final int mPreLoadNum = Constant.PRE_LOAD_NUM;
     private Context context;
     private RecyclerView mAlbumsRv;
     private List<WholeAlbumItem> datas;
     private SimpleRvAdapter<WholeAlbumItem> mAlbumAdapter;
     private int mWidth;
-    private int offset = 0, limit = 40;
+    private int offset = 0, limit = Constant.ONECE_QUERY_DATA_NUM;
     private boolean isBig = false;
 
 
@@ -74,6 +79,33 @@ public class AlbumQuery4WholePresenterImpl extends FragmentPresenter {
         });
     }
 
+    //从网络获取数据
+    public void queryNetDatas() {
+        if (offset == -1)
+            return;
+        StringBuilder sb = new StringBuilder(API.GET_SCAN_WHOLE).append("?offset=").append(offset).append("&limit=").append(limit);
+        QueryUtils.get().query(sb.toString(), WholeAlbumResponse.class, new QueryUtils.OnQueryOverListener<WholeAlbumResponse>() {
+            @Override
+            public void queryOver(WholeAlbumResponse rst) {
+                List<WholeAlbumItem> data = rst.getData();
+                if(data.size()<=0){
+                    offset = -1;
+                    Lg.e("网络已经没有更多数据了");
+                    return;
+                }
+                datas.addAll(data);
+                if (mAlbumAdapter == null) {
+                    createRvAdapter();
+                    mAlbumsRv.setAdapter(mAlbumAdapter);
+                } else {
+                    mAlbumAdapter.notifyDataSetChanged();
+                }
+                //查询成功,offset增加
+                offset += limit;
+                mAlbumAdapter.finishLoad();
+            }
+        });
+    }
     //构建adapter
     private void createRvAdapter() {
         mAlbumAdapter = new SimpleRvAdapter<WholeAlbumItem>(context, datas, R.layout.albumquery_item_album) {

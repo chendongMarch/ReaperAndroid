@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 /**
  * Created by march on 16/6/6.
  */
-public abstract class ReaperActivity extends AppCompatActivity {
+public abstract class RootActivity extends AppCompatActivity {
 
     protected Activity self;
     @Override

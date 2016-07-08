@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.march.reaper.R;
 import com.march.reaper.common.Constant;
-import com.march.reaper.mvp.ui.BaseFragment;
+import com.march.reaper.mvp.ui.RootFragment;
 import com.march.reaper.mvp.ui.adapter.VPAlbumAdapter;
 
 import java.util.ArrayList;
@@ -16,21 +16,22 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * Created by march on 16/7/1.\
+ * Created by march on 16/7/1.
  * 推荐页面
  */
-public class RecommendFragment extends BaseFragment {
+public class RecommendFragment extends RootFragment {
 
     @Bind(R.id.recommend_tably)
     TabLayout mTabLy;
     @Bind(R.id.recommend_viewpager)
     ViewPager mTypeAlbumVp;
-    private List<BaseFragment> mFragments;
+    private List<RootFragment> mFragments;
 
 
     @Override
     protected void initViews(View view, Bundle save) {
         super.initViews(view, save);
+        mTypeAlbumVp.setOffscreenPageLimit(8);
         mTypeAlbumVp.setAdapter(new VPAlbumAdapter(getFragmentManager(), mFragments));
         for (int i = 0; i < Constant.mMenuItem.length; i++) {
             mTabLy.addTab(mTabLy.newTab().setText(Constant.mMenuItem[i]).setTag(i));

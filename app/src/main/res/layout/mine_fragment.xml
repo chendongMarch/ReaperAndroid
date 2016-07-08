@@ -1,25 +1,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
     tools:context="com.march.reaper.mvp.ui.fragment.MineFragment">
 
     <TextView
-        android:textColor="@color/black"
-        android:textSize="15sp"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:gravity="center"
         android:text="我的"
-        android:gravity="center"/>
-    <View
-        style="@style/common_line"/>
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+    <View style="@style/common_line" />
 
     <Button
         android:id="@+id/mine_offline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="离线数据"/>
+        android:text="离线数据"
+        android:visibility="gone" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_mine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

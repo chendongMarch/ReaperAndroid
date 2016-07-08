@@ -4,8 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.march.reaper.mvp.ui.BaseFragment;
-import com.march.reaper.mvp.ui.fragment.AlbumQueryFragment;
+import com.march.reaper.mvp.ui.RootFragment;
 
 import java.util.List;
 
@@ -15,13 +14,13 @@ import java.util.List;
  */
 public class VPAlbumAdapter extends FragmentPagerAdapter{
 
-    private List<BaseFragment> mFragments;
+    private List<RootFragment> mFragments;
 
     public VPAlbumAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public VPAlbumAdapter(FragmentManager fm, List<BaseFragment> mFragments) {
+    public VPAlbumAdapter(FragmentManager fm, List<RootFragment> mFragments) {
         super(fm);
         this.mFragments = mFragments;
     }

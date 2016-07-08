@@ -24,13 +24,17 @@ import com.march.quickrvlibs.inter.OnItemClickListener;
 import com.march.quickrvlibs.model.RvQuickModel;
 import com.march.quickrvlibs.module.LoadMoreModule;
 import com.march.reaper.R;
+import com.march.reaper.common.API;
 import com.march.reaper.common.Constant;
 import com.march.reaper.common.DbHelper;
+import com.march.reaper.mvp.model.AlbumDetailResponse;
+import com.march.reaper.mvp.model.WholeAlbumResponse;
 import com.march.reaper.mvp.presenter.ActivityPresenter;
 import com.march.reaper.mvp.ui.activity.ScanImgActivity;
 import com.march.reaper.utils.ActivityAnimUtils;
 import com.march.reaper.utils.DisplayUtils;
 import com.march.reaper.utils.Lg;
+import com.march.reaper.utils.QueryUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,14 +46,14 @@ import java.util.List;
 public class AlbumDetailPresenterImpl extends ActivityPresenter {
 
 
-    private static final int mPreLoadNum = 2;
+    private static final int mPreLoadNum = Constant.PRE_LOAD_NUM;
     private View mHeadView;
     private Activity context;
     private RecyclerView mAlbumDetailRv;
     private List<AlbumDetail> datas;
     private RvQuickAdapter<AlbumDetail> mAlbumAdapter;
     private int mWidth;
-    private int offset = 0, limit = 40;
+    private int offset = 0, limit = Constant.ONECE_QUERY_DATA_NUM;
     private boolean isBig = false;
     private Album mAlbumData;
 
@@ -87,6 +91,33 @@ public class AlbumDetailPresenterImpl extends ActivityPresenter {
         });
     }
 
+    //从网络获取数据
+    public void queryNetDatas() {
+        if (offset == -1)
+            return;
+        StringBuilder sb = new StringBuilder(API.GET_SCAN_DETAIL).append("?offset=").append(offset).append("&limit=").append(limit).append("&albumlink=").append(mAlbumData.getAlbum_link());
+        QueryUtils.get().query(sb.toString(), AlbumDetailResponse.class, new QueryUtils.OnQueryOverListener<AlbumDetailResponse>() {
+            @Override
+            public void queryOver(AlbumDetailResponse rst) {
+                List<AlbumDetail> data = rst.getData();
+                if(data.size()<=0){
+                    offset = -1;
+                    Lg.e("网络已经没有更多数据了");
+                    return;
+                }
+                datas.addAll(data);
+                if (mAlbumAdapter == null) {
+                    createRvAdapter();
+                    mAlbumDetailRv.setAdapter(mAlbumAdapter);
+                } else {
+                    mAlbumAdapter.notifyDataSetChanged();
+                }
+                //查询成功,offset增加
+                offset += limit;
+                mAlbumAdapter.finishLoad();
+            }
+        });
+    }
     //构建adapter
     private void createRvAdapter() {
         mAlbumAdapter = new RvQuickAdapter<AlbumDetail>(context, datas) {
@@ -146,7 +177,7 @@ public class AlbumDetailPresenterImpl extends ActivityPresenter {
             tv.setText("大图");
             mAlbumDetailRv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         }
-        mAlbumAdapter.notifyDataSetChanged();
+        mAlbumDetailRv.setAdapter(mAlbumAdapter);
     }
 
 }

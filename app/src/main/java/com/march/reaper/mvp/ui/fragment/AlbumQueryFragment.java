@@ -8,21 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.march.bean.RecommendAlbumItem;
-import com.march.quickrvlibs.RvViewHolder;
-import com.march.quickrvlibs.SimpleRvAdapter;
 import com.march.reaper.R;
 import com.march.reaper.common.Constant;
-import com.march.reaper.common.DbHelper;
 import com.march.reaper.mvp.presenter.impl.AlbumQuery4WholePresenterImpl;
 import com.march.reaper.mvp.presenter.impl.AlbumQueryPresenterImpl;
-import com.march.reaper.mvp.ui.BaseFragment;
-import com.march.reaper.utils.DisplayUtils;
-import com.march.reaper.utils.Lg;
+import com.march.reaper.mvp.ui.RootFragment;
 
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -31,7 +22,7 @@ import butterknife.OnClick;
  * Created by march on 16/7/1.
  * 专辑展示
  */
-public class AlbumQueryFragment extends BaseFragment {
+public class AlbumQueryFragment extends RootFragment {
 
     @Bind(R.id.albumquery_recycler)
     RecyclerView mAlbumsRv;
@@ -67,6 +58,8 @@ public class AlbumQueryFragment extends BaseFragment {
         super.initDatas();
         mTitle = getArguments().getString(Constant.KEY_ALBUM_TITLE);
         mRecommendType = getArguments().getString(Constant.KEY_ALBUM_RECOMMEND_TYPE);
+        if (mRecommendType == null)
+            mRecommendType = "all";
         isWholeAlbum = getArguments().getBoolean(Constant.KEY_IS_WHOLE_ALBUM);
         mSelfName = AlbumQueryFragment.class.getSimpleName() + mTitle;
     }
@@ -83,12 +76,12 @@ public class AlbumQueryFragment extends BaseFragment {
             mTitleBar.setVisibility(View.VISIBLE);
             mAlbumsRv.setLayoutManager(new GridLayoutManager(getActivity(), 2));
             mAlbumQuery4WholePresenterImpl = new AlbumQuery4WholePresenterImpl(getActivity(), mAlbumsRv);
-            mAlbumQuery4WholePresenterImpl.queryDatas();
+            mAlbumQuery4WholePresenterImpl.queryNetDatas();
         } else {
             mAlbumsRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
             AlbumQueryPresenterImpl mAlbumQueryPresenterImpl =
                     new AlbumQueryPresenterImpl(getActivity(), mAlbumsRv, mRecommendType);
-            mAlbumQueryPresenterImpl.queryDatas();
+            mAlbumQueryPresenterImpl.queryNetDatas();
         }
     }
 

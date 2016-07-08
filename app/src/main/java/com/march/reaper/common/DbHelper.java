@@ -35,14 +35,14 @@ public class DbHelper {
         return mInst;
     }
 
+    //查询指定数据库的数量
     public long queryCount(Class cls) {
         QueryBuilder queryBuilder = DaoHelper.get().
                 getDao(cls).queryBuilder();
-        long count = queryBuilder.count();
-        Lg.e(count + "");
-        return count;
+        return queryBuilder.count();
     }
 
+    //查询完毕接口
     public interface OnQueryReadyListener<T> {
         void queryReady(List<T> list);
     }

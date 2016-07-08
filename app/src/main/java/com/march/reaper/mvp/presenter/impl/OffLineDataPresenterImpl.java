@@ -2,7 +2,6 @@ package com.march.reaper.mvp.presenter.impl;
 
 import android.os.AsyncTask;
 import android.support.v4.widget.ContentLoadingProgressBar;
-
 import com.march.reaper.common.API;
 import com.march.reaper.common.DaoHelper;
 import com.march.reaper.common.DbHelper;
@@ -14,7 +13,6 @@ import com.march.reaper.mvp.presenter.ActivityPresenter;
 import com.march.reaper.utils.Lg;
 import com.march.reaper.utils.QueryUtils;
 import com.march.reaper.utils.SPUtils;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -24,7 +22,6 @@ import java.util.Locale;
  * 离线数据的操作
  */
 public class OffLineDataPresenterImpl extends ActivityPresenter {
-
 
     private SimpleDateFormat mTimeStampFormat;
 
@@ -44,9 +41,9 @@ public class OffLineDataPresenterImpl extends ActivityPresenter {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                Lg.e("数据大小 = "+response.getData().size());
+                Lg.e("开始存储,数据大小 = " + response.getData().size());
                 DaoHelper.get().getDao(response.getClass()).insertOrReplaceInTx(response.getData());
-                DbHelper.get().queryCount(response.getClass());
+                Lg.e("存储完毕,当前数据库大小 = " + DbHelper.get().queryCount(response.getClass()));
                 syncLocalTimeStamp(response.getClass());
                 return null;
             }

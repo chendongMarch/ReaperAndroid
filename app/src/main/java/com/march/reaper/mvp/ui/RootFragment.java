@@ -20,8 +20,7 @@ import butterknife.ButterKnife;
  * Created by march on 16/7/1.
  *
  */
-public abstract class BaseFragment extends Fragment {
-    protected List<RecommendAlbumItem> list;
+public abstract class RootFragment extends Fragment {
     protected abstract int getLayoutId();
     protected String mSelfName;
 
@@ -32,7 +31,7 @@ public abstract class BaseFragment extends Fragment {
         ButterKnife.bind(this,view);
         initViews(view,savedInstanceState);
         initEvents();
-//        Lg.e(mSelfName + " onCreateView");
+        Lg.e(mSelfName + " onCreateView");
         return view;
     }
 
@@ -40,14 +39,11 @@ public abstract class BaseFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initDatas();
-//        Lg.e(mSelfName + " onCreate");
+        Lg.e(mSelfName + " onCreate");
     }
 
     protected  void initDatas(){
-        list = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            list.add(new RecommendAlbumItem());
-        }
+
     }
 
     protected  void initViews(View view,Bundle save){

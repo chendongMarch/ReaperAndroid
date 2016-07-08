@@ -9,7 +9,7 @@ import okhttp3.Response;
 
 /**
  * Created by march on 16/7/1.
- * 封装的请求类
+ * 封装的请求类,从网络请求数据
  */
 public class QueryUtils {
 
@@ -31,9 +31,10 @@ public class QueryUtils {
     }
 
 
-    public interface OnQueryOverListener<T>{
+    public interface OnQueryOverListener<T> {
         void queryOver(T rst);
     }
+
 
     public <T> void query(String url, final Class<T> cls, final OnQueryOverListener<T> listener) {
         OkHttpUtils.get().url(url).build().execute(new Callback<T>() {
@@ -60,7 +61,7 @@ public class QueryUtils {
             @Override
             public void inProgress(float progress) {
                 super.inProgress(progress);
-                Lg.e(progress+"");
+                Lg.e(progress + "");
             }
         });
     }

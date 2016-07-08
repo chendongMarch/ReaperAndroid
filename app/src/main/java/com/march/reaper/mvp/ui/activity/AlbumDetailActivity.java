@@ -1,22 +1,17 @@
 package com.march.reaper.mvp.ui.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.TextView;
 
 import com.march.bean.Album;
-import com.march.quickrvlibs.RvViewHolder;
-import com.march.quickrvlibs.SimpleRvAdapter;
-import com.march.quickrvlibs.helper.RvConvertor;
-import com.march.quickrvlibs.model.RvQuickModel;
 import com.march.reaper.R;
-import com.march.reaper.ReaperActivity;
+import com.march.reaper.RootActivity;
 import com.march.reaper.common.Constant;
 import com.march.reaper.mvp.presenter.impl.AlbumDetailPresenterImpl;
-import com.march.reaper.utils.Lg;
+import com.march.reaper.utils.To;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -24,7 +19,10 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class AlbumDetailActivity extends ReaperActivity {
+/**
+ * 专辑详情界面
+ */
+public class AlbumDetailActivity extends RootActivity {
 
     @Bind(R.id.detail_albumlist_rv)
     RecyclerView mAlbumsRv;
@@ -67,7 +65,7 @@ public class AlbumDetailActivity extends ReaperActivity {
             });
         }
         mAlbumDetailPresenterImpl = new AlbumDetailPresenterImpl(self, mAlbumsRv, mHeadView, mAlbumData);
-        mAlbumDetailPresenterImpl.queryDatas();
+        mAlbumDetailPresenterImpl.queryNetDatas();
     }
 
     @OnClick({R.id.detail_switchmode, R.id.detail_back})
@@ -78,6 +76,7 @@ public class AlbumDetailActivity extends ReaperActivity {
                 break;
             case R.id.detail_switchmode:
                 mAlbumDetailPresenterImpl.switchMode((TextView) view);
+//                To.show("长按图片查看大图");
                 break;
         }
 

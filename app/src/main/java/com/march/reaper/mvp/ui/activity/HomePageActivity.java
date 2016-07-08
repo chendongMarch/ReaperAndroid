@@ -15,6 +15,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.OnClick;
 
+/**
+ *  主页分为四个fragment ,第一个fragment是viewpager(包含多个fragment)
+ */
 public class HomePageActivity extends MultiFragmentActivity {
 
     @Bind({R.id.home_recommend, R.id.home_album, R.id.home_search, R.id.home_mine})
