@@ -38,7 +38,7 @@ public class ExampleDaoGenerator {
         Entity albumDetail = schema.addEntity("DetailCollection");
         albumDetail.setHasKeepSections(true);
         albumDetail.addStringProperty("album_link");
-        albumDetail.addStringProperty("photo_src");
+        albumDetail.addStringProperty("photo_src").primaryKey();
         albumDetail.addIntProperty("width");
         albumDetail.addIntProperty("height");
     }
@@ -46,7 +46,7 @@ public class ExampleDaoGenerator {
     private static void addAlbumItemCollection(Schema schema) {
         Entity wholeAlbumItem = schema.addEntity("AlbumItemCollection");
         wholeAlbumItem.setHasKeepSections(true);
-        wholeAlbumItem.addStringProperty("album_link");
+        wholeAlbumItem.addStringProperty("album_link").primaryKey();
         wholeAlbumItem.addStringProperty("key_words");
         wholeAlbumItem.addStringProperty("album_cover");
         wholeAlbumItem.addStringProperty("album_desc");;

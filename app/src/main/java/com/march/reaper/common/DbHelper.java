@@ -1,14 +1,19 @@
 package com.march.reaper.common;
 
 import com.march.bean.AlbumDetail;
+import com.march.bean.AlbumItemCollection;
+import com.march.bean.DetailCollection;
 import com.march.bean.RecommendAlbumItem;
 import com.march.bean.WholeAlbumItem;
 import com.march.dao.AlbumDetailDao;
+import com.march.dao.AlbumItemCollectionDao;
+import com.march.dao.DetailCollectionDao;
 import com.march.dao.RecommendAlbumItemDao;
 import com.march.reaper.utils.Lg;
 
 import java.util.List;
 
+import de.greenrobot.dao.internal.FastCursor;
 import de.greenrobot.dao.query.Query;
 import de.greenrobot.dao.query.QueryBuilder;
 
@@ -115,4 +120,38 @@ public class DbHelper {
             }
         }.execute();
     }
+
+    public void addAlbumCollection(AlbumItemCollection col) {
+        DaoHelper.get().<AlbumItemCollectionDao>getDao(AlbumItemCollection.class).insert(col);
+    }
+    public void removeAlbumCollection(AlbumItemCollection col) {
+        DaoHelper.get().<AlbumItemCollectionDao>getDao(AlbumItemCollection.class).delete(col);
+    }
+
+    public void addDetailCollection(DetailCollection col) {
+        DaoHelper.get().<DetailCollectionDao>getDao(DetailCollection.class).insert(col);
+    }
+    public void removeDetailCollection(DetailCollection col) {
+        DaoHelper.get().<DetailCollectionDao>getDao(DetailCollection.class).delete(col);
+    }
+
+
+
+    public boolean isAlbumCollection(AlbumItemCollection col) {
+        QueryBuilder<AlbumItemCollection> queryBuilder = DaoHelper.get()
+                .<AlbumItemCollectionDao>getDao(AlbumItemCollection.class).queryBuilder()
+                .where(AlbumItemCollectionDao.Properties.Album_link.eq(col.getAlbum_link()));
+        long count = queryBuilder.count();
+        return count > 0;
+    }
+
+    public boolean isDetailCollection(DetailCollection col) {
+        QueryBuilder<DetailCollection> queryBuilder = DaoHelper.get()
+                .<DetailCollectionDao>getDao(DetailCollection.class).queryBuilder()
+                .where(DetailCollectionDao.Properties.Photo_src.eq(col.getPhoto_src()));
+        long count = queryBuilder.count();
+        return count > 0;
+    }
+
+
 }

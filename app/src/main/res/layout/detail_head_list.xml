@@ -1,26 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="6dp">
 
-    <TextView
-        android:id="@+id/head_desc_tv"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="我是标题"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/head_desc_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:text="我是标题"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/iv_is_collection"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_collection" />
+
+    </LinearLayout>
 
     <com.zhy.view.flowlayout.TagFlowLayout
         android:id="@+id/head_keywds_flow"
-        app:max_select="-1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="6dp">
-    </com.zhy.view.flowlayout.TagFlowLayout>
+        android:padding="6dp"
+        app:max_select="-1" />
 
 </LinearLayout>

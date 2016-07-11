@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.march.bean.AlbumDetail;
+import com.march.bean.AlbumItemCollection;
+import com.march.bean.DetailCollection;
 import com.march.bean.RecommendAlbumItem;
 import com.march.bean.WholeAlbumItem;
 import com.march.dao.AlbumDetailDao;
@@ -74,13 +76,17 @@ public class DaoHelper {
         return mDaoSession.getWholeAlbumItemDao();
     }
 
-    public AbstractDao getDao(Class cls) {
+    public <T extends AbstractDao> T getDao(Class cls) {
         if (cls == AlbumDetail.class || cls == AlbumDetailResponse.class) {
-            return mDaoSession.getAlbumDetailDao();
+            return (T) mDaoSession.getAlbumDetailDao();
         } else if (cls == RecommendAlbumItem.class || cls == RecommendAlbumResponse.class) {
-            return mDaoSession.getRecommendAlbumItemDao();
+            return (T) mDaoSession.getRecommendAlbumItemDao();
         } else if (cls == WholeAlbumItem.class || cls == WholeAlbumResponse.class) {
-            return mDaoSession.getWholeAlbumItemDao();
+            return (T) mDaoSession.getWholeAlbumItemDao();
+        } else if (cls == AlbumItemCollection.class) {
+            return (T) mDaoSession.getAlbumItemCollectionDao();
+        } else if (cls == DetailCollection.class) {
+            return (T) mDaoSession.getDetailCollectionDao();
         }
         return null;
     }

@@ -1,11 +1,14 @@
 package com.march.reaper.mvp.ui.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.march.bean.AlbumDetail;
+import com.march.bean.DetailCollection;
 import com.march.reaper.R;
+import com.march.reaper.common.DbHelper;
 import com.march.reaper.mvp.ui.RootActivity;
 import com.march.reaper.common.Constant;
 import com.march.reaper.utils.DisplayUtils;
@@ -21,9 +24,13 @@ public class ScanImgActivity extends RootActivity {
 
     @Bind(R.id.scan_iv)
     ImageView mScanIv;
+    @Bind(R.id.scan_is_collection)
+    ImageView mIsColIv;
     @Bind(R.id.scan_swipe)
     SwipeFinishLayout mSwipeFinishLayout;
+    private boolean isCollection;
     private AlbumDetail mAlbumDetailData;
+    private DetailCollection mCol;
 
     @Override
     protected int getLayoutId() {
@@ -35,20 +42,32 @@ public class ScanImgActivity extends RootActivity {
     protected void initDatas() {
         super.initDatas();
         mAlbumDetailData = (AlbumDetail) getIntent().getSerializableExtra(Constant.KEY_ALBUM_DETAIL_SCAN);
+        mCol = new DetailCollection(mAlbumDetailData);
+        isCollection = DbHelper.get().isDetailCollection(mCol);
     }
 
 
     @Override
     protected void initViews(Bundle save) {
         super.initViews(save);
-//        mSwipeFinishLayout.setTouchView(mScanIv);
-//        float rate = mAlbumDetailData.getHeight() * 1.0f / mAlbumDetailData.getWidth();
-//        mScanIv.getLayoutParams().height = (int) (DisplayUtils.getScreenWidth() * rate);
-
         Lg.e(mAlbumDetailData.getWidth() + "  " + DisplayUtils.getScreenWidth());
         String url = mAlbumDetailData.getPhoto_src().replaceAll("-\\d+x\\d+.jpg", ".jpg");
         Lg.e(url);
         Glide.with(self).load(url).crossFade().into(mScanIv);
+
+        mIsColIv.setImageResource(isCollection ? R.drawable.ic_collection : R.drawable.ic_not_collection);
+        mIsColIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isCollection) {
+                    DbHelper.get().removeDetailCollection(mCol);
+                    mIsColIv.setImageResource(R.drawable.ic_not_collection);
+                } else {
+                    DbHelper.get().addDetailCollection(mCol);
+                    mIsColIv.setImageResource(R.drawable.ic_collection);
+                }
+            }
+        });
     }
 
     @Override

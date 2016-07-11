@@ -13,4 +13,5 @@ public abstract class Album implements java.io.Serializable {
 
     public abstract String getAlbum_link();
 
+    public abstract String getAlbum_cover();
 }
