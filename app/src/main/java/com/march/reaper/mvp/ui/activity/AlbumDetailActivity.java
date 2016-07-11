@@ -8,10 +8,12 @@ import android.widget.TextView;
 
 import com.march.bean.Album;
 import com.march.reaper.R;
-import com.march.reaper.RootActivity;
+import com.march.reaper.common.TitleBarView;
+import com.march.reaper.mvp.ui.RootActivity;
 import com.march.reaper.common.Constant;
 import com.march.reaper.mvp.presenter.impl.AlbumDetailPresenterImpl;
-import com.march.reaper.utils.To;
+import com.march.reaper.mvp.ui.TitleActivity;
+import com.march.reaper.widget.RecyclerGroupView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -22,10 +24,10 @@ import butterknife.OnClick;
 /**
  * 专辑详情界面
  */
-public class AlbumDetailActivity extends RootActivity {
+public class AlbumDetailActivity extends TitleActivity {
 
     @Bind(R.id.detail_albumlist_rv)
-    RecyclerView mAlbumsRv;
+    RecyclerGroupView mAlbumsRgv;
     private Album mAlbumData;
     private AlbumDetailPresenterImpl mAlbumDetailPresenterImpl;
 
@@ -44,7 +46,8 @@ public class AlbumDetailActivity extends RootActivity {
     @Override
     protected void initViews(Bundle save) {
         super.initViews(save);
-        mAlbumsRv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        mTitleBar.setText("首页", "专辑详情", "大图");
+        mAlbumsRgv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         View mHeadView = getLayoutInflater().inflate(R.layout.detail_head_list, null);
         final TagFlowLayout mKeyWdsFlow = (TagFlowLayout) mHeadView.findViewById(R.id.head_keywds_flow);
         TextView mDescTv = (TextView) mHeadView.findViewById(R.id.head_desc_tv);
@@ -64,21 +67,19 @@ public class AlbumDetailActivity extends RootActivity {
                 }
             });
         }
-        mAlbumDetailPresenterImpl = new AlbumDetailPresenterImpl(self, mAlbumsRv, mHeadView, mAlbumData);
-        mAlbumDetailPresenterImpl.queryNetDatas();
+        mAlbumDetailPresenterImpl = new AlbumDetailPresenterImpl(mAlbumsRgv,self, mHeadView, mAlbumData);
+        mAlbumDetailPresenterImpl.justQuery();
     }
 
-    @OnClick({R.id.detail_switchmode, R.id.detail_back})
-    public void clickBtn(View view) {
-        switch (view.getId()) {
-            case R.id.detail_back:
-                finish();
-                break;
-            case R.id.detail_switchmode:
-                mAlbumDetailPresenterImpl.switchMode((TextView) view);
-//                To.show("长按图片查看大图");
-                break;
-        }
 
+    @Override
+    protected void initEvents() {
+        super.initEvents();
+        mTitleBar.setListener(TitleBarView.POS_Right, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAlbumDetailPresenterImpl.switchMode((TextView) v);
+            }
+        });
     }
 }

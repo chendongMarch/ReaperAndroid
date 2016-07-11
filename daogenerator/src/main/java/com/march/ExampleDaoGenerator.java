@@ -6,7 +6,7 @@ import de.greenrobot.daogenerator.Schema;
 
 public class ExampleDaoGenerator {
     public static void main(String[] args) throws Exception {
-//        operate();
+        operate();
     }
 
     private static void operate() throws Exception {
@@ -17,8 +17,8 @@ public class ExampleDaoGenerator {
         Schema schema = new Schema(2, "com.march.bean");
         schema.setDefaultJavaPackageDao("com.march.dao");
         // 模式（Schema）同时也拥有两个默认的 flags，分别用来标示 entity 是否是 activie 以及是否使用 keep sections。
-         schema.enableActiveEntitiesByDefault();
-         schema.enableKeepSectionsByDefault();
+//        schema.enableActiveEntitiesByDefault();
+        schema.enableKeepSectionsByDefault();
         // 一旦你拥有了一个 Schema 对象后，你便可以使用它添加实体（Entities）了。
         generateBean(schema);
         // 最后我们将使用 DAOGenerator 类的 generateAll() 方法自动生成代码，此处你需要根据自己的情况更改输出目录（既之前创建的 java-gen)。
@@ -27,11 +27,67 @@ public class ExampleDaoGenerator {
     }
 
     private static void generateBean(Schema schema) {
-
         addAlbumDetail(schema);
         addRecommendAlbumItem(schema);
         addWholeAlbumItem(schema);
+        addDetailCollection(schema);
+        addAlbumItemCollection(schema);
     }
+
+    private static void addDetailCollection(Schema schema) {
+        Entity albumDetail = schema.addEntity("DetailCollection");
+        albumDetail.setHasKeepSections(true);
+        albumDetail.addStringProperty("album_link");
+        albumDetail.addStringProperty("photo_src");
+        albumDetail.addIntProperty("width");
+        albumDetail.addIntProperty("height");
+    }
+
+    private static void addAlbumItemCollection(Schema schema) {
+        Entity wholeAlbumItem = schema.addEntity("AlbumItemCollection");
+        wholeAlbumItem.setHasKeepSections(true);
+        wholeAlbumItem.addStringProperty("album_link");
+        wholeAlbumItem.addStringProperty("key_words");
+        wholeAlbumItem.addStringProperty("album_cover");
+        wholeAlbumItem.addStringProperty("album_desc");;
+    }
+
+    private static void addAlbumDetail(Schema schema) {
+        Entity albumDetail = schema.addEntity("AlbumDetail");
+        albumDetail.setHasKeepSections(true);
+        albumDetail.implementsInterface("RvQuickInterface", "java.io.Serializable");
+        albumDetail.addStringProperty("album_link");
+        albumDetail.addStringProperty("photo_src");
+        albumDetail.addIntProperty("width");
+        albumDetail.addIntProperty("height");
+        albumDetail.addStringProperty("time_stamp");
+        albumDetail.addBooleanProperty("isFavorite");
+    }
+
+    private static void addRecommendAlbumItem(Schema schema) {
+        Entity recommendAlbumItem = schema.addEntity("RecommendAlbumItem");
+        recommendAlbumItem.setHasKeepSections(true);
+        recommendAlbumItem.setSuperclass("Album");
+        recommendAlbumItem.addStringProperty("album_type");
+        recommendAlbumItem.addStringProperty("album_link");
+        recommendAlbumItem.addStringProperty("album_cover");
+        recommendAlbumItem.addStringProperty("album_desc");
+        recommendAlbumItem.addStringProperty("time_stamp");
+        recommendAlbumItem.addBooleanProperty("isFavorite");
+    }
+
+    private static void addWholeAlbumItem(Schema schema) {
+        Entity wholeAlbumItem = schema.addEntity("WholeAlbumItem");
+        wholeAlbumItem.setHasKeepSections(true);
+        wholeAlbumItem.setSuperclass("Album");
+        wholeAlbumItem.addStringProperty("album_link");
+        wholeAlbumItem.addStringProperty("key_words");
+        wholeAlbumItem.addStringProperty("album_cover");
+        wholeAlbumItem.addStringProperty("album_desc");
+        wholeAlbumItem.addStringProperty("time_stamp");
+        wholeAlbumItem.addBooleanProperty("isFavorite");
+    }
+
 
     private static void addNote(Schema schema) {
         // 一个实体（类）就关联到数据库中的一张表，此处表名为「Note」（既类名）
@@ -46,44 +102,6 @@ public class ExampleDaoGenerator {
         // For example, a property called “creationDate” will become a database column “CREATION_DATE”.
         note.addStringProperty("comment");
         note.addDateProperty("date");
-    }
-
-    private static void addTest(Schema schema) {
-        Entity note = schema.addEntity("Test");
-        note.addIdProperty();
-        note.addStringProperty("text").notNull();
-        note.addStringProperty("comment");
-        note.addDateProperty("date");
-    }
-
-    private static void addAlbumDetail(Schema schema) {
-        Entity albumDetail = schema.addEntity("AlbumDetail");
-        albumDetail.addStringProperty("album_link");
-        albumDetail.addStringProperty("photo_src");
-        albumDetail.addIntProperty("width");
-        albumDetail.addIntProperty("height");
-        albumDetail.addStringProperty("time_stamp");
-        albumDetail.addBooleanProperty("isFavorite");
-    }
-
-    private static void addRecommendAlbumItem(Schema schema) {
-        Entity recommendAlbumItem = schema.addEntity("RecommendAlbumItem");
-        recommendAlbumItem.addStringProperty("album_type");
-        recommendAlbumItem.addStringProperty("album_link");
-        recommendAlbumItem.addStringProperty("album_cover");
-        recommendAlbumItem.addStringProperty("album_desc");
-        recommendAlbumItem.addStringProperty("time_stamp");
-        recommendAlbumItem.addBooleanProperty("isFavorite");
-    }
-
-    private static void addWholeAlbumItem(Schema schema) {
-        Entity wholeAlbumItem = schema.addEntity("WholeAlbumItem");
-        wholeAlbumItem.addStringProperty("album_link");
-        wholeAlbumItem.addStringProperty("key_words");
-        wholeAlbumItem.addStringProperty("album_cover");
-        wholeAlbumItem.addStringProperty("album_desc");
-        wholeAlbumItem.addStringProperty("time_stamp");
-        wholeAlbumItem.addBooleanProperty("isFavorite");
     }
 
 

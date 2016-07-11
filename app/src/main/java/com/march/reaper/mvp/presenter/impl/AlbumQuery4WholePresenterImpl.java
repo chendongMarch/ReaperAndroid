@@ -1,5 +1,6 @@
 package com.march.reaper.mvp.presenter.impl;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
@@ -21,11 +22,13 @@ import com.march.reaper.common.Constant;
 import com.march.reaper.common.DbHelper;
 import com.march.reaper.mvp.model.RecommendAlbumResponse;
 import com.march.reaper.mvp.model.WholeAlbumResponse;
+import com.march.reaper.mvp.presenter.ActivityPresenter;
 import com.march.reaper.mvp.presenter.FragmentPresenter;
 import com.march.reaper.mvp.ui.activity.AlbumDetailActivity;
 import com.march.reaper.utils.DisplayUtils;
 import com.march.reaper.utils.Lg;
 import com.march.reaper.utils.QueryUtils;
+import com.march.reaper.widget.RecyclerGroupView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,102 +39,113 @@ import java.util.List;
  */
 public class AlbumQuery4WholePresenterImpl extends FragmentPresenter {
 
-    private static final int mPreLoadNum = Constant.PRE_LOAD_NUM;
-    private Context context;
-    private RecyclerView mAlbumsRv;
     private List<WholeAlbumItem> datas;
     private SimpleRvAdapter<WholeAlbumItem> mAlbumAdapter;
     private int mWidth;
-    private int offset = 0, limit = Constant.ONECE_QUERY_DATA_NUM;
     private boolean isBig = false;
 
-
-    public AlbumQuery4WholePresenterImpl(Context context, RecyclerView mAlbumsRv) {
-        this.mAlbumsRv = mAlbumsRv;
-        this.context = context;
+    public AlbumQuery4WholePresenterImpl(RecyclerGroupView mRecyclerGV, Activity mContext) {
+        super(mRecyclerGV, mContext);
         datas = new ArrayList<>();
         mWidth = DisplayUtils.getScreenWidth();
     }
 
+
+    @Override
+    protected void clearDatas() {
+        datas.clear();
+    }
+
     //从数据库查询数据
-    public void queryDatas() {
-        if (offset == -1)
-            return;
+    public void queryDbDatas() {
         DbHelper.get().queryWholeAlbum(offset, limit, new DbHelper.OnQueryReadyListener<WholeAlbumItem>() {
             @Override
             public void queryReady(List<WholeAlbumItem> list) {
-                if (list.size() <= 0) {
-                    offset = -1;
-                    Lg.e("没有数据了");
-                    return;
-                }
-                datas.addAll(list);
-                if (mAlbumAdapter == null) {
-                    createRvAdapter();
-                    mAlbumsRv.setAdapter(mAlbumAdapter);
-                } else {
-                    mAlbumAdapter.notifyDataSetChanged();
-                }
-                //查询成功,offset增加
-                offset += limit;
-                mAlbumAdapter.finishLoad();
+                handleDatasAfterQueryReady(list);
             }
         });
     }
 
+
     //从网络获取数据
-    public void queryNetDatas() {
-        if (offset == -1)
-            return;
+    @Override
+    protected void queryNetDatas() {
         StringBuilder sb = new StringBuilder(API.GET_SCAN_WHOLE).append("?offset=").append(offset).append("&limit=").append(limit);
         QueryUtils.get().query(sb.toString(), WholeAlbumResponse.class, new QueryUtils.OnQueryOverListener<WholeAlbumResponse>() {
             @Override
             public void queryOver(WholeAlbumResponse rst) {
                 List<WholeAlbumItem> data = rst.getData();
-                if(data.size()<=0){
-                    offset = -1;
-                    Lg.e("网络已经没有更多数据了");
-                    return;
-                }
-                datas.addAll(data);
-                if (mAlbumAdapter == null) {
-                    createRvAdapter();
-                    mAlbumsRv.setAdapter(mAlbumAdapter);
-                } else {
-                    mAlbumAdapter.notifyDataSetChanged();
-                }
-                //查询成功,offset增加
-                offset += limit;
+                handleDatasAfterQueryReady(data);
+            }
+
+            @Override
+            public void error(Exception e) {
+                if(mAlbumAdapter!=null)
                 mAlbumAdapter.finishLoad();
+                mRecyclerGV.getPtrLy().refreshComplete();
+                isLoadEnd = true;
             }
         });
     }
+
+
+    //处理加载后的数据
+    private void handleDatasAfterQueryReady(List<WholeAlbumItem> list) {
+        if (list.size() <= 0) {
+            offset = -1;
+            Lg.e("没有数据了");
+            return;
+        }
+        datas.addAll(list);
+        if (mAlbumAdapter == null) {
+            createRvAdapter();
+            mRecyclerGV.setAdapter(mAlbumAdapter);
+        } else {
+            mAlbumAdapter.notifyDataSetChanged();
+        }
+        //查询成功,offset增加
+        offset += limit;
+        mAlbumAdapter.finishLoad();
+        mRecyclerGV.getPtrLy().refreshComplete();
+        isLoadEnd = true;
+    }
     //构建adapter
-    private void createRvAdapter() {
-        mAlbumAdapter = new SimpleRvAdapter<WholeAlbumItem>(context, datas, R.layout.albumquery_item_album) {
+    @Override
+    protected void createRvAdapter() {
+        mAlbumAdapter = new SimpleRvAdapter<WholeAlbumItem>(mContext, datas, R.layout.albumquery_item_album) {
             @Override
             public void bindData4View(RvViewHolder holder, WholeAlbumItem data, int pos) {
                 int height = (int) (mWidth * (2f / 3f));
-                holder.setImg(context, R.id.albumquery_item_iv, data.getAlbum_cover(), mWidth, height, R.mipmap.demo);
+                holder.setImg(mContext, R.id.albumquery_item_iv, data.getAlbum_cover(), mWidth, height, R.mipmap.demo);
                 if (isBig)
                     holder.setVisibility(R.id.albumquery_item_tv, View.VISIBLE).setText(R.id.albumquery_item_tv, data.getAlbum_desc());
                 else
                     holder.setVisibility(R.id.albumquery_item_tv, View.GONE);
             }
+            @Override
+            public void bindLisAndData4Footer(RvViewHolder footer) {
+                footer.setClickLis(R.id.footer_loadmore, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        justQuery();
+                    }
+                });
+            }
         };
+        mAlbumAdapter.addHeaderOrFooter(0, R.layout.footer_load_more);
         mAlbumAdapter.setOnItemClickListener(new OnItemClickListener<RvViewHolder>() {
             @Override
             public void onItemClick(int pos, RvViewHolder holder) {
-                Intent intent = new Intent(context, AlbumDetailActivity.class);
+                Intent intent = new Intent(mContext, AlbumDetailActivity.class);
                 intent.putExtra(Constant.KEY_ALBUM_DETAIL_SHOW, datas.get(pos));
-                context.startActivity(intent);
+                mContext.startActivity(intent);
             }
         });
         mAlbumAdapter.addLoadMoreModule(mPreLoadNum, new LoadMoreModule.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 Lg.e("加载更多  " + offset);
-                queryDatas();
+                justQuery();
             }
         });
     }
@@ -141,10 +155,10 @@ public class AlbumQuery4WholePresenterImpl extends FragmentPresenter {
         isBig = !isBig;
         if (isBig) {
             tv.setText("小图");
-            mAlbumsRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+            mRecyclerGV.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         } else {
             tv.setText("大图");
-            mAlbumsRv.setLayoutManager(new GridLayoutManager(context, 2));
+            mRecyclerGV.setLayoutManager(new GridLayoutManager(mContext, 2));
         }
     }
 

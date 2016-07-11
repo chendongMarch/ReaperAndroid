@@ -31,8 +31,6 @@ public class AlbumDetailDao extends AbstractDao<AlbumDetail, Void> {
         public final static Property IsFavorite = new Property(5, Boolean.class, "isFavorite", false, "IS_FAVORITE");
     };
 
-    private DaoSession daoSession;
-
 
     public AlbumDetailDao(DaoConfig config) {
         super(config);
@@ -40,7 +38,6 @@ public class AlbumDetailDao extends AbstractDao<AlbumDetail, Void> {
     
     public AlbumDetailDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
-        this.daoSession = daoSession;
     }
 
     /** Creates the underlying database table. */
@@ -95,12 +92,6 @@ public class AlbumDetailDao extends AbstractDao<AlbumDetail, Void> {
         if (isFavorite != null) {
             stmt.bindLong(6, isFavorite ? 1L: 0L);
         }
-    }
-
-    @Override
-    protected void attachEntity(AlbumDetail entity) {
-        super.attachEntity(entity);
-        entity.__setDaoSession(daoSession);
     }
 
     /** @inheritdoc */

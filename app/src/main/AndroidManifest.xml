@@ -25,7 +25,6 @@
                 <action android:name="android.intent.action.CREATE_SHORTCUT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".mvp.ui.activity.HomePageActivity"
             android:screenOrientation="portrait"
@@ -42,6 +41,7 @@
             android:name=".mvp.ui.activity.ScanImgActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
+        <activity android:name=".mvp.ui.activity.AboutActivity"></activity>
     </application>
 
 </manifest>

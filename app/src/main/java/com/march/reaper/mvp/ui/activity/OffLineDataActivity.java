@@ -1,16 +1,19 @@
 package com.march.reaper.mvp.ui.activity;
+import android.os.Bundle;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.view.View;
 import com.march.reaper.R;
-import com.march.reaper.RootActivity;
+import com.march.reaper.mvp.ui.RootActivity;
 import com.march.reaper.mvp.presenter.impl.OffLineDataPresenterImpl;
+import com.march.reaper.mvp.ui.TitleActivity;
+
 import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
  * 离线服务器数据,增量更新
  */
-public class OffLineDataActivity extends RootActivity {
+public class OffLineDataActivity extends TitleActivity {
 
     @Bind(R.id.offline_albumdetail_process)
     ContentLoadingProgressBar mAlbumDetailProcessBar;
@@ -29,6 +32,13 @@ public class OffLineDataActivity extends RootActivity {
     protected void initDatas() {
         super.initDatas();
         mOffLineDataPresenterImpl = new OffLineDataPresenterImpl();
+    }
+
+
+    @Override
+    protected void initViews(Bundle save) {
+        super.initViews(save);
+        mTitleBar.setText("我","数据离线",null);
     }
 
     @OnClick({R.id.offline_recommend, R.id.offline_wholealbum, R.id.offline_albumdetail})

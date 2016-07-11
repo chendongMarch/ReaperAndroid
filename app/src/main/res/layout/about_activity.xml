@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.march.reaper.mvp.ui.activity.AboutActivity">
+
+    <ImageView
+        android:id="@+id/about_contact_wechat"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/ic_contact" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/about_contact_wechat"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:lineSpacingExtra="10dp"
+        android:text="服务器使用node.js开发\n服务部署在MoPaaS服务器上\n数据采集使用Python开发爬虫爬取网页数据\n客户端使用Android开发"/>
+</RelativeLayout>

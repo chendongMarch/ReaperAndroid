@@ -42,4 +42,5 @@ dependencies {
     compile 'org.greenrobot:greendao:2.2.0'
     compile 'com.zhy:flowlayout-lib:1.0.3'
     compile 'com.github.chrisbanes:PhotoView:1.2.6'
+    compile 'in.srain.cube:ultra-ptr:1.0.11'
 }

@@ -10,9 +10,11 @@ import android.widget.TextView;
 
 import com.march.reaper.R;
 import com.march.reaper.common.Constant;
+import com.march.reaper.common.TitleBarView;
 import com.march.reaper.mvp.presenter.impl.AlbumQuery4WholePresenterImpl;
 import com.march.reaper.mvp.presenter.impl.AlbumQueryPresenterImpl;
 import com.march.reaper.mvp.ui.RootFragment;
+import com.march.reaper.widget.RecyclerGroupView;
 
 
 import butterknife.Bind;
@@ -25,14 +27,14 @@ import butterknife.OnClick;
 public class AlbumQueryFragment extends RootFragment {
 
     @Bind(R.id.albumquery_recycler)
-    RecyclerView mAlbumsRv;
-    @Bind(R.id.albumquery_title)
-    ViewGroup mTitleBar;
+    RecyclerGroupView mAlbumsRgv;
+    @Bind(R.id.titlebar_root)
+    ViewGroup mTitleBarRoot;
     private boolean isWholeAlbum;
     private String mTitle;
     private String mRecommendType;
     private AlbumQuery4WholePresenterImpl mAlbumQuery4WholePresenterImpl;
-
+    private TitleBarView mTitleBar;
 
     public static AlbumQueryFragment newInst(String title, String type) {
         AlbumQueryFragment albumQueryFragment = new AlbumQueryFragment();
@@ -72,20 +74,22 @@ public class AlbumQueryFragment extends RootFragment {
     @Override
     protected void initViews(View view, Bundle save) {
         super.initViews(view, save);
+        mTitleBar = new TitleBarView(getActivity(), mTitleBarRoot);
         if (isWholeAlbum) {
-            mTitleBar.setVisibility(View.VISIBLE);
-            mAlbumsRv.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-            mAlbumQuery4WholePresenterImpl = new AlbumQuery4WholePresenterImpl(getActivity(), mAlbumsRv);
-            mAlbumQuery4WholePresenterImpl.queryNetDatas();
+            mTitleBar.setText(null, "专辑", "大图");
+            mAlbumsRgv.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+            mAlbumQuery4WholePresenterImpl = new AlbumQuery4WholePresenterImpl(mAlbumsRgv,getActivity());
+            mAlbumQuery4WholePresenterImpl.justQuery();
         } else {
-            mAlbumsRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+            mTitleBar.hide();
+            mAlbumsRgv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
             AlbumQueryPresenterImpl mAlbumQueryPresenterImpl =
-                    new AlbumQueryPresenterImpl(getActivity(), mAlbumsRv, mRecommendType);
-            mAlbumQueryPresenterImpl.queryNetDatas();
+                    new AlbumQueryPresenterImpl(getActivity(), mAlbumsRgv, mRecommendType);
+            mAlbumQueryPresenterImpl.justQuery();
         }
     }
 
-    @OnClick(R.id.albumquery_switchmode)
+    @OnClick(R.id.tv_titlebar_right)
     public void clickBtn(View v) {
         mAlbumQuery4WholePresenterImpl.switchMode((TextView) v);
     }

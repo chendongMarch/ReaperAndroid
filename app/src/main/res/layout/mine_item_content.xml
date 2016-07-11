@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal"
+    android:paddingTop="4dp">
+
+    <ImageView
+        android:id="@+id/iv_mine_item_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tv_mine_item_info"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/iv_mine_item_icon"
+        android:gravity="center_vertical"
+        android:text="分享给好有"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <View
+        android:id="@+id/line_mine_item"
+        style="@style/common_line"
+        android:layout_below="@id/iv_mine_item_icon"
+        android:layout_marginTop="4dp" />
+</RelativeLayout>

@@ -5,47 +5,14 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/albumquery_title"
-        android:visibility="gone"
+    <include
+        layout="@layout/widget_title_bar"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/albumquery_switchmode"
-            android:layout_marginRight="15dp"
-            android:layout_width="wrap_content"
-            android:textColor="@color/colorPrimary"
-            android:layout_height="45dp"
-            android:gravity="center"
-            android:layout_alignParentRight="true"
-            android:textSize="14sp"
-            android:text="大图" />
+        android:layout_height="wrap_content" />
 
-        <TextView
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:layout_width="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_height="45dp"
-            android:gravity="center"
-            android:text="专辑" />
-        <View
-            android:layout_alignParentBottom="true"
-            style="@style/common_line" />
-    </RelativeLayout>
-
-    <android.support.v7.widget.RecyclerView
+    <com.march.reaper.widget.RecyclerGroupView
         android:id="@+id/albumquery_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible" />
+        android:layout_height="match_parent" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="专辑展示"
-        android:textColor="@color/black"
-        android:visibility="gone" />
 </LinearLayout>

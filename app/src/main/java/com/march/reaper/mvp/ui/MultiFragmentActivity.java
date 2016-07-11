@@ -6,8 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import com.march.reaper.RootActivity;
-
 /**
  * Created by march on 16/7/1.
  * 切换多个fragment的activity

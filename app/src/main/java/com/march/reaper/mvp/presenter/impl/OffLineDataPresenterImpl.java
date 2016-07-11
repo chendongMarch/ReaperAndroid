@@ -2,6 +2,7 @@ package com.march.reaper.mvp.presenter.impl;
 
 import android.os.AsyncTask;
 import android.support.v4.widget.ContentLoadingProgressBar;
+
 import com.march.reaper.common.API;
 import com.march.reaper.common.DaoHelper;
 import com.march.reaper.common.DbHelper;
@@ -13,6 +14,7 @@ import com.march.reaper.mvp.presenter.ActivityPresenter;
 import com.march.reaper.utils.Lg;
 import com.march.reaper.utils.QueryUtils;
 import com.march.reaper.utils.SPUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -21,7 +23,7 @@ import java.util.Locale;
  * Created by march on 16/7/1.
  * 离线数据的操作
  */
-public class OffLineDataPresenterImpl extends ActivityPresenter {
+public class OffLineDataPresenterImpl {
 
     private SimpleDateFormat mTimeStampFormat;
 
@@ -65,6 +67,11 @@ public class OffLineDataPresenterImpl extends ActivityPresenter {
             public void queryOver(T rst) {
                 saveData2GreenDao(rst);
                 syncLocalTimeStamp(cls);
+            }
+
+            @Override
+            public void error(Exception e) {
+
             }
         });
     }

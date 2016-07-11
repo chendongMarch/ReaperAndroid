@@ -33,6 +33,8 @@ public class QueryUtils {
 
     public interface OnQueryOverListener<T> {
         void queryOver(T rst);
+
+        void error(Exception e);
     }
 
 
@@ -48,6 +50,9 @@ public class QueryUtils {
             public void onError(Call call, Exception e) {
                 e.printStackTrace();
                 Lg.e("请求出错" + e.toString());
+                if (listener != null) {
+                    listener.error(e);
+                }
             }
 
             @Override

@@ -3,56 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context="com.march.reaper.mvp.ui.activity.AlbumDetailActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:orientation="vertical"
-        android:visibility="visible">
-
-        <TextView
-            android:id="@+id/detail_switchmode"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_alignParentRight="true"
-            android:paddingRight="15dp"
-            android:gravity="center"
-            android:text="大图"
-            android:textColor="@color/colorPrimary"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/detail_back"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_alignParentLeft="true"
-            android:paddingLeft="15dp"
-            android:gravity="center"
-            android:text="首页"
-            android:textColor="@color/colorPrimary"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:gravity="center"
-            android:text="专辑详情"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
-
-        <View
-            style="@style/common_line"
-            android:layout_alignParentBottom="true" />
-    </RelativeLayout>
-
-
-    <android.support.v7.widget.RecyclerView
+    <com.march.reaper.widget.RecyclerGroupView
         android:id="@+id/detail_albumlist_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 
 </LinearLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<in.srain.cube.views.ptr.PtrFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/widget_rgv_ptr"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    cube_ptr:ptr_duration_to_close="300"
+    cube_ptr:ptr_duration_to_close_header="2000"
+    cube_ptr:ptr_keep_header_when_refresh="true"
+    cube_ptr:ptr_pull_to_fresh="false"
+    cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+    cube_ptr:ptr_resistance="1.7">
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/widget_rgv_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:overScrollMode="never" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/widget_rgv_fab"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right|bottom"
+            android:layout_margin="50dp"
+            android:elevation="30dp"
+            android:src="@mipmap/ic_launcher" />
+
+    </FrameLayout>
+</in.srain.cube.views.ptr.PtrFrameLayout>
+

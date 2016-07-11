@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.march.bean.AlbumDetail;
 import com.march.reaper.R;
-import com.march.reaper.RootActivity;
+import com.march.reaper.mvp.ui.RootActivity;
 import com.march.reaper.common.Constant;
 import com.march.reaper.utils.DisplayUtils;
 import com.march.reaper.utils.Lg;

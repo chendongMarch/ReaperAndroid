@@ -1,5 +1,4 @@
 package com.march.reaper.common;
-
 /**
  * Created by march on 16/6/30.
  * API
@@ -7,7 +6,7 @@ package com.march.reaper.common;
 public class API {
     public static final String BASE_TEST = "http://192.168.1.132:3000";
     public static final String BASE_ONLINE = "http://reapernode.tiger.mopaasapp.com";
-    public static final String BASE = BASE_ONLINE;
+    public static final String BASE = BASE_TEST;
     public static final String GET_RECOMMEND_ALBUM = "";
     public static final String GET_WHOLE_ALBUM = "";
     public static final String GET_ALBUM_DETAIL = "";
@@ -19,4 +18,5 @@ public class API {
     public static final String GET_SCAN_RECOMMEND = BASE + "/scan/recommend";
     public static final String GET_SCAN_WHOLE = BASE + "/scan/whole";
     public static final String GET_SCAN_DETAIL = BASE + "/scan/detail";
+    public static final String GET_LUCKY = BASE + "/lucky";
 }

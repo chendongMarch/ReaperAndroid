@@ -15,7 +15,8 @@ import com.march.reaper.RootApplication;
 public class SPUtils {
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
-    private final String SP_NAME = "Reaper";
+    private final static String SP_NAME = "Reaper";
+    private final static String SP_APP_START_PHOTO = "SP_APP_START_PHOTO";
 
     private SPUtils() {
         sp = RootApplication.get().getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
@@ -66,4 +67,12 @@ public class SPUtils {
         editor.putString(mTempKey, currentTimeStamp).apply();
     }
 
+    public String getAppStartPhoto() {
+        return sp.getString(SP_APP_START_PHOTO, null);
+    }
+
+    public void putAppStartPhoto(String str) {
+        editor.putString(SP_APP_START_PHOTO, str);
+        editor.apply();
+    }
 }

@@ -14,4 +14,6 @@
     <color name="white">#fff</color>
     <color name="transparent">#bf000000</color>
     <color name="newgray">#eaeaea</color>
+    <color name="red">#f00</color>
+    <color name="blue">#0f0</color>
 </resources>

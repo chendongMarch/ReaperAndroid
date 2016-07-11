@@ -1,9 +1,10 @@
-package com.march.reaper;
+package com.march.reaper.mvp.ui;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.WindowManager;
 
 import butterknife.ButterKnife;
@@ -14,6 +15,7 @@ import butterknife.ButterKnife;
 public abstract class RootActivity extends AppCompatActivity {
 
     protected Activity self;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(0, 0);
@@ -22,7 +24,10 @@ public abstract class RootActivity extends AppCompatActivity {
         if (isFullScreen()) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
-        setContentView(getLayoutId());
+        if (getLayoutView() == null)
+            setContentView(getLayoutId());
+        else
+            setContentView(getLayoutView());
         hideActionBar();
         self = this;
         ButterKnife.bind(this);
@@ -33,9 +38,10 @@ public abstract class RootActivity extends AppCompatActivity {
         finalOperate();
     }
 
-    protected void setIntentData(Intent intent){
+    protected void setIntentData(Intent intent) {
 
     }
+
     protected void finalOperate() {
     }
 
@@ -62,6 +68,10 @@ public abstract class RootActivity extends AppCompatActivity {
 
     protected abstract int getLayoutId();
 
+    protected View getLayoutView() {
+        return null;
+    }
+
     protected boolean isFullScreen() {
         return false;
     }
@@ -71,10 +81,11 @@ public abstract class RootActivity extends AppCompatActivity {
     }
 
     public void startActivity(Class cls) {
-        startActivity(new Intent(self,cls));
+        startActivity(new Intent(self, cls));
     }
 
-    @Override protected void onPause() {
+    @Override
+    protected void onPause() {
         overridePendingTransition(0, 0);
         super.onPause();
     }

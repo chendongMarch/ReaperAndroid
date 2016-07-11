@@ -6,16 +6,6 @@
     android:orientation="vertical"
     tools:context="com.march.reaper.mvp.ui.fragment.MineFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:gravity="center"
-        android:text="我的"
-        android:textColor="@color/black"
-        android:textSize="15sp" />
-
-    <View style="@style/common_line" />
-
     <Button
         android:id="@+id/mine_offline"
         android:layout_width="match_parent"
@@ -25,6 +15,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_mine"
+        android:overScrollMode="never"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
