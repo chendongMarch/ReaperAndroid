@@ -1,6 +1,7 @@
 package com.march.reaper.mvp.presenter;
 
 import android.app.Activity;
+import android.support.v7.widget.RecyclerView;
 
 import com.march.bean.RecommendAlbumItem;
 import com.march.quickrvlibs.SimpleRvAdapter;
@@ -33,6 +34,10 @@ public abstract class NetLoadListPresenter<T> {
                 justQuery();
             }
         });
+    }
+
+    public NetLoadListPresenter(Activity mContext) {
+        this.mContext = mContext;
     }
 
     public void justQuery() {

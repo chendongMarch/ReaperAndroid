@@ -9,7 +9,12 @@ import com.march.reaper.widget.RecyclerGroupView;
  *
  */
 public abstract class FragmentPresenter extends NetLoadListPresenter{
+
     public FragmentPresenter(RecyclerGroupView mRecyclerGV, Activity mContext) {
         super(mRecyclerGV, mContext);
+    }
+
+    public FragmentPresenter(Activity mContext) {
+        super(mContext);
     }
 }

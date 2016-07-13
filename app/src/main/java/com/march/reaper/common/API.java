@@ -5,7 +5,8 @@ package com.march.reaper.common;
  */
 public class API {
 //    public static final String BASE_TEST = "http://192.168.1.132:3000";
-    public static final String BASE_TEST = "http://192.168.2.145:3000";
+    public static final String BASE_TEST = "http://92.168.92.142:3000";
+//    public static final String BASE_TEST = "http://192.168.2.145:3000";
     public static final String BASE_ONLINE = "http://reapernode.tiger.mopaasapp.com";
     public static final String BASE = BASE_TEST;
     public static final String GET_RECOMMEND_ALBUM = "";

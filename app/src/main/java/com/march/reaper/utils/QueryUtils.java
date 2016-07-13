@@ -43,7 +43,7 @@ public class QueryUtils {
 
 
     public <T> void query(String url, final Class<T> cls, final OnQueryOverListener<T> listener) {
-
+        Lg.e("请求 -> " + url);
         OkHttpUtils.get().url(url).build().execute(new Callback<T>() {
             @Override
             public T parseNetworkResponse(Response response) throws Exception {

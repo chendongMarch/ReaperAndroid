@@ -53,8 +53,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="搜图"
-
+            android:text="发现"
             android:tag="2"
             android:textColor="@color/selector_tab"
             android:textSize="14sp" />
