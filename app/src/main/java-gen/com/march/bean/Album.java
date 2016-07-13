@@ -5,6 +5,7 @@ package com.march.bean;
  * Album基类
  */
 public abstract class Album implements java.io.Serializable {
+
     public abstract String getAlbum_desc();
 
     public abstract String getKey_words();

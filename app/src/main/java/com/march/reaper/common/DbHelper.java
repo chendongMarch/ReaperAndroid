@@ -16,6 +16,7 @@ import java.util.List;
 import de.greenrobot.dao.internal.FastCursor;
 import de.greenrobot.dao.query.Query;
 import de.greenrobot.dao.query.QueryBuilder;
+import de.greenrobot.dao.query.WhereCondition;
 
 /**
  * Created by march on 16/6/30.
@@ -47,12 +48,56 @@ public class DbHelper {
         return queryBuilder.count();
     }
 
+
     //查询完毕接口
     public interface OnQueryReadyListener<T> {
         void queryReady(List<T> list);
     }
 
+
+    public void queryDetailCollection(final int offset, final int limit, final OnQueryReadyListener<DetailCollection> onQueryReadyListener) {
+        new SimpleQueryTask<DetailCollection>() {
+            @Override
+            protected List<DetailCollection> query() {
+                Query<DetailCollection> query = DaoHelper.get()
+                        .<DetailCollectionDao>getDao(DetailCollection.class).queryBuilder()
+                        .offset(offset).limit(limit)
+                        .build();
+                return query.list();
+            }
+
+            @Override
+            protected void afterQuery(List<DetailCollection> list) {
+                if (onQueryReadyListener != null) {
+                    onQueryReadyListener.queryReady(list);
+                }
+            }
+        }.execute();
+    }
+
+
+    public void queryAlbumCollection(final int offset, final int limit, final OnQueryReadyListener<AlbumItemCollection> onQueryReadyListener) {
+        new SimpleQueryTask<AlbumItemCollection>() {
+            @Override
+            protected List<AlbumItemCollection> query() {
+                Query<AlbumItemCollection> query = DaoHelper.get()
+                        .<AlbumItemCollectionDao>getDao(DetailCollection.class).queryBuilder()
+                        .offset(offset).limit(limit)
+                        .build();
+                return query.list();
+            }
+
+            @Override
+            protected void afterQuery(List<AlbumItemCollection> list) {
+                if (onQueryReadyListener != null) {
+                    onQueryReadyListener.queryReady(list);
+                }
+            }
+        }.execute();
+    }
+
     //分页加载所有的专辑
+
     public void queryWholeAlbum(final int skip, final int limit, final OnQueryReadyListener<WholeAlbumItem> onQueryReadyListener) {
         new SimpleQueryTask<WholeAlbumItem>() {
             @Override
@@ -124,17 +169,18 @@ public class DbHelper {
     public void addAlbumCollection(AlbumItemCollection col) {
         DaoHelper.get().<AlbumItemCollectionDao>getDao(AlbumItemCollection.class).insert(col);
     }
+
     public void removeAlbumCollection(AlbumItemCollection col) {
-        DaoHelper.get().<AlbumItemCollectionDao>getDao(AlbumItemCollection.class).delete(col);
+        DaoHelper.get().<AlbumItemCollectionDao>getDao(AlbumItemCollection.class).deleteByKey(col.getAlbum_link());
     }
 
     public void addDetailCollection(DetailCollection col) {
         DaoHelper.get().<DetailCollectionDao>getDao(DetailCollection.class).insert(col);
     }
-    public void removeDetailCollection(DetailCollection col) {
-        DaoHelper.get().<DetailCollectionDao>getDao(DetailCollection.class).delete(col);
-    }
 
+    public void removeDetailCollection(DetailCollection col) {
+        DaoHelper.get().<DetailCollectionDao>getDao(DetailCollection.class).deleteByKey(col.getPhoto_src());
+    }
 
 
     public boolean isAlbumCollection(AlbumItemCollection col) {

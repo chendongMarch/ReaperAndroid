@@ -35,12 +35,15 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.android.support:design:23.1.0'
     compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'com.march.quickrvlibs:quickrvlibs:2.0.6-beta1'
+    compile 'com.march.quickrvlibs:quickrvlibs:2.0.6-beta2'
     compile 'com.zhy:okhttputils:2.2.1'
     compile 'com.google.code.gson:gson:2.4'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
+
     compile 'org.greenrobot:greendao:2.2.0'
     compile 'com.zhy:flowlayout-lib:1.0.3'
     compile 'com.github.chrisbanes:PhotoView:1.2.6'
     compile 'in.srain.cube:ultra-ptr:1.0.11'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+//    compile 'com.github.florent37:glidepalette:2.0.0'
+//    compile 'com.github.bumptech.glide:glide:4.0.0-SNAPSHOT'
 }

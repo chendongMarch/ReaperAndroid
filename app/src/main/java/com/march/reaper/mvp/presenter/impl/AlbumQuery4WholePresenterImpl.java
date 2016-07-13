@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.march.bean.AlbumDetail;
 import com.march.bean.RecommendAlbumItem;
 import com.march.bean.WholeAlbumItem;
 import com.march.bean.WholeAlbumItem;
@@ -80,8 +81,8 @@ public class AlbumQuery4WholePresenterImpl extends FragmentPresenter {
 
             @Override
             public void error(Exception e) {
-                if(mAlbumAdapter!=null)
-                mAlbumAdapter.finishLoad();
+                if (mAlbumAdapter != null)
+                    mAlbumAdapter.finishLoad();
                 mRecyclerGV.getPtrLy().refreshComplete();
                 isLoadEnd = true;
             }
@@ -109,6 +110,7 @@ public class AlbumQuery4WholePresenterImpl extends FragmentPresenter {
         mRecyclerGV.getPtrLy().refreshComplete();
         isLoadEnd = true;
     }
+
     //构建adapter
     @Override
     protected void createRvAdapter() {
@@ -122,6 +124,7 @@ public class AlbumQuery4WholePresenterImpl extends FragmentPresenter {
                 else
                     holder.setVisibility(R.id.albumquery_item_tv, View.GONE);
             }
+
             @Override
             public void bindLisAndData4Footer(RvViewHolder footer) {
                 footer.setClickLis(R.id.footer_loadmore, new View.OnClickListener() {
@@ -132,13 +135,11 @@ public class AlbumQuery4WholePresenterImpl extends FragmentPresenter {
                 });
             }
         };
-        mAlbumAdapter.addHeaderOrFooter(0, R.layout.footer_load_more);
+        mAlbumAdapter.addHeaderOrFooter(0, R.layout.footer_load_more, mRecyclerGV.getRecyclerView());
         mAlbumAdapter.setOnItemClickListener(new OnItemClickListener<RvViewHolder>() {
             @Override
             public void onItemClick(int pos, RvViewHolder holder) {
-                Intent intent = new Intent(mContext, AlbumDetailActivity.class);
-                intent.putExtra(Constant.KEY_ALBUM_DETAIL_SHOW, datas.get(pos));
-                mContext.startActivity(intent);
+                AlbumDetailActivity.loadActivity4DetailShow(mContext, datas.get(pos));
             }
         });
         mAlbumAdapter.addLoadMoreModule(mPreLoadNum, new LoadMoreModule.OnLoadMoreListener() {

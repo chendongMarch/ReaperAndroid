@@ -14,6 +14,15 @@ public class Constant {
                     "美乳香臀",
                     "唯美写真",
                     "高清壁纸"};
+//    public static final String[] mMenuItem =
+//            new String[]{
+//                    "newnew",
+//                    "xinggan",
+//                    "shaonv",
+//                    "swmtswmt",
+//                    "mrxtmrxt",
+//                    "wmxzwmxz",
+//                    "wallpaper"};
     public static final String[] mRecommendType =
             new String[]{
                     null,
@@ -44,6 +53,8 @@ public class Constant {
     public static final String KEY_ALBUM_DETAIL_SHOW = "KEY_ALBUM_DETAIL_SHOW";
     //查看照片
     public static final String KEY_ALBUM_DETAIL_SCAN = "KEY_ALBUM_DETAIL_SCAN";
+    //启动详情页的形式
+    public static final String KEY_DETAIL_TYPE = "KEY_DETAIL_TYPE";
     //提前预加载的数量
     public static final int PRE_LOAD_NUM = 4;
     //一次请求的数据量

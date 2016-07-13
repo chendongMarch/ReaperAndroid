@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -11,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="center"
-        android:background="@color/blue"
         android:gravity="center"
-        android:textSize="18sp" />
+        android:text="点击加载更多"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp" />
 </FrameLayout>

@@ -41,7 +41,6 @@ public class AlbumQueryFragment extends RootFragment {
         Bundle args = new Bundle();
         args.putString(Constant.KEY_ALBUM_TITLE, title);
         args.putString(Constant.KEY_ALBUM_RECOMMEND_TYPE, type);
-
         albumQueryFragment.setArguments(args);
         return albumQueryFragment;
     }

@@ -41,7 +41,8 @@
             android:name=".mvp.ui.activity.ScanImgActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".mvp.ui.activity.AboutActivity"></activity>
+        <activity android:name=".mvp.ui.activity.AboutActivity" />
+        <activity android:name=".mvp.ui.activity.AlbumCollectionActivity"></activity>
     </application>
 
 </manifest>

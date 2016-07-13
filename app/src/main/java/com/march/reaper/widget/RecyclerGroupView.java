@@ -69,7 +69,7 @@ public class RecyclerGroupView extends FrameLayout {
         mFloatBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRecyclerView.scrollToPosition(0);
+                mRecyclerView.smoothScrollToPosition(0);
             }
         });
     }
@@ -90,7 +90,7 @@ public class RecyclerGroupView extends FrameLayout {
         mPtrLy.setKeepHeaderWhenRefresh(true);
         mPtrLy.setDurationToCloseHeader(1000);
         mPtrLy.setLoadingMinTime(2000);
-        mPtrLy.setRatioOfHeaderHeightToRefresh(1.5f);
+        mPtrLy.setRatioOfHeaderHeightToRefresh(2.0f);
         mPtrLy.setHeaderView(header);
         mPtrLy.addPtrUIHandler(header);
         mPtrLy.setPtrHandler(new PtrHandler() {

@@ -3,6 +3,7 @@ package com.march.reaper.mvp.presenter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.march.reaper.widget.RecyclerGroupView;
 
@@ -18,7 +19,7 @@ public abstract class ActivityPresenter extends NetLoadListPresenter{
 
     protected void onCreate(Bundle savedInstanceState){}
 
-    protected void setIntent(Intent intent){}
+    public void setIntent(Intent intent){}
 
     protected void onResume(){}
 
@@ -27,4 +28,6 @@ public abstract class ActivityPresenter extends NetLoadListPresenter{
     protected void onStop(){}
 
     protected void onDestroy(){}
+
+    public void switchMode(TextView tv){}
 }

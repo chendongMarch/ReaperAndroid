@@ -11,9 +11,12 @@ import com.march.quickrvlibs.SimpleRvAdapter;
 import com.march.quickrvlibs.inter.OnItemClickListener;
 import com.march.reaper.R;
 import com.march.reaper.common.Constant;
+import com.march.reaper.mvp.ui.RootActivity;
 import com.march.reaper.mvp.ui.RootFragment;
 import com.march.reaper.mvp.ui.TitleFragment;
 import com.march.reaper.mvp.ui.activity.AboutActivity;
+import com.march.reaper.mvp.ui.activity.AlbumCollectionActivity;
+import com.march.reaper.mvp.ui.activity.AlbumDetailActivity;
 import com.march.reaper.mvp.ui.activity.OffLineDataActivity;
 import com.march.reaper.utils.SysShareUtils;
 
@@ -42,7 +45,7 @@ public class MineFragment extends TitleFragment {
     @Override
     protected void initViews(View view, Bundle save) {
         super.initViews(view, save);
-        mTitleBar.setText(null,"我的",null);
+        mTitleBar.setText(null, "我的", null);
         mContentRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         SimpleRvAdapter<String> mContentAdapter = new SimpleRvAdapter<String>(getActivity(), Constant.MINE_CONTENT_LIST, R.layout.mine_item_content) {
             @Override
@@ -60,19 +63,21 @@ public class MineFragment extends TitleFragment {
     }
 
     private void handleMineOperate(int pos) {
-        switch (pos){
+        switch (pos) {
             case 0:
                 //照片收藏
+                AlbumDetailActivity.loadActivity4Collection(getActivity());
                 break;
             case 1:
                 //专辑收藏
+                AlbumCollectionActivity.loadActivity(getActivity());
                 break;
             case 2:
                 //数据离线
                 break;
             case 3:
                 //分享
-                SysShareUtils.newInst(getActivity()).shareText("美图软件","精选美女图片尽在指尖");
+                SysShareUtils.newInst(getActivity()).shareText("美图软件", "精选美女图片尽在指尖");
                 break;
             case 4:
                 //设置

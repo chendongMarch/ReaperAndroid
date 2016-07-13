@@ -1,8 +1,12 @@
 package com.march.reaper.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.Callback;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import okhttp3.Call;
 import okhttp3.Response;
@@ -39,6 +43,7 @@ public class QueryUtils {
 
 
     public <T> void query(String url, final Class<T> cls, final OnQueryOverListener<T> listener) {
+
         OkHttpUtils.get().url(url).build().execute(new Callback<T>() {
             @Override
             public T parseNetworkResponse(Response response) throws Exception {

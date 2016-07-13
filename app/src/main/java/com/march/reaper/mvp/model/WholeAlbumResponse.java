@@ -10,6 +10,15 @@ import java.util.List;
  */
 public class WholeAlbumResponse implements BaseResponse{
     private List<WholeAlbumItem> data;
+    private int offset;
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
 
     public List<WholeAlbumItem> getData() {
         return data;

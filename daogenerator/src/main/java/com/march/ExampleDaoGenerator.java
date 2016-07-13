@@ -37,6 +37,7 @@ public class ExampleDaoGenerator {
     private static void addDetailCollection(Schema schema) {
         Entity albumDetail = schema.addEntity("DetailCollection");
         albumDetail.setHasKeepSections(true);
+        albumDetail.implementsInterface("RvQuickInterface","java.io.Serializable","Detail");
         albumDetail.addStringProperty("album_link");
         albumDetail.addStringProperty("photo_src").primaryKey();
         albumDetail.addIntProperty("width");
@@ -46,16 +47,17 @@ public class ExampleDaoGenerator {
     private static void addAlbumItemCollection(Schema schema) {
         Entity wholeAlbumItem = schema.addEntity("AlbumItemCollection");
         wholeAlbumItem.setHasKeepSections(true);
+        wholeAlbumItem.implementsInterface("RvQuickInterface","java.io.Serializable");
         wholeAlbumItem.addStringProperty("album_link").primaryKey();
         wholeAlbumItem.addStringProperty("key_words");
         wholeAlbumItem.addStringProperty("album_cover");
-        wholeAlbumItem.addStringProperty("album_desc");;
+        wholeAlbumItem.addStringProperty("album_desc");
     }
 
     private static void addAlbumDetail(Schema schema) {
         Entity albumDetail = schema.addEntity("AlbumDetail");
         albumDetail.setHasKeepSections(true);
-        albumDetail.implementsInterface("RvQuickInterface", "java.io.Serializable");
+        albumDetail.implementsInterface("RvQuickInterface", "java.io.Serializable","Detail");
         albumDetail.addStringProperty("album_link");
         albumDetail.addStringProperty("photo_src");
         albumDetail.addIntProperty("width");
@@ -80,6 +82,7 @@ public class ExampleDaoGenerator {
         Entity wholeAlbumItem = schema.addEntity("WholeAlbumItem");
         wholeAlbumItem.setHasKeepSections(true);
         wholeAlbumItem.setSuperclass("Album");
+//        wholeAlbumItem.addStringProperty("_id").primaryKey();
         wholeAlbumItem.addStringProperty("album_link");
         wholeAlbumItem.addStringProperty("key_words");
         wholeAlbumItem.addStringProperty("album_cover");
@@ -92,11 +95,18 @@ public class ExampleDaoGenerator {
     private static void addNote(Schema schema) {
         // 一个实体（类）就关联到数据库中的一张表，此处表名为「Note」（既类名）
         Entity note = schema.addEntity("Note");
+        //设置实现的接口
+        note.implementsInterface("RvQuickInterface", "java.io.Serializable");
+        //设置支持自定义代码
+        note.setHasKeepSections(true);
+        //设置继承的父类
+        note.setSuperclass("Album");
         // 你也可以重新给表命名
-        // note.setTableName("NODE");
+         note.setTableName("NODE");
         // greenDAO 会自动根据实体类的属性值来创建表字段，并赋予默认值
         // 接下来你便可以设置表中的字段：
-        note.addIdProperty();
+        note.addIdProperty().autoincrement();
+        note.addBooleanProperty("isYes").primaryKey().unique();
         note.addStringProperty("text").notNull();
         // 与在 Java 中使用驼峰命名法不同，默认数据库中的命名是使用大写和下划线来分割单词的。
         // For example, a property called “creationDate” will become a database column “CREATION_DATE”.

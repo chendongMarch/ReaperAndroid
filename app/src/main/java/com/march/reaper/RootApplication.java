@@ -2,12 +2,19 @@ package com.march.reaper;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Environment;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.Resource;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.load.resource.gifbitmap.GifBitmapWrapper;
+import com.bumptech.glide.load.resource.transcode.ResourceTranscoder;
 import com.march.quickrvlibs.RvQuick;
 import com.march.quickrvlibs.helper.QuickLoad;
 import com.march.reaper.common.DaoHelper;
+
+import java.io.File;
 
 /**
  * Created by march on 16/6/6.
@@ -32,7 +39,7 @@ public class RootApplication extends Application {
 
     //    初始化QuickAdapter
     private void initRvQuick() {
-        RvQuick.init(new  QuickLoad() {
+        RvQuick.init(new QuickLoad() {
             @Override
             public void load(Context context, String url, ImageView view) {
                 Glide.with(context).load(url).centerCrop().crossFade().into(view);
@@ -43,6 +50,14 @@ public class RootApplication extends Application {
                 Glide.with(context).load(url).centerCrop().crossFade().into(view);
             }
         });
+    }
+
+
+    public File getDownloadDir() {
+        File downloadDir = new File(Environment.getExternalStorageDirectory(), "/reaperDownload");
+        if (!downloadDir.exists())
+            downloadDir.mkdirs();
+        return downloadDir;
     }
 
 

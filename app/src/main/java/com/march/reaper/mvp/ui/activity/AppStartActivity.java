@@ -40,7 +40,8 @@ public class AppStartActivity extends RootActivity {
         if (appStartPhoto != null) {
             Glide.with(self).load(appStartPhoto).crossFade().into(mRecommendIv);
         }
-        QueryUtils.get().query(API.GET_LUCKY, WholeAlbumResponse.class, new QueryUtils.OnQueryOverListener<WholeAlbumResponse>() {
+        StringBuilder sb = new StringBuilder(API.GET_LUCKY).append("?limit=1");
+        QueryUtils.get().query(sb.toString(), WholeAlbumResponse.class, new QueryUtils.OnQueryOverListener<WholeAlbumResponse>() {
             @Override
             public void queryOver(WholeAlbumResponse rst) {
                 List<WholeAlbumItem> data = rst.getData();

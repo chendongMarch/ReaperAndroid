@@ -19,7 +19,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-
             android:text="我是标题"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -28,6 +27,7 @@
             android:id="@+id/iv_is_collection"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
             android:src="@drawable/ic_collection" />
 
     </LinearLayout>

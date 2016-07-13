@@ -1,19 +1,30 @@
 package com.march.reaper.mvp.ui.activity;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.march.bean.AlbumDetail;
+import com.march.bean.Detail;
 import com.march.bean.DetailCollection;
 import com.march.reaper.R;
+import com.march.reaper.RootApplication;
 import com.march.reaper.common.DbHelper;
 import com.march.reaper.mvp.ui.RootActivity;
 import com.march.reaper.common.Constant;
 import com.march.reaper.utils.DisplayUtils;
 import com.march.reaper.utils.Lg;
 import com.march.reaper.widget.SwipeFinishLayout;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 import butterknife.Bind;
 
@@ -29,7 +40,7 @@ public class ScanImgActivity extends RootActivity {
     @Bind(R.id.scan_swipe)
     SwipeFinishLayout mSwipeFinishLayout;
     private boolean isCollection;
-    private AlbumDetail mAlbumDetailData;
+    private Detail mAlbumDetailData;
     private DetailCollection mCol;
 
     @Override
@@ -37,6 +48,12 @@ public class ScanImgActivity extends RootActivity {
         return R.layout.scan_img_activity;
     }
 
+
+    public static void loadActivity(Activity activity, Detail detail) {
+        Intent intent = new Intent(activity, ScanImgActivity.class);
+        intent.putExtra(Constant.KEY_ALBUM_DETAIL_SCAN, detail);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected void initDatas() {
@@ -66,6 +83,7 @@ public class ScanImgActivity extends RootActivity {
                     DbHelper.get().addDetailCollection(mCol);
                     mIsColIv.setImageResource(R.drawable.ic_collection);
                 }
+                isCollection = !isCollection;
             }
         });
     }
@@ -85,5 +103,23 @@ public class ScanImgActivity extends RootActivity {
     protected void onDestroy() {
         super.onDestroy();
         System.gc();
+    }
+
+    private void downloadPic() {
+        Glide.with(RootApplication.get().getApplicationContext())
+                .load(mAlbumDetailData.getPhoto_src())
+                .asBitmap()
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        File downloadDir = RootApplication.get().getDownloadDir();
+                        String fileName = "reaper_" + System.currentTimeMillis() + ".jpg";
+                        try {
+                            resource.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(new File(downloadDir, fileName)));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 }
