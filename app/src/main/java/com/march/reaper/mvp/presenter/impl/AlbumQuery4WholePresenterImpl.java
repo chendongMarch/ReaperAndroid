@@ -26,6 +26,7 @@ import com.march.reaper.mvp.model.WholeAlbumResponse;
 import com.march.reaper.mvp.presenter.ActivityPresenter;
 import com.march.reaper.mvp.presenter.FragmentPresenter;
 import com.march.reaper.mvp.ui.activity.AlbumDetailActivity;
+import com.march.reaper.utils.ColorUtils;
 import com.march.reaper.utils.DisplayUtils;
 import com.march.reaper.utils.Lg;
 import com.march.reaper.utils.QueryUtils;
@@ -95,6 +96,8 @@ public class AlbumQuery4WholePresenterImpl extends FragmentPresenter {
         if (list.size() <= 0) {
             offset = -1;
             Lg.e("没有数据了");
+            mAlbumAdapter.setFooterEnable(false);
+            mAlbumAdapter.notifyDataSetChanged();
             return;
         }
         datas.addAll(list);
@@ -123,6 +126,7 @@ public class AlbumQuery4WholePresenterImpl extends FragmentPresenter {
                     holder.setVisibility(R.id.albumquery_item_tv, View.VISIBLE).setText(R.id.albumquery_item_tv, data.getAlbum_desc());
                 else
                     holder.setVisibility(R.id.albumquery_item_tv, View.GONE);
+                holder.getView(R.id.album_bg).setBackgroundColor(ColorUtils.randomColor());
             }
 
             @Override

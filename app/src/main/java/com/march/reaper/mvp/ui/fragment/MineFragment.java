@@ -19,6 +19,7 @@ import com.march.reaper.mvp.ui.activity.AlbumCollectionActivity;
 import com.march.reaper.mvp.ui.activity.AlbumDetailActivity;
 import com.march.reaper.mvp.ui.activity.OffLineDataActivity;
 import com.march.reaper.utils.SysShareUtils;
+import com.march.reaper.utils.To;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -74,16 +75,18 @@ public class MineFragment extends TitleFragment {
                 break;
             case 2:
                 //数据离线
+                To.show("敬请期待");
                 break;
             case 3:
                 //分享
-                SysShareUtils.newInst(getActivity()).shareText("美图软件", "精选美女图片尽在指尖");
+                SysShareUtils.newInst(getActivity()).shareText("Reaper精品美图", "Reaper精选美图,火热上线,访问官网 http://fir.im/9wy8");
                 break;
             case 4:
                 //设置
+                To.show("敬请期待");
                 break;
             case 5:
-//                关于
+                //关于
                 startActivity(new Intent(getActivity(), AboutActivity.class));
                 break;
 

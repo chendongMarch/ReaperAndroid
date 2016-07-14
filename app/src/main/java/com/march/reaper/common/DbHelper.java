@@ -81,7 +81,7 @@ public class DbHelper {
             @Override
             protected List<AlbumItemCollection> query() {
                 Query<AlbumItemCollection> query = DaoHelper.get()
-                        .<AlbumItemCollectionDao>getDao(DetailCollection.class).queryBuilder()
+                        .<AlbumItemCollectionDao>getDao(AlbumItemCollection.class).queryBuilder()
                         .offset(offset).limit(limit)
                         .build();
                 return query.list();

@@ -16,6 +16,7 @@ import com.march.reaper.common.DbHelper;
 import com.march.reaper.mvp.model.RecommendAlbumResponse;
 import com.march.reaper.mvp.presenter.FragmentPresenter;
 import com.march.reaper.mvp.ui.activity.AlbumDetailActivity;
+import com.march.reaper.utils.ColorUtils;
 import com.march.reaper.utils.DisplayUtils;
 import com.march.reaper.utils.Lg;
 import com.march.reaper.utils.QueryUtils;
@@ -90,6 +91,8 @@ public class AlbumQueryPresenterImpl extends FragmentPresenter {
         if (list.size() <= 0) {
             offset = -1;
             Lg.e("没有数据了");
+            mAlbumAdapter.setFooterEnable(false);
+            mAlbumAdapter.notifyDataSetChanged();
             return;
         }
         datas.addAll(list);
@@ -116,6 +119,7 @@ public class AlbumQueryPresenterImpl extends FragmentPresenter {
                 int height = (int) (mWidth * (2f / 3f));
                 holder.setImg(mContext, R.id.albumquery_item_iv, data.getAlbum_cover(), mWidth, height, R.mipmap.demo)
                         .setText(R.id.albumquery_item_tv, data.getAlbum_desc());
+                holder.getView(R.id.album_bg).setBackgroundColor(ColorUtils.randomColor());
             }
 
             @Override

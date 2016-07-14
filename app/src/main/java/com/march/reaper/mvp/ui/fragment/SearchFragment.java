@@ -1,16 +1,14 @@
 package com.march.reaper.mvp.ui.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.march.reaper.R;
-import com.march.reaper.mvp.presenter.ActivityPresenter;
 import com.march.reaper.mvp.presenter.FragmentPresenter;
-import com.march.reaper.mvp.ui.RootFragment;
+import com.march.reaper.mvp.presenter.impl.AlbumCollectionPresenterImpl;
+import com.march.reaper.mvp.presenter.impl.SearchPresenterImpl;
 import com.march.reaper.mvp.ui.TitleFragment;
-import com.march.reaper.mvp.ui.activity.SearchPresenterImpl;
 
 import butterknife.Bind;
 import butterknife.OnClick;

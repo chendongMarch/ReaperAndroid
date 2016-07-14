@@ -1,4 +1,4 @@
-package com.march.reaper.mvp.ui.activity;
+package com.march.reaper.mvp.presenter.impl;
 
 import android.app.Activity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,13 +9,12 @@ import com.march.bean.WholeAlbumItem;
 import com.march.quickrvlibs.RvViewHolder;
 import com.march.quickrvlibs.SimpleRvAdapter;
 import com.march.quickrvlibs.inter.OnItemClickListener;
-import com.march.quickrvlibs.module.LoadMoreModule;
 import com.march.reaper.R;
 import com.march.reaper.common.API;
 import com.march.reaper.mvp.model.WholeAlbumResponse;
 import com.march.reaper.mvp.presenter.FragmentPresenter;
+import com.march.reaper.mvp.ui.activity.AlbumDetailActivity;
 import com.march.reaper.utils.DisplayUtils;
-import com.march.reaper.utils.Lg;
 import com.march.reaper.utils.QueryUtils;
 
 import java.util.List;
@@ -49,16 +48,13 @@ public class SearchPresenterImpl extends FragmentPresenter {
     }
 
     @Override
-    protected void queryNetDatas() {
+    public void queryNetDatas() {
         QueryUtils.get().query(API.GET_LUCKY + "?limit=10", WholeAlbumResponse.class, new QueryUtils.OnQueryOverListener<WholeAlbumResponse>() {
             @Override
             public void queryOver(WholeAlbumResponse rst) {
                 datas = rst.getData();
-                if (mAlbumAdapter == null)
-                    createRvAdapter();
-                else
-                    mAlbumAdapter.notifyDataSetChanged();
-
+                createRvAdapter();
+                isLoadEnd = true;
             }
 
             @Override
@@ -77,31 +73,14 @@ public class SearchPresenterImpl extends FragmentPresenter {
                 holder.setImg(mContext, R.id.albumquery_item_iv, data.getAlbum_cover(), mWidth, height, R.mipmap.demo);
                 holder.setVisibility(R.id.albumquery_item_tv, View.VISIBLE).setText(R.id.albumquery_item_tv, data.getAlbum_desc());
             }
-
-            @Override
-            public void bindLisAndData4Footer(RvViewHolder footer) {
-                footer.setClickLis(R.id.footer_loadmore, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        justQuery();
-                    }
-                });
-            }
         };
-        mAlbumAdapter.addHeaderOrFooter(0, R.layout.footer_load_more, mRecyclerGV.getRecyclerView());
         mAlbumAdapter.setOnItemClickListener(new OnItemClickListener<RvViewHolder>() {
             @Override
             public void onItemClick(int pos, RvViewHolder holder) {
                 AlbumDetailActivity.loadActivity4DetailShow(mContext, datas.get(pos));
             }
         });
-        mAlbumAdapter.addLoadMoreModule(mPreLoadNum, new LoadMoreModule.OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                Lg.e("加载更多  " + offset);
-                justQuery();
-            }
-        });
+
         mAlbumRv.setAdapter(mAlbumAdapter);
     }
 }

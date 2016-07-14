@@ -71,6 +71,8 @@ public class DetailCollectionPresenterImpl extends ActivityPresenter {
         if (list.size() <= 0) {
             offset = -1;
             Lg.e("没有数据了");
+            mColAdapter.setFooterEnable(false);
+            mColAdapter.notifyDataSetChanged();
             return;
         }
         datas.addAll(list);

@@ -103,6 +103,8 @@ public class AlbumDetailPresenterImpl extends ActivityPresenter {
         if (list.size() <= 0) {
             offset = -1;
             Lg.e("没有数据了");
+            mAlbumAdapter.setFooterEnable(false);
+            mAlbumAdapter.notifyDataSetChanged();
             return;
         }
         datas.addAll(list);
