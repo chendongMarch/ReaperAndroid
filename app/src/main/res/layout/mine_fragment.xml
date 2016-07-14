@@ -2,20 +2,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/gray_bg"
     android:orientation="vertical"
+
     tools:context="com.march.reaper.mvp.ui.fragment.MineFragment">
 
-    <Button
-        android:id="@+id/mine_offline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="离线数据"
-        android:visibility="gone" />
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_mine"
+        android:layout_marginTop="15dp"
         android:overScrollMode="never"
+        android:background="@color/white"
+        tools:listitem="@layout/mine_item_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

@@ -51,7 +51,16 @@ public class MineFragment extends TitleFragment {
         SimpleRvAdapter<String> mContentAdapter = new SimpleRvAdapter<String>(getActivity(), Constant.MINE_CONTENT_LIST, R.layout.mine_item_content) {
             @Override
             public void bindData4View(RvViewHolder holder, String data, int pos) {
+                if (pos == 2 || pos == 4) {
+                    holder.getParentView().getLayoutParams().height = 0;
+                    return;
+                }
+                if (pos == 5) {
+                    holder.setVisibility(R.id.mine_item_blackline, View.GONE);
+                }
+
                 holder.setText(R.id.tv_mine_item_info, data);
+
             }
         };
         mContentAdapter.setOnItemClickListener(new OnItemClickListener<RvViewHolder>() {
@@ -82,20 +91,14 @@ public class MineFragment extends TitleFragment {
                 SysShareUtils.newInst(getActivity()).shareText("Reaper精品美图", "Reaper精选美图,火热上线,访问官网 http://fir.im/9wy8");
                 break;
             case 4:
-                //设置
+                //检查更新
                 To.show("敬请期待");
                 break;
             case 5:
                 //关于
                 startActivity(new Intent(getActivity(), AboutActivity.class));
                 break;
-
-
         }
     }
 
-    @OnClick(R.id.mine_offline)
-    public void clickBtn(View v) {
-        startActivity(new Intent(getActivity(), OffLineDataActivity.class));
-    }
 }

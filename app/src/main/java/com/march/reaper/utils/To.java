@@ -11,6 +11,6 @@ import com.march.reaper.RootApplication;
 public class To {
 
     public static void show(String msg) {
-        Toast.makeText(RootApplication.get().getApplicationContext(), msg, Toast.LENGTH_SHORT);
+        Toast.makeText(RootApplication.get().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
 }

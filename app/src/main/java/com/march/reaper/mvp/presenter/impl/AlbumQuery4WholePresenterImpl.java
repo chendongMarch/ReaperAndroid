@@ -120,8 +120,7 @@ public class AlbumQuery4WholePresenterImpl extends FragmentPresenter {
         mAlbumAdapter = new SimpleRvAdapter<WholeAlbumItem>(mContext, datas, R.layout.albumquery_item_album) {
             @Override
             public void bindData4View(RvViewHolder holder, WholeAlbumItem data, int pos) {
-                int height = (int) (mWidth * (2f / 3f));
-                holder.setImg(mContext, R.id.albumquery_item_iv, data.getAlbum_cover(), mWidth, height, R.mipmap.demo);
+                holder.setImg(mContext, R.id.albumquery_item_iv, data.getAlbum_cover());
                 if (isBig)
                     holder.setVisibility(R.id.albumquery_item_tv, View.VISIBLE).setText(R.id.albumquery_item_tv, data.getAlbum_desc());
                 else

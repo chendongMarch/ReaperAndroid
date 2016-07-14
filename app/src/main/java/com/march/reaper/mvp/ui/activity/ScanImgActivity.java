@@ -20,13 +20,14 @@ import com.march.reaper.mvp.ui.RootActivity;
 import com.march.reaper.common.Constant;
 import com.march.reaper.utils.DisplayUtils;
 import com.march.reaper.utils.Lg;
-import com.march.reaper.widget.SwipeFinishLayout;
+import com.march.reaper.utils.To;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * 图片查看,可以缩放,基于photoview
@@ -37,8 +38,6 @@ public class ScanImgActivity extends RootActivity {
     ImageView mScanIv;
     @Bind(R.id.scan_is_collection)
     ImageView mIsColIv;
-    @Bind(R.id.scan_swipe)
-    SwipeFinishLayout mSwipeFinishLayout;
     private boolean isCollection;
     private Detail mAlbumDetailData;
     private DetailCollection mCol;
@@ -71,11 +70,17 @@ public class ScanImgActivity extends RootActivity {
         String url = mAlbumDetailData.getPhoto_src().replaceAll("-\\d+x\\d+.jpg", ".jpg");
         Lg.e(url);
         Glide.with(self).load(url).crossFade().into(mScanIv);
-
         mIsColIv.setImageResource(isCollection ? R.drawable.ic_collection : R.drawable.ic_not_collection);
-        mIsColIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    }
+
+
+    @OnClick({R.id.scan_is_download, R.id.scan_is_collection})
+    public void clickBtn(View view) {
+        switch (view.getId()) {
+            case R.id.scan_is_download:
+                downloadPic();
+                break;
+            case R.id.scan_is_collection:
                 if (isCollection) {
                     DbHelper.get().removeDetailCollection(mCol);
                     mIsColIv.setImageResource(R.drawable.ic_not_collection);
@@ -84,19 +89,8 @@ public class ScanImgActivity extends RootActivity {
                     mIsColIv.setImageResource(R.drawable.ic_collection);
                 }
                 isCollection = !isCollection;
-            }
-        });
-    }
-
-    @Override
-    protected void initEvents() {
-        super.initEvents();
-        mSwipeFinishLayout.setOnSwipeFinishListener(new SwipeFinishLayout.OnSwipeFinishListener() {
-            @Override
-            public void onSwipeFinish() {
-                finish();
-            }
-        });
+                break;
+        }
     }
 
     @Override
@@ -105,6 +99,8 @@ public class ScanImgActivity extends RootActivity {
         System.gc();
     }
 
+
+    //下载图片
     private void downloadPic() {
         Glide.with(RootApplication.get().getApplicationContext())
                 .load(mAlbumDetailData.getPhoto_src())
@@ -115,7 +111,9 @@ public class ScanImgActivity extends RootActivity {
                         File downloadDir = RootApplication.get().getDownloadDir();
                         String fileName = "reaper_" + System.currentTimeMillis() + ".jpg";
                         try {
-                            resource.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(new File(downloadDir, fileName)));
+                            File file = new File(downloadDir, fileName);
+                            resource.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(file));
+                            To.show("图片下载完毕,保存到 " + file.getAbsolutePath());
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }

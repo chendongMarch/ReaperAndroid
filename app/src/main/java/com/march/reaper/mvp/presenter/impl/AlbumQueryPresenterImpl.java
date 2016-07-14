@@ -116,8 +116,7 @@ public class AlbumQueryPresenterImpl extends FragmentPresenter {
         mAlbumAdapter = new SimpleRvAdapter<RecommendAlbumItem>(mContext, datas, R.layout.albumquery_item_album) {
             @Override
             public void bindData4View(RvViewHolder holder, RecommendAlbumItem data, int pos) {
-                int height = (int) (mWidth * (2f / 3f));
-                holder.setImg(mContext, R.id.albumquery_item_iv, data.getAlbum_cover(), mWidth, height, R.mipmap.demo)
+                holder.setImg(mContext, R.id.albumquery_item_iv, data.getAlbum_cover())
                         .setText(R.id.albumquery_item_tv, data.getAlbum_desc());
                 holder.getView(R.id.album_bg).setBackgroundColor(ColorUtils.randomColor());
             }
