@@ -17,6 +17,7 @@ public class SPUtils {
     private SharedPreferences.Editor editor;
     private final static String SP_NAME = "Reaper";
     private final static String SP_APP_START_PHOTO = "SP_APP_START_PHOTO";
+    private final static String SP_IS_LOGIN = "SP_IS_LOGIN";
 
     private SPUtils() {
         sp = RootApplication.get().getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
@@ -73,6 +74,15 @@ public class SPUtils {
 
     public void putAppStartPhoto(String str) {
         editor.putString(SP_APP_START_PHOTO, str);
+        editor.apply();
+    }
+
+    public boolean getIsLogin() {
+        return sp.getBoolean(SP_IS_LOGIN, false);
+    }
+
+    public void putIsLogin(boolean isLogin) {
+        editor.putBoolean(SP_IS_LOGIN, isLogin);
         editor.apply();
     }
 }

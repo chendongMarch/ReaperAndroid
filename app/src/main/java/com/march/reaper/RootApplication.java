@@ -6,15 +6,14 @@ import android.os.Environment;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.Resource;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.load.resource.gifbitmap.GifBitmapWrapper;
-import com.bumptech.glide.load.resource.transcode.ResourceTranscoder;
 import com.march.quickrvlibs.RvQuick;
 import com.march.quickrvlibs.helper.QuickLoad;
 import com.march.reaper.common.DaoHelper;
+import com.march.reaper.common.SMSHelper;
 
 import java.io.File;
+
+import cn.smssdk.SMSSDK;
 
 /**
  * Created by march on 16/6/6.
@@ -29,8 +28,10 @@ public class RootApplication extends Application {
         super.onCreate();
         mInst = this;
         initRvQuick();
+        SMSHelper.newInst(this);
         DaoHelper.get().setupDatabase(this);
     }
+
 
     public static RootApplication get() {
         return mInst;

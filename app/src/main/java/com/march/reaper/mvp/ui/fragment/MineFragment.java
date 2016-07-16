@@ -55,12 +55,10 @@ public class MineFragment extends TitleFragment {
                     holder.getParentView().getLayoutParams().height = 0;
                     return;
                 }
-                if (pos == 5) {
-                    holder.setVisibility(R.id.mine_item_blackline, View.GONE);
-                }
-
+//                if (pos == 5) {
+//                    holder.setVisibility(R.id.mine_item_blackline, View.GONE);
+//                }
                 holder.setText(R.id.tv_mine_item_info, data);
-
             }
         };
         mContentAdapter.setOnItemClickListener(new OnItemClickListener<RvViewHolder>() {

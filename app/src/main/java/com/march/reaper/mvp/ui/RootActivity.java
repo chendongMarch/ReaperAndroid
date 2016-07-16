@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import butterknife.ButterKnife;
 
@@ -66,6 +67,9 @@ public abstract class RootActivity extends AppCompatActivity {
         }
     }
 
+    protected String getText(TextView tv){
+        return tv.getText().toString().trim();
+    }
     protected abstract int getLayoutId();
 
     protected View getLayoutView() {

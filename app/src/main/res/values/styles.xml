@@ -1,19 +1,5 @@
 <resources>
 
-
-    <style name="push" parent="@android:style/Animation.Activity">
-        <item name="android:activityOpenEnterAnimation">@anim/fade_in</item>
-        <item name="android:activityOpenExitAnimation">@anim/fade_in</item>
-        <item name="android:activityCloseEnterAnimation">@anim/fade_out</item>
-        <item name="android:activityCloseExitAnimation">@anim/fade_out</item>
-    </style>
-<style name="activityAnimation" parent="@android:style/Animation">
-    <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
-    <item name="android:activityOpenExitAnimation">@anim/slide_left_out</item>
-    <item name="android:activityCloseEnterAnimation">@anim/slide_left_in</item>
-    <item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
-</style>
-
     <style name="AppThemeNoActionBar" parent="AppTheme">
         <!--<item name="android:windowIsTranslucent">true</item>-->
         <!--<item name="android:windowBackground">@android:color/transparent</item>-->
@@ -22,8 +8,6 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-
-        <item name="android:windowAnimationStyle">@style/push</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/white</item>
         <item name="android:windowBackground">@color/newgray</item>
@@ -35,6 +19,38 @@
         <item name="colorPrimary">@color/Indigo_colorPrimary</item>
         <!--返回键样式-->
         <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
+    </style>
+
+
+    <style name="dialog_theme" parent="android:Theme.Holo.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <!--除去title-->
+        <item name="android:background">#00000000</item>
+        <!-- 设置自定义布局的背景透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 设置window背景透明，也就是去边框 -->
+    </style>
+    <!-- 使用默认的黑暗程度0.6 -->
+    <style name="dim_up_down_anim_dialog" parent="dim_dialog">
+        <item name="android:windowAnimationStyle">@style/dialog_anim_bottom_to_center</item>
+        <!-- 无标题，设置的是decorview的背景色 -->
+    </style>
+    <style name="dialog_anim_bottom_to_center" parent="android:Animation">
+        <!-- 进入时的动画 -->
+        <item name="@android:windowEnterAnimation">@anim/bottom_to_center</item>
+        <!-- 退出时的动画 -->
+        <item name="@android:windowExitAnimation">@anim/center_to_bottom</item>
+    </style>
+
+    <!-- 使用默认的黑暗程度0.6 -->
+    <style name="dim_dialog" parent="Theme.AppCompat.Light.Dialog">
+        <!--修改了progressbar的颜色-->
+        <!--背景波纹颜色-->
+        <!--<item name="colorControlHighlight">@color/dialog_color</item>-->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 无标题，设置的是decorview的背景色 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 默认是有阴影背景的,加以下属性可以改变阴影度阴影 -->
     </style>
 
 

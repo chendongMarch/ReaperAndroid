@@ -8,7 +8,7 @@ import java.util.List;
  * Created by march on 16/7/1.
  *
  */
-public class RecommendAlbumResponse implements BaseResponse{
+public class RecommendAlbumResponse extends BaseResponse {
 
     List<RecommendAlbumItem> data;
 

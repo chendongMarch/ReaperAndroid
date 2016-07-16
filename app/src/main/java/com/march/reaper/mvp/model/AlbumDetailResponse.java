@@ -8,8 +8,10 @@ import java.util.List;
  * Created by march on 16/7/1.
  *
  */
-public class AlbumDetailResponse implements BaseResponse{
+public class AlbumDetailResponse extends BaseResponse {
+
     private List<AlbumDetail> data;
+
 
     public List<AlbumDetail> getData() {
         return data;

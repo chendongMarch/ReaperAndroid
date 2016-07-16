@@ -8,21 +8,12 @@ import java.util.List;
  * Created by march on 16/6/9.
  *
  */
-public class AlbumItemResponse implements BaseResponse{
-    int offset;
+public class AlbumItemResponse extends BaseResponse {
     List<AlbumItem> data;
 
     public AlbumItemResponse(int offset, List<AlbumItem> data) {
         this.offset = offset;
         this.data = data;
-    }
-
-    public int getOffset() {
-        return offset;
-    }
-
-    public void setOffset(int offset) {
-        this.offset = offset;
     }
 
     public List<AlbumItem> getData() {
