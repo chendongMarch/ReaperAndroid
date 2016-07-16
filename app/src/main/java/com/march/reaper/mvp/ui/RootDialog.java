@@ -28,6 +28,9 @@ public abstract class RootDialog extends AppCompatDialog {
         super(context, theme);
         setContentView(getLayoutId());
         ButterKnife.bind(this);
+//         返回键可不可以推出
+        setCancelable(true);
+        setCanceledOnTouchOutside(false);
     }
 
     protected abstract int getLayoutId();

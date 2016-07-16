@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.march.reaper.common.SMSHelper;
+import com.march.reaper.utils.SPUtils;
+import com.march.reaper.utils.To;
+
 import butterknife.ButterKnife;
 
 /**
@@ -67,9 +71,10 @@ public abstract class RootActivity extends AppCompatActivity {
         }
     }
 
-    protected String getText(TextView tv){
+    protected String getText(TextView tv) {
         return tv.getText().toString().trim();
     }
+
     protected abstract int getLayoutId();
 
     protected View getLayoutView() {
@@ -92,5 +97,34 @@ public abstract class RootActivity extends AppCompatActivity {
     protected void onPause() {
         overridePendingTransition(0, 0);
         super.onPause();
+    }
+
+    protected boolean checkCode(String code) {
+        if (code.length() != 4) {
+            To.show("验证码格式(4位)不正确,请检查.");
+            return false;
+        }
+
+        return true;
+    }
+
+    protected boolean checkPwd(String pwd) {
+        if (pwd.length() <= 5 || pwd.length() > 10) {
+            To.show("密码格式(6-10位)不正确,请检查.");
+            return false;
+        }
+        return true;
+    }
+
+    protected boolean checkAccount(String phone) {
+        if (!SMSHelper.get().isMobile(phone)) {
+            To.show("手机号格式不正确,请检查.");
+            return false;
+        }
+        return true;
+    }
+
+    protected void authority() {
+        SPUtils.get().putIsLogin(true);
     }
 }

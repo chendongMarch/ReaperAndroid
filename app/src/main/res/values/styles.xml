@@ -1,5 +1,12 @@
 <resources>
 
+    <style name="AppThemeNoActionBar.Loading"> 
+        <item name="windowActionBar">false</item> 
+        <item name="windowNoTitle">true</item> 
+        <item name="android:windowBackground">@color/colorPrimary</item> 
+        <item name="android:textColorPrimary">@color/black</item> 
+    </style>
+
     <style name="AppThemeNoActionBar" parent="AppTheme">
         <!--<item name="android:windowIsTranslucent">true</item>-->
         <!--<item name="android:windowBackground">@android:color/transparent</item>-->

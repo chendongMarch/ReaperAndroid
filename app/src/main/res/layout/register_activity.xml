@@ -55,7 +55,7 @@
         android:layout_margin="10dp"
         android:background="@drawable/shape_round_rect_empty_colorprimary"
         android:gravity="center"
-        android:hint="请输入密码(&lt;10位)"
+        android:hint="请输入密码(6-10位)"
         android:inputType="textPassword"
         android:paddingLeft="10dp"
         android:textSize="16sp" />

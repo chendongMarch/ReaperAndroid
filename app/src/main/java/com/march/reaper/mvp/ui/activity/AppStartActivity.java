@@ -75,7 +75,7 @@ public class AppStartActivity extends RootActivity {
                 @Override
                 public void run() {
                     //如果登录过了.直接进入主界面
-                    startActivity(new Intent(AppStartActivity.this, HomePageActivity.class));
+                    startActivity(HomePageActivity.class);
                     finish();
                 }
             }, 4000);

@@ -1,20 +1,21 @@
 package com.march.reaper.mvp.ui.activity;
 
 import android.os.Handler;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.march.reaper.R;
 import com.march.reaper.common.API;
 import com.march.reaper.common.SMSHelper;
+import com.march.reaper.listener.OnDialogBtnListener;
 import com.march.reaper.mvp.model.BaseResponse;
+import com.march.reaper.mvp.ui.RootDialog;
 import com.march.reaper.mvp.ui.TitleActivity;
-import com.march.reaper.mvp.ui.TitleFragment;
 import com.march.reaper.mvp.ui.dialog.ChooseCodeModeDialog;
+import com.march.reaper.mvp.ui.dialog.CommonMsgDialog;
 import com.march.reaper.utils.Lg;
 import com.march.reaper.utils.QueryUtils;
 import com.march.reaper.utils.To;
@@ -22,7 +23,6 @@ import com.march.reaper.utils.To;
 import java.util.HashMap;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RegisterActivity extends TitleActivity {
@@ -48,6 +48,7 @@ public class RegisterActivity extends TitleActivity {
     @Override
     protected void initViews(Bundle save) {
         super.initViews(save);
+
         mTitleBar.setText("返回", "注册", null);
         mChooseCodeModeDialog = new ChooseCodeModeDialog(self);
     }
@@ -58,24 +59,14 @@ public class RegisterActivity extends TitleActivity {
         switch (view.getId()) {
             case R.id.btn_get_code:
                 phone = getText(mPhoneEt);
-                if (!SMSHelper.get().isMobile(phone)) {
-                    To.show("请输入合法的手机号.");
-                    return;
-                }
-                mChooseCodeModeDialog.show(phone);
+                if (checkAccount(phone))
+                    mChooseCodeModeDialog.show(phone);
                 break;
             case R.id.btn_regis:
                 String code = getText(mCodeEt);
                 pwd = getText(mPwdEt);
-                if (code.length() <= 0 || code.length() > 4) {
-                    To.show("验证码格式不正确,请检查.");
-                    return;
-                }
-                if (pwd.length() <= 0 || pwd.length() > 10) {
-                    To.show("密码格式不正确,请检查.");
-                    return;
-                }
-                SMSHelper.get().submitCode(phone, code);
+                if (checkCode(code) && checkPwd(pwd))
+                    SMSHelper.get().submitCode(phone, code);
                 break;
         }
     }
@@ -127,21 +118,22 @@ public class RegisterActivity extends TitleActivity {
     //验证码验证通过,向服务器注册
     private void registerToMyServer() {
         HashMap<String, String> map = new HashMap<>();
-        Lg.e(phone +"  " + pwd);
+        Lg.e(phone + "  " + pwd);
         map.put("username", phone);
         map.put("pwd", pwd);
-        QueryUtils.get().post(API.POST_ADDUSER, BaseResponse.class, map, new QueryUtils.OnQueryOverListener<BaseResponse>() {
+        QueryUtils.get().post(API.POST_ADD_USER, BaseResponse.class, map, new QueryUtils.OnQueryOverListener<BaseResponse>() {
             @Override
             public void queryOver(BaseResponse rst) {
                 if (rst.getStatus() == 901) {
-                    To.show("您已经注册过了,快去登录吧");
-                    Snackbar.make(mPwdEt,"您已经注册过了,快去登录吧",Snackbar.LENGTH_SHORT).setAction("确定", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            finish();
-                        }
-                    }).show();
-
+                    new CommonMsgDialog(self)
+                            .setBtn(CommonMsgDialog.Btn_OK, "确定", new OnDialogBtnListener() {
+                                @Override
+                                public void onBtnClick(RootDialog dialog, TextView btn) {
+                                    dialog.dismiss();
+                                    finish();
+                                }
+                            })
+                            .show("注册", "您已经注册过了,快去登录吧");
                 }
                 if (rst.getStatus() == 902) {
                     To.show("注册失败,请重试");
@@ -149,6 +141,8 @@ public class RegisterActivity extends TitleActivity {
                 }
                 if (rst.getStatus() == 0) {
                     To.show("注册成功");
+                    authority();
+                    startActivity(HomePageActivity.class);
                     finish();
                 }
             }
