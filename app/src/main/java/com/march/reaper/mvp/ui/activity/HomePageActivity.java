@@ -20,7 +20,7 @@ import butterknife.OnClick;
  * 主页分为四个fragment ,第一个fragment是viewpager(包含多个fragment)
  */
 public class HomePageActivity extends MultiFragmentActivity {
-ultifragmmulddd
+
     @Bind({R.id.home_recommend, R.id.home_album, R.id.home_search, R.id.home_mine})
     List<TextView> mBotTabsTv;
 //    private int mShowItem = 0;

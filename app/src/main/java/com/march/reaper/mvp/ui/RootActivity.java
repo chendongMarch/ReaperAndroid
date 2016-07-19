@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.march.reaper.common.SMSHelper;
+import com.march.reaper.mvp.presenter.BasePresenter;
 import com.march.reaper.utils.SPUtils;
 import com.march.reaper.utils.To;
 
@@ -16,6 +17,7 @@ import butterknife.ButterKnife;
 
 /**
  * Created by march on 16/6/6.
+ * activity基类
  */
 public abstract class RootActivity extends AppCompatActivity {
 
@@ -37,10 +39,14 @@ public abstract class RootActivity extends AppCompatActivity {
         self = this;
         ButterKnife.bind(this);
         setIntentData(getIntent());
+        initMainPresenter();
         initDatas();
         initViews(savedInstanceState);
         initEvents();
         finalOperate();
+    }
+
+    protected void initMainPresenter(){
     }
 
     protected void setIntentData(Intent intent) {
@@ -124,6 +130,7 @@ public abstract class RootActivity extends AppCompatActivity {
         return true;
     }
 
+    //授权
     protected void authority() {
         SPUtils.get().putIsLogin(true);
     }
