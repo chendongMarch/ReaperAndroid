@@ -14,7 +14,7 @@ import cn.smssdk.SMSSDK;
 
 /**
  * Created by march on 16/7/15.
- * 短信帮助
+ * 短信验证码平台
  */
 public class SMSHelper {
 

@@ -45,7 +45,7 @@ public abstract class MultiFragmentActivity extends RootActivity {
      * @param showItem   需要显示的fragment
      * @param isOnCreate 是否是第一次从OnCreate中启动,点击都是flase
      */
-    public void performSelectItem(int hideItem, int showItem, boolean isOnCreate) {
+    private void performSelectItem(int hideItem, int showItem, boolean isOnCreate) {
         // 获得将要显示页的tag
         String currentTag = "fragment" + hideItem;
         // 隐藏当前的的fragment
@@ -73,7 +73,7 @@ public abstract class MultiFragmentActivity extends RootActivity {
             // 不存在则添加新的fragment
             mCurrentFragment = makeFragment(showItem);
             if (mCurrentFragment != null) {
-                transaction.add(getFragmentId(), mCurrentFragment, toTag);
+                transaction.add(getFragmentContainerId(), mCurrentFragment, toTag);
             }
         }
         // 选择image图片
@@ -84,14 +84,50 @@ public abstract class MultiFragmentActivity extends RootActivity {
         transaction.commitAllowingStateLoss();
     }
 
+    /**
+     * 选中某一个fragment
+     */
+    protected void selectItemFragment(int hideItem, int showItem, boolean isOnCreate) {
+        performSelectItem(hideItem, showItem, isOnCreate);
+    }
+
+    /**
+     * 选中某一个fragment
+     */
+    protected void selectItemFragment(int showItem, boolean isOnCreate) {
+        performSelectItem(mHideItem, showItem, isOnCreate);
+    }
+
+    /**
+     * 获取当前处于活动状态的fragment
+     *
+     * @return fragment
+     */
     protected Fragment getCurrentFragment() {
         return mCurrentFragment;
     }
 
-    protected abstract int getFragmentId();
+    /**
+     * 获取放置fragment的控件id
+     *
+     * @return id
+     */
+    protected abstract int getFragmentContainerId();
 
+    /**
+     * 构建fragment
+     *
+     * @param showItem 将要展示的fragment pos
+     * @return fragment
+     */
     protected abstract Fragment makeFragment(int showItem);
 
+
+    /**
+     * 同步选中之后的显示状态
+     *
+     * @param selectImage 被选中的item
+     */
     protected abstract void syncSelectState(int selectImage);
 
 }

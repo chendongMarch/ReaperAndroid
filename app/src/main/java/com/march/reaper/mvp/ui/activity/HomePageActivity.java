@@ -10,19 +10,20 @@ import com.march.reaper.mvp.ui.fragment.AlbumQueryFragment;
 import com.march.reaper.mvp.ui.fragment.MineFragment;
 import com.march.reaper.mvp.ui.fragment.RecommendFragment;
 import com.march.reaper.mvp.ui.fragment.SearchFragment;
+
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
- *  主页分为四个fragment ,第一个fragment是viewpager(包含多个fragment)
+ * 主页分为四个fragment ,第一个fragment是viewpager(包含多个fragment)
  */
 public class HomePageActivity extends MultiFragmentActivity {
-
+ultifragmmulddd
     @Bind({R.id.home_recommend, R.id.home_album, R.id.home_search, R.id.home_mine})
     List<TextView> mBotTabsTv;
-    private int mShowItem = 0;
+//    private int mShowItem = 0;
 
     @Override
     protected int getLayoutId() {
@@ -30,7 +31,7 @@ public class HomePageActivity extends MultiFragmentActivity {
     }
 
     @Override
-    protected int getFragmentId() {
+    protected int getFragmentContainerId() {
         return R.id.home_container;
     }
 
@@ -64,7 +65,7 @@ public class HomePageActivity extends MultiFragmentActivity {
     @OnClick({R.id.home_recommend, R.id.home_album, R.id.home_search, R.id.home_mine})
     public void click(View v) {
         int tag = Integer.parseInt(v.getTag().toString());
-        performSelectItem(mShowItem, tag, false);
-        mShowItem = tag;
+        selectItemFragment(tag, false);
+//        mShowItem = tag;
     }
 }
