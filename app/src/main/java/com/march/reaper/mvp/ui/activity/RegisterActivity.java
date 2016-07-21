@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.march.reaper.R;
 import com.march.reaper.common.SMSHelper;
 import com.march.reaper.listener.OnDialogBtnListener;
-import com.march.reaper.mvp.contact.RegisterContact;
 import com.march.reaper.mvp.presenter.impl.RegisterPresenterImpl;
 import com.march.reaper.mvp.ui.RootDialog;
 import com.march.reaper.mvp.ui.TitleActivity;
@@ -21,8 +20,9 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 public class RegisterActivity extends TitleActivity
-        implements RegisterContact.RegisterView {
+        implements RegisterPresenterImpl.RegisterView {
 
+    private RegisterPresenterImpl mPresenter;
     @Bind(R.id.et_phone)
     EditText mPhoneEt;
     @Bind(R.id.et_code)
@@ -34,26 +34,27 @@ public class RegisterActivity extends TitleActivity
     private ChooseCodeModeDialog mChooseCodeModeDialog;
     private String phone;
     private String pwd;
-    private RegisterContact.RegisterPresenter mPresenter;
 
     @Override
     protected int getLayoutId() {
         return R.layout.register_activity;
     }
 
+
+    @Override
+    protected void destroyPresenter() {
+        mPresenter = null;
+    }
+
     @Override
     protected void initViews(Bundle save) {
         super.initViews(save);
+        mPresenter = new RegisterPresenterImpl(this);
         mTitleBar.setText("返回", "注册", null);
         mChooseCodeModeDialog = new ChooseCodeModeDialog(self);
         mPresenter.registerEventHandler();
     }
 
-    @Override
-    protected void initMainPresenter() {
-        super.initMainPresenter();
-        mPresenter = new RegisterPresenterImpl(this, this);
-    }
 
     @OnClick({R.id.btn_get_code, R.id.btn_regis})
     public void clickBtn(View view) {
@@ -72,11 +73,6 @@ public class RegisterActivity extends TitleActivity
         }
     }
 
-    @Override
-    protected void initEvents() {
-        super.initEvents();
-
-    }
 
     //验证码验证通过,向服务器注册
     public void registerToMyServer() {
@@ -86,7 +82,6 @@ public class RegisterActivity extends TitleActivity
     @Override
     public void registerSucceed() {
         To.show("注册成功");
-        authority();
         startActivity(HomePageActivity.class);
         finish();
     }

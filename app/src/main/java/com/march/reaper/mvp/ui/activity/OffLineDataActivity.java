@@ -29,6 +29,11 @@ public class OffLineDataActivity extends TitleActivity {
     }
 
     @Override
+    protected void destroyPresenter() {
+
+    }
+
+    @Override
     protected void initDatas() {
         super.initDatas();
         mOffLineDataPresenterImpl = new OffLineDataPresenterImpl();

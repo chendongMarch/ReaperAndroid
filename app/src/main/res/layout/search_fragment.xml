@@ -8,21 +8,8 @@
     tools:context="com.march.reaper.mvp.ui.fragment.SearchFragment">
 
 
-    <android.support.v7.widget.RecyclerView
+    <com.march.reaper.widget.RecyclerGroupView
         android:id="@+id/rv_random_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_random"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="50dp"
-        android:src="@drawable/ic_random"
-        app:backgroundTint="@color/colorPrimary"
-        app:elevation="6dp"
-        app:pressedTranslationZ="12dp"
-        app:rippleColor="@color/colorPrimary" />
 </RelativeLayout>

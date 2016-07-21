@@ -2,6 +2,7 @@ package com.march.reaper.mvp.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,11 +10,11 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.march.reaper.common.SMSHelper;
-import com.march.reaper.mvp.presenter.BasePresenter;
 import com.march.reaper.utils.SPUtils;
 import com.march.reaper.utils.To;
 
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by march on 16/6/6.
@@ -21,7 +22,7 @@ import butterknife.ButterKnife;
  */
 public abstract class RootActivity extends AppCompatActivity {
 
-    protected Activity self;
+    protected RootActivity self;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,20 +39,16 @@ public abstract class RootActivity extends AppCompatActivity {
         hideActionBar();
         self = this;
         ButterKnife.bind(this);
-        setIntentData(getIntent());
-        initMainPresenter();
+        EventBus.getDefault().register(this);
         initDatas();
         initViews(savedInstanceState);
         initEvents();
         finalOperate();
     }
 
-    protected void initMainPresenter(){
+    protected void initMainPresenter() {
     }
 
-    protected void setIntentData(Intent intent) {
-
-    }
 
     protected void finalOperate() {
     }
@@ -99,11 +96,6 @@ public abstract class RootActivity extends AppCompatActivity {
         startActivity(new Intent(self, cls));
     }
 
-    @Override
-    protected void onPause() {
-        overridePendingTransition(0, 0);
-        super.onPause();
-    }
 
     protected boolean checkCode(String code) {
         if (code.length() != 4) {
@@ -134,4 +126,14 @@ public abstract class RootActivity extends AppCompatActivity {
     protected void authority() {
         SPUtils.get().putIsLogin(true);
     }
+
+
+    protected abstract void destroyPresenter();
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        destroyPresenter();
+    }
+
 }

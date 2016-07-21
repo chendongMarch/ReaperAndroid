@@ -73,10 +73,10 @@ public class CommonMsgDialog extends RootDialog {
     public CommonMsgDialog setBtn(int btnType) {
         switch (btnType) {
             case Btn_CANCEL:
-                setBtn(mOkBtnTv, null, null);
+                setBtn(mCancelBtnTv, null, null);
                 break;
             case Btn_OK:
-                setBtn(mCancelBtnTv, null, null);
+                setBtn(mOkBtnTv, null, null);
                 break;
         }
         return this;

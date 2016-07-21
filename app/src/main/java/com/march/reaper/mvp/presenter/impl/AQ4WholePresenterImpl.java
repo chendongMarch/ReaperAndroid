@@ -1,17 +1,8 @@
 package com.march.reaper.mvp.presenter.impl;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
-
-import com.march.bean.AlbumDetail;
-import com.march.bean.RecommendAlbumItem;
-import com.march.bean.WholeAlbumItem;
 import com.march.bean.WholeAlbumItem;
 import com.march.quickrvlibs.RvViewHolder;
 import com.march.quickrvlibs.SimpleRvAdapter;
@@ -19,43 +10,34 @@ import com.march.quickrvlibs.inter.OnItemClickListener;
 import com.march.quickrvlibs.module.LoadMoreModule;
 import com.march.reaper.R;
 import com.march.reaper.common.API;
-import com.march.reaper.common.Constant;
 import com.march.reaper.common.DbHelper;
-import com.march.reaper.mvp.model.RecommendAlbumResponse;
 import com.march.reaper.mvp.model.WholeAlbumResponse;
-import com.march.reaper.mvp.presenter.ActivityPresenter;
-import com.march.reaper.mvp.presenter.FragmentPresenter;
+import com.march.reaper.mvp.presenter.BaseNetFragmentPresenter;
+import com.march.reaper.mvp.ui.RootActivity;
 import com.march.reaper.mvp.ui.activity.AlbumDetailActivity;
 import com.march.reaper.utils.ColorUtils;
-import com.march.reaper.utils.DisplayUtils;
 import com.march.reaper.utils.Lg;
 import com.march.reaper.utils.QueryUtils;
-import com.march.reaper.widget.RecyclerGroupView;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by march on 16/7/2.
  * 专辑页面
  */
-public class AlbumQuery4WholePresenterImpl extends FragmentPresenter {
+public class AQ4WholePresenterImpl
+        extends BaseNetFragmentPresenter<AlbumQueryPresenterImpl.AlbumQueryView, WholeAlbumItem>  {
 
-    private List<WholeAlbumItem> datas;
-    private SimpleRvAdapter<WholeAlbumItem> mAlbumAdapter;
-    private int mWidth;
     private boolean isBig = false;
 
-    public AlbumQuery4WholePresenterImpl(RecyclerGroupView mRecyclerGV, Activity mContext) {
-        super(mRecyclerGV, mContext);
-        datas = new ArrayList<>();
-        mWidth = DisplayUtils.getScreenWidth();
+
+    public AQ4WholePresenterImpl(AlbumQueryPresenterImpl.AlbumQueryView mView, RootActivity mContext) {
+        super(mView, mContext);
     }
 
-
     @Override
-    protected void clearDatas() {
-        datas.clear();
+    public void justQuery() {
+        if (checkCanQuery())
+            queryNetDatas();
     }
 
     //从数据库查询数据
@@ -72,8 +54,7 @@ public class AlbumQuery4WholePresenterImpl extends FragmentPresenter {
     //从网络获取数据
     @Override
     protected void queryNetDatas() {
-        StringBuilder sb = new StringBuilder(API.GET_SCAN_WHOLE).append("?offset=").append(offset).append("&limit=").append(limit);
-        QueryUtils.get().query(sb.toString(), WholeAlbumResponse.class, new QueryUtils.OnQueryOverListener<WholeAlbumResponse>() {
+        QueryUtils.get().query(API.GET_SCAN_WHOLE + "?offset=" + offset + "&limit=" + limit, WholeAlbumResponse.class, new QueryUtils.OnQueryOverListener<WholeAlbumResponse>() {
             @Override
             public void queryOver(WholeAlbumResponse rst) {
                 List<WholeAlbumItem> data = rst.getData();
@@ -82,42 +63,19 @@ public class AlbumQuery4WholePresenterImpl extends FragmentPresenter {
 
             @Override
             public void error(Exception e) {
-                if (mAlbumAdapter != null)
-                    mAlbumAdapter.finishLoad();
-                mRecyclerGV.getPtrLy().refreshComplete();
+                if (mAdapter != null)
+                    mAdapter.finishLoad();
+                mRgv.getPtrLy().refreshComplete();
                 isLoadEnd = true;
             }
         });
     }
 
 
-    //处理加载后的数据
-    private void handleDatasAfterQueryReady(List<WholeAlbumItem> list) {
-        if (list.size() <= 0) {
-            offset = -1;
-            Lg.e("没有数据了");
-            mAlbumAdapter.setFooterEnable(false);
-            mAlbumAdapter.notifyDataSetChanged();
-            return;
-        }
-        datas.addAll(list);
-        if (mAlbumAdapter == null) {
-            createRvAdapter();
-            mRecyclerGV.setAdapter(mAlbumAdapter);
-        } else {
-            mAlbumAdapter.notifyDataSetChanged();
-        }
-        //查询成功,offset增加
-        offset += limit;
-        mAlbumAdapter.finishLoad();
-        mRecyclerGV.getPtrLy().refreshComplete();
-        isLoadEnd = true;
-    }
-
     //构建adapter
     @Override
     protected void createRvAdapter() {
-        mAlbumAdapter = new SimpleRvAdapter<WholeAlbumItem>(mContext, datas, R.layout.albumquery_item_album) {
+        mAdapter = new SimpleRvAdapter<WholeAlbumItem>(mContext, datas, R.layout.albumquery_item_album) {
             @Override
             public void bindData4View(RvViewHolder holder, WholeAlbumItem data, int pos) {
                 holder.setImg(mContext, R.id.albumquery_item_iv, data.getAlbum_cover());
@@ -138,14 +96,14 @@ public class AlbumQuery4WholePresenterImpl extends FragmentPresenter {
                 });
             }
         };
-        mAlbumAdapter.addHeaderOrFooter(0, R.layout.footer_load_more, mRecyclerGV.getRecyclerView());
-        mAlbumAdapter.setOnItemClickListener(new OnItemClickListener<RvViewHolder>() {
+        mAdapter.addHeaderOrFooter(0, R.layout.footer_load_more, mRgv.getRecyclerView());
+        mAdapter.setOnItemClickListener(new OnItemClickListener<RvViewHolder>() {
             @Override
             public void onItemClick(int pos, RvViewHolder holder) {
                 AlbumDetailActivity.loadActivity4DetailShow(mContext, datas.get(pos));
             }
         });
-        mAlbumAdapter.addLoadMoreModule(mPreLoadNum, new LoadMoreModule.OnLoadMoreListener() {
+        mAdapter.addLoadMoreModule(mPreLoadNum, new LoadMoreModule.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 Lg.e("加载更多  " + offset);
@@ -155,14 +113,15 @@ public class AlbumQuery4WholePresenterImpl extends FragmentPresenter {
     }
 
 
-    public void switchMode(TextView tv) {
+    @Override
+    public void switchMode() {
         isBig = !isBig;
         if (isBig) {
-            tv.setText("小图");
-            mRecyclerGV.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+            mView.setModeTvText("小图");
+            mRgv.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         } else {
-            tv.setText("大图");
-            mRecyclerGV.setLayoutManager(new GridLayoutManager(mContext, 2));
+            mView.setModeTvText("大图");
+            mRgv.setLayoutManager(new GridLayoutManager(mContext, 2));
         }
     }
 

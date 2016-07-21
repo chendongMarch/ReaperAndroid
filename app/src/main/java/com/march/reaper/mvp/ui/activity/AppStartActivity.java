@@ -5,17 +5,21 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.MainThread;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.march.reaper.R;
-import com.march.reaper.mvp.contact.AppStartContact;
+import com.march.reaper.event.SucceedEntryAppEvent;
 import com.march.reaper.mvp.presenter.impl.AppStartPresenterImpl;
 import com.march.reaper.mvp.ui.RootActivity;
 import com.march.reaper.utils.ImgLoadUtils;
 import com.march.reaper.utils.SPUtils;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -24,7 +28,7 @@ import butterknife.OnClick;
  * app启动页面
  */
 public class AppStartActivity extends RootActivity
-        implements AppStartContact.AppStartView {
+        implements AppStartPresenterImpl.AppStartView {
 
     @Bind(R.id.iv_app_start_recommend)
     ImageView mRecommendIv;
@@ -34,15 +38,17 @@ public class AppStartActivity extends RootActivity
     TextView mTitleTv;
     @Bind(R.id.app_start_logregis_part)
     ViewGroup mLogRegisterPartVg;
-    private AppStartContact.AppStartPresenter mPresenter;
+    private AppStartPresenterImpl mPresenter;
+
     @Override
     protected int getLayoutId() {
         return R.layout.start_app_activity;
     }
 
     @Override
-    protected void initMainPresenter() {
-        mPresenter = new AppStartPresenterImpl(this, this);
+    protected void initDatas() {
+        super.initDatas();
+        mPresenter = new AppStartPresenterImpl(this);
     }
 
     @Override
@@ -90,6 +96,11 @@ public class AppStartActivity extends RootActivity
         return true;
     }
 
+    @Override
+    protected void destroyPresenter() {
+        mPresenter = null;
+    }
+
     @OnClick({R.id.app_start_jump, R.id.btn_login, R.id.btn_regis})
     public void clickBtn(View v) {
         switch (v.getId()) {
@@ -111,4 +122,14 @@ public class AppStartActivity extends RootActivity
     public void loadViewImg(String url) {
         ImgLoadUtils.loadImg(self, url, mRecommendIv);
     }
+
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(SucceedEntryAppEvent event) {
+        if(event.getMsg().equals(SucceedEntryAppEvent.EVENT_SUCCEED_ENTRY_APP)){
+            finish();
+        }
+    }
+
 }

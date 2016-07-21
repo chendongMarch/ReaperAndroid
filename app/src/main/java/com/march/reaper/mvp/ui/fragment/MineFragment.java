@@ -45,6 +45,11 @@ public class MineFragment extends TitleFragment {
     RecyclerView mContentRv;
 
     @Override
+    protected void destroyPresenter() {
+
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.mine_fragment;
     }
@@ -63,7 +68,7 @@ public class MineFragment extends TitleFragment {
         SimpleRvAdapter<String> mContentAdapter = new SimpleRvAdapter<String>(getActivity(), Constant.MINE_CONTENT_LIST, R.layout.mine_item_content) {
             @Override
             public void bindData4View(RvViewHolder holder, String data, int pos) {
-                if (pos == 2 || pos == 4) {
+                if (pos == 2) {
                     holder.getParentView().getLayoutParams().height = 0;
                     return;
                 }
@@ -102,7 +107,6 @@ public class MineFragment extends TitleFragment {
                 break;
             case 4:
                 //检查更新
-                To.show("敬请期待");
                 checkUpdateVersion();
                 break;
             case 5:

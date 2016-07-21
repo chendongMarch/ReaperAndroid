@@ -3,16 +3,16 @@ package com.march.reaper.mvp.ui.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.march.reaper.R;
 import com.march.reaper.common.Constant;
 import com.march.reaper.common.TitleBarView;
-import com.march.reaper.mvp.presenter.impl.AlbumQuery4WholePresenterImpl;
+import com.march.reaper.mvp.presenter.BaseNetFragmentPresenter;
+import com.march.reaper.mvp.presenter.impl.AQ4WholePresenterImpl;
 import com.march.reaper.mvp.presenter.impl.AlbumQueryPresenterImpl;
+import com.march.reaper.mvp.ui.RootActivity;
 import com.march.reaper.mvp.ui.RootFragment;
 import com.march.reaper.widget.RecyclerGroupView;
 
@@ -24,16 +24,16 @@ import butterknife.OnClick;
  * Created by march on 16/7/1.
  * 专辑展示
  */
-public class AlbumQueryFragment extends RootFragment {
+public class AlbumQueryFragment extends RootFragment
+        implements AlbumQueryPresenterImpl.AlbumQueryView {
 
     @Bind(R.id.albumquery_recycler)
     RecyclerGroupView mAlbumsRgv;
     @Bind(R.id.titlebar_root)
     ViewGroup mTitleBarRoot;
     private boolean isWholeAlbum;
-    private String mTitle;
     private String mRecommendType;
-    private AlbumQuery4WholePresenterImpl mAlbumQuery4WholePresenterImpl;
+    private BaseNetFragmentPresenter mPresenter;
     private TitleBarView mTitleBar;
 
     public static AlbumQueryFragment newInst(String title, String type) {
@@ -57,12 +57,17 @@ public class AlbumQueryFragment extends RootFragment {
     @Override
     protected void initDatas() {
         super.initDatas();
-        mTitle = getArguments().getString(Constant.KEY_ALBUM_TITLE);
+        String mTitle = getArguments().getString(Constant.KEY_ALBUM_TITLE);
         mRecommendType = getArguments().getString(Constant.KEY_ALBUM_RECOMMEND_TYPE);
         if (mRecommendType == null)
             mRecommendType = "all";
         isWholeAlbum = getArguments().getBoolean(Constant.KEY_IS_WHOLE_ALBUM);
         mSelfName = AlbumQueryFragment.class.getSimpleName() + mTitle;
+    }
+
+    @Override
+    protected void destroyPresenter() {
+        mPresenter = null;
     }
 
     @Override
@@ -74,23 +79,27 @@ public class AlbumQueryFragment extends RootFragment {
     protected void initViews(View view, Bundle save) {
         super.initViews(view, save);
         mTitleBar = new TitleBarView(getActivity(), mTitleBarRoot);
+
         if (isWholeAlbum) {
             mTitleBar.setText(null, "专辑", "大图");
             mAlbumsRgv.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-            mAlbumQuery4WholePresenterImpl = new AlbumQuery4WholePresenterImpl(mAlbumsRgv,getActivity());
-            mAlbumQuery4WholePresenterImpl.justQuery();
+            mPresenter = new AQ4WholePresenterImpl(this, (RootActivity) getActivity());
         } else {
             mTitleBar.hide();
             mAlbumsRgv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-            AlbumQueryPresenterImpl mAlbumQueryPresenterImpl =
-                    new AlbumQueryPresenterImpl(getActivity(), mAlbumsRgv, mRecommendType);
-            mAlbumQueryPresenterImpl.justQuery();
+            mPresenter = new AlbumQueryPresenterImpl(this, (RootActivity) getActivity(), mRecommendType);
         }
+        mPresenter.setRgv(mAlbumsRgv);
+        mPresenter.justQuery();
     }
 
     @OnClick(R.id.tv_titlebar_right)
     public void clickBtn(View v) {
-        mAlbumQuery4WholePresenterImpl.switchMode((TextView) v);
+        mPresenter.switchMode();
     }
 
+    @Override
+    public void setModeTvText(String txt) {
+        mTitleBar.get(TitleBarView.POS_Right).setText(txt);
+    }
 }

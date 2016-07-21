@@ -16,6 +16,8 @@ public abstract class MultiFragmentActivity extends RootActivity {
     private FragmentManager mFragmentManager;
     private int mShowItem, mHideItem;
 
+    protected int mExtactItem = 0;
+
     @Override
     protected abstract int getLayoutId();
 
@@ -95,7 +97,8 @@ public abstract class MultiFragmentActivity extends RootActivity {
      * 选中某一个fragment
      */
     protected void selectItemFragment(int showItem, boolean isOnCreate) {
-        performSelectItem(mHideItem, showItem, isOnCreate);
+        performSelectItem(mExtactItem, showItem, isOnCreate);
+        mExtactItem = showItem;
     }
 
     /**

@@ -45,7 +45,7 @@ public class RecommendFragment extends RootFragment {
         mFragments = new ArrayList<>();
         mSelfName = RecommendFragment.class.getSimpleName();
         for (int i = 0; i < Constant.mMenuItem.length; i++) {
-            mFragments.add(AlbumQueryFragment.newInst(Constant.mMenuItem[i],Constant.mRecommendType[i]));
+            mFragments.add(AlbumQueryFragment.newInst(Constant.mMenuItem[i], Constant.mRecommendType[i]));
         }
     }
 
@@ -88,6 +88,11 @@ public class RecommendFragment extends RootFragment {
 
             }
         });
+    }
+
+    @Override
+    protected void destroyPresenter() {
+
     }
 
     @Override

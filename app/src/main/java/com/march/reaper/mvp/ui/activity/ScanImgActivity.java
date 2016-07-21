@@ -47,6 +47,11 @@ public class ScanImgActivity extends RootActivity {
         return R.layout.scan_img_activity;
     }
 
+    @Override
+    protected void destroyPresenter() {
+
+    }
+
 
     public static void loadActivity(Activity activity, Detail detail) {
         Intent intent = new Intent(activity, ScanImgActivity.class);

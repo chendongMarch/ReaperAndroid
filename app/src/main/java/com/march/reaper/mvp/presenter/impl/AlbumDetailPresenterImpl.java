@@ -1,8 +1,8 @@
 package com.march.reaper.mvp.presenter.impl;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.march.bean.Album;
 import com.march.bean.AlbumDetail;
 import com.march.bean.AlbumItemCollection;
-import com.march.quickrvlibs.RvQuickAdapter;
 import com.march.quickrvlibs.RvViewHolder;
+import com.march.quickrvlibs.TypeRvAdapter;
 import com.march.quickrvlibs.inter.OnItemClickListener;
 import com.march.quickrvlibs.module.LoadMoreModule;
 import com.march.reaper.R;
@@ -20,53 +20,55 @@ import com.march.reaper.common.API;
 import com.march.reaper.common.Constant;
 import com.march.reaper.common.DbHelper;
 import com.march.reaper.mvp.model.AlbumDetailResponse;
-import com.march.reaper.mvp.presenter.ActivityPresenter;
+import com.march.reaper.mvp.presenter.BaseNetActivityPresenter;
+import com.march.reaper.mvp.ui.BaseView;
+import com.march.reaper.mvp.ui.RootActivity;
 import com.march.reaper.mvp.ui.activity.ScanImgActivity;
 import com.march.reaper.utils.ColorUtils;
-import com.march.reaper.utils.DisplayUtils;
 import com.march.reaper.utils.Lg;
 import com.march.reaper.utils.QueryUtils;
-import com.march.reaper.widget.RecyclerGroupView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by march on 16/7/2.
  * 详情
  */
-public class AlbumDetailPresenterImpl extends ActivityPresenter {
+public class AlbumDetailPresenterImpl
+        extends BaseNetActivityPresenter<AlbumDetailPresenterImpl.AlbumDetailView, AlbumDetail> {
 
-    private List<AlbumDetail> datas;
-    private RvQuickAdapter<AlbumDetail> mAlbumAdapter;
-    private int mWidth;
     private boolean isBig = false;
     private Album mAlbumData;
     private boolean isCollection;
     private AlbumItemCollection mCol;
 
-    public AlbumDetailPresenterImpl(RecyclerGroupView mRecyclerGV, Activity mContext) {
-        super(mRecyclerGV, mContext);
-        mWidth = DisplayUtils.getScreenWidth();
-        datas = new ArrayList<>();
+    public interface AlbumDetailView extends BaseView {
+        void setModeTvText(String txt);
+    }
+
+    public AlbumDetailPresenterImpl(RootActivity mContext) {
+        super(mContext);
     }
 
     @Override
+    public void justQuery() {
+        if (checkCanQuery())
+            queryNetDatas();
+    }
+
+
+    @Override
     public void setIntent(Intent intent) {
-        super.setIntent(intent);
         mAlbumData = (Album) intent.getSerializableExtra(Constant.KEY_ALBUM_DETAIL_SHOW);
         mCol = new AlbumItemCollection(mAlbumData);
         isCollection = DbHelper.get().isAlbumCollection(mCol);
     }
 
-    @Override
-    protected void clearDatas() {
-        datas.clear();
-    }
 
+    @Override
     public void queryDbDatas() {
         DbHelper.get().queryAlbumDetail(mAlbumData.getAlbum_link(), offset, limit, new DbHelper.OnQueryReadyListener<AlbumDetail>() {
             @Override
@@ -80,8 +82,8 @@ public class AlbumDetailPresenterImpl extends ActivityPresenter {
     //从网络获取数据
     @Override
     protected void queryNetDatas() {
-        StringBuilder sb = new StringBuilder(API.GET_SCAN_DETAIL).append("?offset=").append(offset).append("&limit=").append(limit).append("&albumlink=").append(mAlbumData.getAlbum_link());
-        QueryUtils.get().query(sb.toString(), AlbumDetailResponse.class, new QueryUtils.OnQueryOverListener<AlbumDetailResponse>() {
+        String url = API.GET_SCAN_DETAIL + "?offset=" + offset + "&limit=" + limit + "&albumlink=" + mAlbumData.getAlbum_link();
+        QueryUtils.get().query(url, AlbumDetailResponse.class, new QueryUtils.OnQueryOverListener<AlbumDetailResponse>() {
             @Override
             public void queryOver(AlbumDetailResponse rst) {
                 List<AlbumDetail> data = rst.getData();
@@ -90,41 +92,19 @@ public class AlbumDetailPresenterImpl extends ActivityPresenter {
 
             @Override
             public void error(Exception e) {
-                if (mAlbumAdapter != null)
-                    mAlbumAdapter.finishLoad();
-                mRecyclerGV.getPtrLy().refreshComplete();
+                if (mAdapter != null)
+                    mAdapter.finishLoad();
+                completeRefresh();
                 isLoadEnd = true;
             }
         });
     }
 
-    //处理加载后的数据
-    private void handleDatasAfterQueryReady(List<AlbumDetail> list) {
-        if (list.size() <= 0) {
-            offset = -1;
-            Lg.e("没有数据了");
-            mAlbumAdapter.setFooterEnable(false);
-            mAlbumAdapter.notifyDataSetChanged();
-            return;
-        }
-        datas.addAll(list);
-        if (mAlbumAdapter == null) {
-            createRvAdapter();
-            mRecyclerGV.setAdapter(mAlbumAdapter);
-        } else {
-            mAlbumAdapter.notifyDataSetChanged();
-        }
-        //查询成功,offset增加
-        offset += limit;
-        mAlbumAdapter.finishLoad();
-        mRecyclerGV.getPtrLy().refreshComplete();
-        isLoadEnd = true;
-    }
 
     //构建adapter
     @Override
     protected void createRvAdapter() {
-        mAlbumAdapter = new RvQuickAdapter<AlbumDetail>(mContext, datas) {
+        mAdapter = new TypeRvAdapter<AlbumDetail>(mContext, datas) {
             @Override
             public void bindData4View(RvViewHolder holder, AlbumDetail data, int pos, int type) {
                 holder.setImg(mContext, R.id.detail_item_show_iv, data.getPhoto_src());
@@ -201,10 +181,10 @@ public class AlbumDetailPresenterImpl extends ActivityPresenter {
             }
         };
 
-        mAlbumAdapter.addHeaderOrFooter(R.layout.detail_head_list, R.layout.footer_load_more, mRecyclerGV.getRecyclerView());
-        mAlbumAdapter.addType(AlbumDetail.TYPE_SHU, R.layout.detail_item_show);
-        mAlbumAdapter.addType(AlbumDetail.TYPE_HENG, R.layout.detail_item_show2);
-        mAlbumAdapter.addLoadMoreModule(mPreLoadNum, new LoadMoreModule.OnLoadMoreListener() {
+        mAdapter.addHeaderOrFooter(R.layout.detail_head_list, R.layout.footer_load_more, mRgv.getRecyclerView());
+        mAdapter.addType(AlbumDetail.TYPE_SHU, R.layout.detail_item_show);
+        mAdapter.addType(AlbumDetail.TYPE_HENG, R.layout.detail_item_show2);
+        mAdapter.addLoadMoreModule(mPreLoadNum, new LoadMoreModule.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 Lg.e("加载更多  " + offset);
@@ -212,25 +192,24 @@ public class AlbumDetailPresenterImpl extends ActivityPresenter {
             }
         });
 
-        mAlbumAdapter.setOnItemClickListener(new OnItemClickListener<RvViewHolder>() {
+        mAdapter.setOnItemClickListener(new OnItemClickListener<RvViewHolder>() {
             @Override
             public void onItemClick(int pos, RvViewHolder holder) {
-                ScanImgActivity.loadActivity(mContext, datas.get(pos - mAlbumAdapter.getHeaderCount()));
+                ScanImgActivity.loadActivity(mContext, datas.get(pos - mAdapter.getHeaderCount()));
             }
         });
     }
 
-
-    public void switchMode(TextView tv) {
+    public void switchMode() {
         isBig = !isBig;
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         if (isBig) {
-            tv.setText("小图");
-            mRecyclerGV.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+            mView.setModeTvText("小图");
         } else {
-            tv.setText("大图");
-            mRecyclerGV.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+            mView.setModeTvText("大图");
+            layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         }
-        mRecyclerGV.setAdapter(mAlbumAdapter);
+        mRgv.setLayoutManager(layoutManager);
+        mRgv.setAdapter(mAdapter);
     }
-
 }

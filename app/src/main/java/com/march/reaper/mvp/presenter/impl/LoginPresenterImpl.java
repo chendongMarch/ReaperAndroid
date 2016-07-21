@@ -1,9 +1,11 @@
 package com.march.reaper.mvp.presenter.impl;
 
+import android.content.Intent;
+
 import com.march.reaper.common.API;
-import com.march.reaper.mvp.contact.LoginContact;
 import com.march.reaper.mvp.model.BaseResponse;
-import com.march.reaper.mvp.presenter.EasyPresenter;
+import com.march.reaper.mvp.presenter.BaseActivityPresenter;
+import com.march.reaper.mvp.ui.BaseView;
 import com.march.reaper.mvp.ui.RootActivity;
 import com.march.reaper.mvp.ui.activity.HomePageActivity;
 import com.march.reaper.utils.QueryUtils;
@@ -14,16 +16,19 @@ import java.util.HashMap;
 /**
  * com.march.reaper.mvp.presenter.impl
  * Created by chendong on 16/7/19.
- * desc : AppSrart界面的Presenter,
+ * desc : AppStart界面的Presenter
  */
 public class LoginPresenterImpl
-        extends EasyPresenter<LoginContact.LoginView>
-        implements LoginContact.LoginPresenter {
+        extends BaseActivityPresenter<LoginPresenterImpl.LoginView> {
 
-    public LoginPresenterImpl(LoginContact.LoginView mView, RootActivity mContext) {
-        super(mView, mContext);
+
+    public LoginPresenterImpl(RootActivity mContext) {
+        super(mContext);
     }
 
+    public interface LoginView extends BaseView {
+
+    }
 
     //验证码验证通过,向服务器注册
     public void checkToMyServer(String phone, String pwd) {
@@ -50,4 +55,10 @@ public class LoginPresenterImpl
             }
         });
     }
+
+    @Override
+    public void setIntent(Intent intent) {
+
+    }
+
 }

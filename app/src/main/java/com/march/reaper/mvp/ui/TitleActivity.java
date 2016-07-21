@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 
 import com.march.reaper.R;
 import com.march.reaper.common.TitleBarView;
+import com.march.reaper.mvp.presenter.BaseActivityPresenter;
 import com.march.reaper.mvp.presenter.BasePresenter;
 
 /**

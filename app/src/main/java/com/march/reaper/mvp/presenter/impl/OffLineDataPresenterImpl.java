@@ -10,7 +10,6 @@ import com.march.reaper.mvp.model.AlbumDetailResponse;
 import com.march.reaper.mvp.model.BaseResponse;
 import com.march.reaper.mvp.model.RecommendAlbumResponse;
 import com.march.reaper.mvp.model.WholeAlbumResponse;
-import com.march.reaper.mvp.presenter.ActivityPresenter;
 import com.march.reaper.utils.Lg;
 import com.march.reaper.utils.QueryUtils;
 import com.march.reaper.utils.SPUtils;

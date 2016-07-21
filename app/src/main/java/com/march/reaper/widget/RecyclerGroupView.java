@@ -24,6 +24,7 @@ public class RecyclerGroupView extends FrameLayout {
     private FloatingActionButton mFloatBtn;
     private PtrFrameLayout mPtrLy;
     private OnRefreshBeginListener mOnRefreshBeginListener;
+    private View mDefaultHeader;
 
     public RecyclerGroupView(Context context) {
         this(context, null);
@@ -49,6 +50,7 @@ public class RecyclerGroupView extends FrameLayout {
         mPtrLy = (PtrFrameLayout) findViewById(R.id.widget_rgv_ptr);
         mFloatBtn = (FloatingActionButton) findViewById(R.id.widget_rgv_fab);
         mRecyclerView = (RecyclerView) findViewById(R.id.widget_rgv_rv);
+        mDefaultHeader = mPtrLy.getHeaderView();
     }
 
 
@@ -106,6 +108,10 @@ public class RecyclerGroupView extends FrameLayout {
                 }
             }
         });
+    }
+
+    public void enableHeader(){
+        mPtrLy.setHeaderView(mDefaultHeader);
     }
 
     public void setOnRefreshBeginListener(OnRefreshBeginListener mOnRefreshBeginListener) {

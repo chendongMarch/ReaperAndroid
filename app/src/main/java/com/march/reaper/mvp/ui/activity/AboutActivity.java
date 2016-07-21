@@ -14,6 +14,11 @@ public class AboutActivity extends TitleActivity {
     }
 
     @Override
+    protected void destroyPresenter() {
+
+    }
+
+    @Override
     protected void initViews(Bundle save) {
         super.initViews(save);
         mTitleBar.setText("我", "关于", null);

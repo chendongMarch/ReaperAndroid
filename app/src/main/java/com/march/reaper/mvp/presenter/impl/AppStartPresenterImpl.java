@@ -1,13 +1,14 @@
 package com.march.reaper.mvp.presenter.impl;
 
-import com.bumptech.glide.Glide;
+import android.content.Intent;
+
 import com.march.bean.WholeAlbumItem;
 import com.march.reaper.common.API;
-import com.march.reaper.mvp.contact.AppStartContact;
 import com.march.reaper.mvp.model.WholeAlbumResponse;
-import com.march.reaper.mvp.presenter.EasyPresenter;
+import com.march.reaper.mvp.presenter.BaseActivityPresenter;
+import com.march.reaper.mvp.presenter.WithViewTypePresenter;
+import com.march.reaper.mvp.ui.BaseView;
 import com.march.reaper.mvp.ui.RootActivity;
-import com.march.reaper.utils.ImgLoadUtils;
 import com.march.reaper.utils.QueryUtils;
 import com.march.reaper.utils.SPUtils;
 
@@ -19,17 +20,17 @@ import java.util.List;
  * desc : AppSrart界面的Presenter,
  */
 public class AppStartPresenterImpl
-        extends EasyPresenter<AppStartContact.AppStartView>
-        implements AppStartContact.AppStartPresenter {
+        extends BaseActivityPresenter<AppStartPresenterImpl.AppStartView> {
 
-
-    public AppStartPresenterImpl(AppStartContact.AppStartView mPresenterView, RootActivity mContext) {
-        super(mPresenterView, mContext);
+    public AppStartPresenterImpl(RootActivity mContext) {
+        super(mContext);
     }
 
+    public interface AppStartView extends BaseView {
+        void loadViewImg(String url);
+    }
 
     //请求图片
-    @Override
     public void queryAppStartFlashImg() {
         final String appStartPhoto = SPUtils.get().getAppStartPhoto();
         if (appStartPhoto != null) {
@@ -52,5 +53,9 @@ public class AppStartPresenterImpl
 
                     }
                 });
+    }
+
+    public void setIntent(Intent intent) {
+
     }
 }

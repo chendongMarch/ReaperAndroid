@@ -15,9 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by march on 16/7/1.
+ * fragment
  */
 public abstract class RootFragment extends Fragment {
 
@@ -36,10 +38,10 @@ public abstract class RootFragment extends Fragment {
         ButterKnife.bind(this, view);
         initViews(view, savedInstanceState);
         initEvents();
-//        Lg.e(mSelfName + " onCreateView");
         return view;
     }
 
+    protected abstract void destroyPresenter();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,5 +69,11 @@ public abstract class RootFragment extends Fragment {
 
     protected void initEvents() {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        destroyPresenter();
     }
 }

@@ -5,20 +5,21 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.march.reaper.R;
-import com.march.reaper.mvp.contact.LoginContact;
 import com.march.reaper.mvp.presenter.impl.LoginPresenterImpl;
 import com.march.reaper.mvp.ui.TitleActivity;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class LoginActivity extends TitleActivity implements LoginContact.LoginView {
+public class LoginActivity
+        extends TitleActivity
+        implements LoginPresenterImpl.LoginView {
 
+    private LoginPresenterImpl mPresenter;
     @Bind(R.id.et_phone)
     EditText mPhoneEt;
     @Bind(R.id.et_pwd)
     EditText mPwdEt;
-    private LoginContact.LoginPresenter mPresenter;
 
     @Override
     protected int getLayoutId() {
@@ -26,15 +27,21 @@ public class LoginActivity extends TitleActivity implements LoginContact.LoginVi
     }
 
     @Override
+    protected void destroyPresenter() {
+        mPresenter = null;
+    }
+
+    @Override
     protected void initViews(Bundle save) {
         super.initViews(save);
+        mPresenter = new LoginPresenterImpl(this);
         mTitleBar.setText("返回", "登录", null);
     }
 
     @Override
     protected void initMainPresenter() {
         super.initMainPresenter();
-        mPresenter = new LoginPresenterImpl(this, this);
+
     }
 
     @OnClick({R.id.btn_login})
@@ -49,4 +56,5 @@ public class LoginActivity extends TitleActivity implements LoginContact.LoginVi
                 break;
         }
     }
+
 }

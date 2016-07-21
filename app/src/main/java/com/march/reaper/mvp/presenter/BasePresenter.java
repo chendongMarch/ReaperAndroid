@@ -7,5 +7,4 @@ package com.march.reaper.mvp.presenter;
  * desc : 接口的基类.所有的presenter实现接口协议的功能
  */
 public interface BasePresenter {
-
 }

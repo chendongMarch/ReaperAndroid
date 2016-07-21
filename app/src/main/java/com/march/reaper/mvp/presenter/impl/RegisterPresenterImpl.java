@@ -1,12 +1,17 @@
 package com.march.reaper.mvp.presenter.impl;
 
+import android.content.Intent;
+
 import com.march.reaper.common.API;
 import com.march.reaper.common.SMSHelper;
-import com.march.reaper.mvp.contact.RegisterContact;
+import com.march.reaper.event.SucceedEntryAppEvent;
 import com.march.reaper.mvp.model.BaseResponse;
-import com.march.reaper.mvp.presenter.EasyPresenter;
+import com.march.reaper.mvp.presenter.BaseActivityPresenter;
+import com.march.reaper.mvp.ui.BaseView;
 import com.march.reaper.mvp.ui.RootActivity;
 import com.march.reaper.utils.QueryUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 
@@ -16,18 +21,30 @@ import java.util.HashMap;
  * desc : Register界面的Presenter
  */
 public class RegisterPresenterImpl
-        extends EasyPresenter<RegisterContact.RegisterView>
-        implements RegisterContact.RegisterPresenter {
+        extends BaseActivityPresenter<RegisterPresenterImpl.RegisterView> {
 
-    public RegisterPresenterImpl(RegisterContact.RegisterView mView, RootActivity mContext) {
-        super(mView, mContext);
+
+    public RegisterPresenterImpl(RootActivity mContext) {
+        super(mContext);
     }
 
+    public interface RegisterView extends BaseView {
+        void hideGetCodeButton();
+
+        void registerToMyServer();
+
+        void registerSucceed();
+
+        void userAlreadyExist();
+
+        void registerFailed();
+
+        void getCodeSucceed();
+    }
 
     /**
      * 注册短信验证码事件
      */
-    @Override
     public void registerEventHandler() {
         SMSHelper.get().registerHandler(new SMSHelper.SmsResultListener() {
             @Override
@@ -71,7 +88,6 @@ public class RegisterPresenterImpl
     /**
      * 验证码验证通过,向服务器注册
      */
-    @Override
     public void registerToMyServer(String phone, String pwd) {
         HashMap<String, String> map = new HashMap<>();
         map.put("username", phone);
@@ -86,6 +102,7 @@ public class RegisterPresenterImpl
                     mView.registerFailed();
                 }
                 if (rst.getStatus() == 0) {
+                    authority();
                     mView.registerSucceed();
                 }
             }
@@ -95,5 +112,10 @@ public class RegisterPresenterImpl
                 mView.registerFailed();
             }
         });
+    }
+
+    @Override
+    public void setIntent(Intent intent) {
+
     }
 }

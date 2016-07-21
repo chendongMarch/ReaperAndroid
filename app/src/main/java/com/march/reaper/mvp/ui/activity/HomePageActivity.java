@@ -31,6 +31,11 @@ public class HomePageActivity extends MultiFragmentActivity {
     }
 
     @Override
+    protected void destroyPresenter() {
+
+    }
+
+    @Override
     protected int getFragmentContainerId() {
         return R.id.home_container;
     }
@@ -66,6 +71,5 @@ public class HomePageActivity extends MultiFragmentActivity {
     public void click(View v) {
         int tag = Integer.parseInt(v.getTag().toString());
         selectItemFragment(tag, false);
-//        mShowItem = tag;
     }
 }
