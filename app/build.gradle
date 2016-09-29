@@ -4,15 +4,15 @@ apply plugin: 'im.fir.plugin.gradle'
 
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 24
     buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "com.march.reaper"
         minSdkVersion 16
-        targetSdkVersion 22
-        versionCode 3
-        versionName "1.2"
+        targetSdkVersion 24
+        versionCode 4
+        versionName "1.3"
     }
 
     fir {
@@ -47,21 +47,18 @@ android {
 
 }
 
-repositories{
-    flatDir{
+repositories {
+    flatDir {
         dirs 'libs' //就是你放aar的目录地址
     }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.android.support:design:24.2.0'
     //控件注解
     compile 'com.jakewharton:butterknife:7.0.1'
-    //消息event bus
-    compile 'org.greenrobot:eventbus:3.0.0'
     //recycler view适配
     compile 'com.march.quickrvlibs:quickrvlibs:2.0.7-beta2'
     //网络请求
@@ -78,6 +75,4 @@ dependencies {
     compile 'in.srain.cube:ultra-ptr:1.0.11'
     //图片加载
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    //短信
-    compile name: 'SMSSDK-2.1.0', ext: 'aar'
 }

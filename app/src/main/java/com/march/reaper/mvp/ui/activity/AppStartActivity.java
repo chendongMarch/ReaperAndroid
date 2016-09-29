@@ -5,27 +5,22 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.MainThread;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.march.reaper.R;
-import com.march.reaper.event.SucceedEntryAppEvent;
 import com.march.reaper.mvp.presenter.impl.AppStartPresenterImpl;
 import com.march.reaper.mvp.ui.RootActivity;
 import com.march.reaper.utils.ImgLoadUtils;
 import com.march.reaper.utils.SPUtils;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
- * app启动页面
+ * app启动页面,包括注册登录的逻辑。不添加注册登录功能的在NewAppStartActivity
  */
 public class AppStartActivity extends RootActivity
         implements AppStartPresenterImpl.AppStartView {
@@ -42,7 +37,7 @@ public class AppStartActivity extends RootActivity
 
     @Override
     protected int getLayoutId() {
-        return R.layout.start_app_activity;
+        return R.layout.app_start_activity;
     }
 
     @Override
@@ -54,6 +49,7 @@ public class AppStartActivity extends RootActivity
     @Override
     protected void initViews(Bundle save) {
         super.initViews(save);
+//        EventBus.getDefault().register(this);
         if (SPUtils.get().getIsLogin()) {
             mLogRegisterPartVg.setVisibility(View.GONE);
             mJumpTv.setVisibility(View.VISIBLE);
@@ -124,12 +120,12 @@ public class AppStartActivity extends RootActivity
     }
 
 
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(SucceedEntryAppEvent event) {
-        if(event.getMsg().equals(SucceedEntryAppEvent.EVENT_SUCCEED_ENTRY_APP)){
-            finish();
-        }
-    }
+//
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void onEventMainThread(SucceedEntryAppEvent event) {
+//        if(event.getMsg().equals(SucceedEntryAppEvent.EVENT_SUCCEED_ENTRY_APP)){
+//            finish();
+//        }
+//    }
 
 }

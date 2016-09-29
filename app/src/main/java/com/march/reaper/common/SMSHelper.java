@@ -9,8 +9,6 @@ import com.march.reaper.utils.Lg;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cn.smssdk.EventHandler;
-import cn.smssdk.SMSSDK;
 
 /**
  * Created by march on 16/7/15.
@@ -54,45 +52,45 @@ public class SMSHelper {
 
 
     public void registerHandler(final SmsResultListener listener) {
-        SMSSDK.initSDK(context, context.getString(R.string.mob_sms_appkey), context.getString(R.string.mob_sms_appsecret));
-        EventHandler eh = new EventHandler() {
-            @Override
-            public void afterEvent(int event, int result, Object data) {
-                if (result == SMSSDK.RESULT_COMPLETE) {
-                    Lg.e("回调完成");
-                    if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
-                        Lg.e("提交验证码成功");
-                        if (listener != null)
-                            listener.onSubmitCodeSucceed();
-                    } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
-                        Lg.e("获取验证码成功");
-                        if (listener != null)
-                            listener.onGetCodeSucceed();
-                    } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
-                        Lg.e("返回支持发送验证码的国家列表" + data.toString());
-                    } else if (event == SMSSDK.EVENT_GET_VOICE_VERIFICATION_CODE) {
-                        Lg.e("获取语音验证码成功");
-                        if (listener != null)
-                            listener.onGetVoiceSucceed();
-                    }
-                } else {
-                    ((Throwable) data).printStackTrace();
-                }
-            }
-        };
-        SMSSDK.registerEventHandler(eh); //注册短信回调
+//        SMSSDK.initSDK(context, context.getString(R.string.mob_sms_appkey), context.getString(R.string.mob_sms_appsecret));
+//        EventHandler eh = new EventHandler() {
+//            @Override
+//            public void afterEvent(int event, int result, Object data) {
+//                if (result == SMSSDK.RESULT_COMPLETE) {
+//                    Lg.e("回调完成");
+//                    if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+//                        Lg.e("提交验证码成功");
+//                        if (listener != null)
+//                            listener.onSubmitCodeSucceed();
+//                    } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
+//                        Lg.e("获取验证码成功");
+//                        if (listener != null)
+//                            listener.onGetCodeSucceed();
+//                    } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
+//                        Lg.e("返回支持发送验证码的国家列表" + data.toString());
+//                    } else if (event == SMSSDK.EVENT_GET_VOICE_VERIFICATION_CODE) {
+//                        Lg.e("获取语音验证码成功");
+//                        if (listener != null)
+//                            listener.onGetVoiceSucceed();
+//                    }
+//                } else {
+//                    ((Throwable) data).printStackTrace();
+//                }
+//            }
+//        };
+//        SMSSDK.registerEventHandler(eh); //注册短信回调
     }
 
     public void getCode(String phone) {
-        SMSSDK.getVerificationCode("86", phone);
+//        SMSSDK.getVerificationCode("86", phone);
     }
 
     public void getVoiceCode(String phone) {
-        SMSSDK.getVoiceVerifyCode("86", phone);
+//        SMSSDK.getVoiceVerifyCode("86", phone);
     }
 
     public void submitCode(String phone, String code) {
-        SMSSDK.submitVerificationCode("86", phone, code);
+//        SMSSDK.submitVerificationCode("86", phone, code);
     }
 
     public boolean isMobile(String str) {

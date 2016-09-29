@@ -4,14 +4,12 @@ import android.content.Intent;
 
 import com.march.reaper.common.API;
 import com.march.reaper.common.SMSHelper;
-import com.march.reaper.event.SucceedEntryAppEvent;
 import com.march.reaper.mvp.model.BaseResponse;
 import com.march.reaper.mvp.presenter.BaseActivityPresenter;
 import com.march.reaper.mvp.ui.BaseView;
 import com.march.reaper.mvp.ui.RootActivity;
 import com.march.reaper.utils.QueryUtils;
 
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 

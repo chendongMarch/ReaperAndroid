@@ -4,6 +4,7 @@ import android.util.Log;
 
 /**
  * Created by march on 16/7/1.
+ * 日志
  */
 public class Lg {
     public static void e(Object msg) {

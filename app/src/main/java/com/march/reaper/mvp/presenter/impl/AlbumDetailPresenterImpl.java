@@ -202,9 +202,10 @@ public class AlbumDetailPresenterImpl
 
     public void switchMode() {
         isBig = !isBig;
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager layoutManager;
         if (isBig) {
             mView.setModeTvText("小图");
+            layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         } else {
             mView.setModeTvText("大图");
             layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);

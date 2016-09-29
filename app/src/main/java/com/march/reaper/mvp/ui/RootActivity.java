@@ -13,8 +13,8 @@ import com.march.reaper.common.SMSHelper;
 import com.march.reaper.utils.SPUtils;
 import com.march.reaper.utils.To;
 
+
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by march on 16/6/6.
@@ -39,7 +39,6 @@ public abstract class RootActivity extends AppCompatActivity {
         hideActionBar();
         self = this;
         ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
         initDatas();
         initViews(savedInstanceState);
         initEvents();

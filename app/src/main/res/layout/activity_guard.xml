@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_appstart"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="com.march.reaper.mvp.ui.activity.GuardActivity">
+
+    <EditText
+        android:inputType="number"
+        android:id="@+id/et_guard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        android:background="@drawable/shape_round_rect_empty_colorprimary"
+        android:gravity="center"
+        android:hint="guard"
+        android:padding="10dp"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btn_check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/selector_common_click"
+        android:text="按钮点击测试" />
+</LinearLayout>

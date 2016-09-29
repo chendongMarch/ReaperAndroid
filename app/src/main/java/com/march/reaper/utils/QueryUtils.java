@@ -17,6 +17,7 @@ import com.zhy.http.okhttp.callback.Callback;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import okhttp3.Call;
@@ -178,4 +179,5 @@ public class QueryUtils {
         }
         OkHttpUtils.post().url(url).params(params).build().execute(createCallBack(cls, listener));
     }
+
 }

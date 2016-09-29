@@ -3,7 +3,6 @@ package com.march.reaper.mvp.ui.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-
 import com.march.reaper.R;
 import com.march.reaper.mvp.presenter.impl.LoginPresenterImpl;
 import com.march.reaper.mvp.ui.TitleActivity;
@@ -41,7 +40,6 @@ public class LoginActivity
     @Override
     protected void initMainPresenter() {
         super.initMainPresenter();
-
     }
 
     @OnClick({R.id.btn_login})

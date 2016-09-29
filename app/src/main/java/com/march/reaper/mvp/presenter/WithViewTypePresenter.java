@@ -5,7 +5,6 @@ import com.march.reaper.mvp.ui.BaseView;
 import com.march.reaper.mvp.ui.RootActivity;
 import com.march.reaper.utils.SPUtils;
 
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * com.march.reaper.mvp.presenter
@@ -33,6 +32,6 @@ public abstract class WithViewTypePresenter<V extends BaseView> implements BaseP
     protected void authority() {
         SPUtils.get().putIsLogin(true);
         //通知app start关闭
-        EventBus.getDefault().post(new SucceedEntryAppEvent(SucceedEntryAppEvent.EVENT_SUCCEED_ENTRY_APP));
+//        EventBus.getDefault().post(new SucceedEntryAppEvent(SucceedEntryAppEvent.EVENT_SUCCEED_ENTRY_APP));
     }
 }

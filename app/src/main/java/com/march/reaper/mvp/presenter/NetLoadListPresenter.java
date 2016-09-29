@@ -66,8 +66,12 @@ public abstract class NetLoadListPresenter<V extends BaseView, D> extends WithVi
         if (list.size() <= 0) {
             offset = -1;
             Lg.e("没有数据了");
-            mAdapter.setFooterEnable(false);
-            mAdapter.notifyDataSetChanged();
+            if (mAdapter != null) {
+                mAdapter.setFooterEnable(false);
+                mAdapter.notifyDataSetChanged();
+            }
+            completeRefresh();
+            isLoadEnd=true;
             return;
         }
         datas.addAll(list);

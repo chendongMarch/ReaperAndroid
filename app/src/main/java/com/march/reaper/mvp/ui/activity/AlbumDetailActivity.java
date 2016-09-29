@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
 
 import com.march.bean.Album;
 import com.march.reaper.R;
@@ -74,6 +75,17 @@ public class AlbumDetailActivity
         }
         mPresenter.setRgv(mRgv);
         mPresenter.justQuery();
+    }
+
+    @Override
+    protected void initEvents() {
+        super.initEvents();
+        mTitleBar.setListener(TitleBarView.POS_Right, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.switchMode();
+            }
+        });
     }
 
     @Override

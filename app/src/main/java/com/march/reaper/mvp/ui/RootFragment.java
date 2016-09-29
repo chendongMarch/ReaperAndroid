@@ -7,15 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.march.bean.RecommendAlbumItem;
-import com.march.reaper.R;
-import com.march.reaper.utils.Lg;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by march on 16/7/1.

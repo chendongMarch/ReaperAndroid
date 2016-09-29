@@ -3,6 +3,7 @@ package com.march.reaper.mvp.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 
 import com.march.reaper.R;
 import com.march.reaper.mvp.presenter.impl.AlbumCollPresenterImpl;
@@ -39,15 +40,14 @@ public class AlbumCollectionActivity extends TitleActivity
     protected void initDatas() {
         super.initDatas();
         mPresenter = new AlbumCollPresenterImpl(self);
-        mPresenter.setRgv(
-                mAlbumRgv
-        );
+        mPresenter.setRgv(mAlbumRgv);
     }
 
     @Override
     protected void initViews(Bundle save) {
         super.initViews(save);
         mTitleBar.setText("我", "专辑收藏", null);
+        mAlbumRgv.setLayoutManager(new LinearLayoutManager(self,LinearLayoutManager.VERTICAL,false));
         mPresenter.justQuery();
     }
 }

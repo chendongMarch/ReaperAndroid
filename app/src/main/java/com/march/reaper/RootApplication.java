@@ -13,7 +13,6 @@ import com.march.reaper.common.SMSHelper;
 
 import java.io.File;
 
-import cn.smssdk.SMSSDK;
 
 /**
  * Created by march on 16/6/6.
@@ -28,7 +27,7 @@ public class RootApplication extends Application {
         super.onCreate();
         mInst = this;
         initRvQuick();
-        SMSHelper.newInst(this);
+//        SMSHelper.newInst(this);
         DaoHelper.get().setupDatabase(this);
     }
 

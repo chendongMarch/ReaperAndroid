@@ -12,7 +12,7 @@
         android:layout_height="150dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:src="@drawable/ic_contact" />
+        android:src="@mipmap/ic_launcher" />
 
 
     <TextView
@@ -25,5 +25,5 @@
         android:textColor="@color/black"
         android:padding="10dp"
         android:lineSpacingExtra="10dp"
-        android:text="服务器使用node.js开发\n服务部署在MoPaaS服务器上\n数据采集使用Python开发爬虫爬取网页数据\n客户端使用Android开发"/>
+        android:text="@string/about_desc"/>
 </RelativeLayout>

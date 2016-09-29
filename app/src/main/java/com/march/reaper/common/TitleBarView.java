@@ -10,9 +10,9 @@ import com.march.reaper.R;
 
 /**
  * Created by march on 16/7/9.
+ *
  */
 public class TitleBarView {
-
 
     public static final int POS_Left = 0;
     public static final int POS_Right = 1;

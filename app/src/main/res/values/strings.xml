@@ -8,4 +8,5 @@
     <string name="mob_sms_appkey">14f78c42c9e00</string>
     <string name="mob_sms_appsecret">bc709f5a64fa5beaa3d68a9609c66368</string>
     <string name="official_website">http://fir.im/9wy8</string>
+    <string name="about_desc">服务器使用node.js开发\n服务部署在MoPaaS服务器上\n数据采集使用Python开发爬虫爬取网页数据\n客户端使用Android开发(MVP架构)\n本客户端仅用于学习\n\nhttps://github.com/chendongMarch/Reaper_Android(github地址)</string>
 </resources>
