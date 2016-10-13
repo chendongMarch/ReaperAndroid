@@ -16,7 +16,6 @@ import com.march.dao.WholeAlbumItemDao;
 import com.march.reaper.imodel.AlbumDetailResponse;
 import com.march.reaper.imodel.RecommendAlbumResponse;
 import com.march.reaper.imodel.WholeAlbumResponse;
-import com.march.reaper.utils.Lg;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.query.QueryBuilder;

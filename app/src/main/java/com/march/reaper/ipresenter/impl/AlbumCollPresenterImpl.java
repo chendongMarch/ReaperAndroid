@@ -1,6 +1,5 @@
 package com.march.reaper.ipresenter.impl;
 
-import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
@@ -10,13 +9,13 @@ import com.march.quickrvlibs.SimpleRvAdapter;
 import com.march.quickrvlibs.inter.OnItemClickListener;
 import com.march.quickrvlibs.module.LoadMoreModule;
 import com.march.reaper.R;
+import com.march.reaper.base.mvp.view.BaseRgvView;
 import com.march.reaper.common.DbHelper;
-import com.march.reaper.ipresenter.BaseNetActivityPresenter;
-import com.march.reaper.iview.BaseView;
-import com.march.reaper.iview.RootActivity;
+import com.march.reaper.helper.CommonHelper;
+import com.march.reaper.helper.Logger;
+import com.march.reaper.ipresenter.NetLoadListPresenter;
 import com.march.reaper.iview.activity.AlbumDetailActivity;
-import com.march.reaper.utils.ColorUtils;
-import com.march.reaper.utils.Lg;
+import com.march.reaper.widget.RecyclerGroupView;
 
 import java.util.List;
 
@@ -25,14 +24,15 @@ import java.util.List;
  * 推荐页面
  */
 public class AlbumCollPresenterImpl
-        extends BaseNetActivityPresenter<AlbumCollPresenterImpl.AlbumCollView, AlbumItemCollection> {
+        extends NetLoadListPresenter<AlbumCollPresenterImpl.AlbumCollView, AlbumItemCollection> {
 
-    public AlbumCollPresenterImpl(RootActivity mContext) {
-        super(mContext);
+    public interface AlbumCollView extends BaseRgvView {
+
     }
 
-    public interface AlbumCollView extends BaseView {
-
+    @Override
+    protected RecyclerGroupView getRgv() {
+        return mView.getRgv();
     }
 
     @Override
@@ -60,13 +60,13 @@ public class AlbumCollPresenterImpl
     //构建adapter
     @Override
     protected void createRvAdapter() {
-        mRgv.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
-        mAdapter = new SimpleRvAdapter<AlbumItemCollection>(mContext, datas, R.layout.albumquery_item_album) {
+        getRgv().setLayoutManager(new LinearLayoutManager(mView.getContext(), LinearLayoutManager.VERTICAL, false));
+        mAdapter = new SimpleRvAdapter<AlbumItemCollection>(mView.getContext(), datas, R.layout.albumquery_item_album) {
             @Override
             public void bindData4View(RvViewHolder holder, AlbumItemCollection data, int pos) {
-                holder.setImg(mContext, R.id.albumquery_item_iv, data.getAlbum_cover())
+                holder.setImg(mView.getContext(), R.id.albumquery_item_iv, data.getAlbum_cover())
                         .setText(R.id.albumquery_item_tv, data.getAlbum_desc());
-                holder.getView(R.id.album_bg).setBackgroundColor(ColorUtils.randomColor());
+                holder.getView(R.id.album_bg).setBackgroundColor(CommonHelper.randomColor());
             }
 
             @Override
@@ -79,29 +79,20 @@ public class AlbumCollPresenterImpl
                 });
             }
         };
-        mAdapter.addHeaderOrFooter(0, R.layout.footer_load_more, mRgv.getRecyclerView());
+        mAdapter.addHeaderOrFooter(0, R.layout.footer_load_more, getRgv().getRecyclerView());
         mAdapter.setOnItemClickListener(new OnItemClickListener<RvViewHolder>() {
             @Override
             public void onItemClick(int pos, RvViewHolder holder) {
-                AlbumDetailActivity.loadActivity4DetailShow(mContext, datas.get(pos));
+                AlbumDetailActivity.loadActivity4DetailShow(mView.getActivity(), datas.get(pos));
             }
         });
         mAdapter.addLoadMoreModule(mPreLoadNum, new LoadMoreModule.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                Lg.e("加载更多  " + offset);
+                Logger.e("加载更多  " + offset);
                 justQuery();
             }
         });
     }
 
-    @Override
-    public void setIntent(Intent intent) {
-
-    }
-
-    @Override
-    public void switchMode() {
-
-    }
 }

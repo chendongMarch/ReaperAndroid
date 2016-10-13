@@ -14,10 +14,10 @@ import com.march.quickrvlibs.module.LoadMoreModule;
 import com.march.reaper.R;
 import com.march.reaper.common.Constant;
 import com.march.reaper.common.DbHelper;
+import com.march.reaper.helper.CommonHelper;
 import com.march.reaper.ipresenter.BaseNetActivityPresenter;
-import com.march.reaper.iview.RootActivity;
+import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.reaper.iview.activity.ScanImgActivity;
-import com.march.reaper.utils.ColorUtils;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class DetailCollPresenterImpl
 
     private boolean isBig = false;
 
-    public DetailCollPresenterImpl(RootActivity mContext) {
+    public DetailCollPresenterImpl(BaseReaperActivity mContext) {
         super(mContext);
     }
 
@@ -66,7 +66,7 @@ public class DetailCollPresenterImpl
             public void bindData4View(RvViewHolder holder, DetailCollection data, int pos, int type) {
                 holder.setImg(mContext, R.id.detail_item_show_iv, data.getPhoto_src());
                 View bgView = holder.getView(R.id.detail_show_bg);
-                bgView.setBackgroundColor(ColorUtils.randomColor());
+                bgView.setBackgroundColor(CommonHelper.randomColor());
             }
 
             @Override

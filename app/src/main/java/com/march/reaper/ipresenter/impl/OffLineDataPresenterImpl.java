@@ -6,11 +6,11 @@ import android.support.v4.widget.ContentLoadingProgressBar;
 import com.march.reaper.common.API;
 import com.march.reaper.common.DaoHelper;
 import com.march.reaper.common.DbHelper;
+import com.march.reaper.helper.Logger;
 import com.march.reaper.imodel.AlbumDetailResponse;
 import com.march.reaper.imodel.BaseResponse;
 import com.march.reaper.imodel.RecommendAlbumResponse;
 import com.march.reaper.imodel.WholeAlbumResponse;
-import com.march.reaper.utils.Lg;
 import com.march.reaper.utils.QueryUtils;
 import com.march.reaper.utils.SPUtils;
 
@@ -42,9 +42,9 @@ public class OffLineDataPresenterImpl {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                Lg.e("开始存储,数据大小 = " + response.getData().size());
+                Logger.e("开始存储,数据大小 = " + response.getData().size());
                 DaoHelper.get().getDao(response.getClass()).insertOrReplaceInTx(response.getData());
-                Lg.e("存储完毕,当前数据库大小 = " + DbHelper.get().queryCount(response.getClass()));
+                Logger.e("存储完毕,当前数据库大小 = " + DbHelper.get().queryCount(response.getClass()));
                 syncLocalTimeStamp(response.getClass());
                 return null;
             }

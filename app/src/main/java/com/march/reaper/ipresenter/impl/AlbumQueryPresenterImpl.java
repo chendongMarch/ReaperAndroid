@@ -10,12 +10,13 @@ import com.march.quickrvlibs.module.LoadMoreModule;
 import com.march.reaper.R;
 import com.march.reaper.common.API;
 import com.march.reaper.common.DbHelper;
+import com.march.reaper.helper.CommonHelper;
 import com.march.reaper.imodel.RecommendAlbumResponse;
 import com.march.reaper.ipresenter.BaseNetFragmentPresenter;
-import com.march.reaper.iview.BaseView;
-import com.march.reaper.iview.RootActivity;
+import com.march.reaper.base.mvp.BaseView;
+import com.march.reaper.base.activity.BaseReaperActivity;
+import com.march.reaper.ipresenter.NetLoadListPresenter;
 import com.march.reaper.iview.activity.AlbumDetailActivity;
-import com.march.reaper.utils.ColorUtils;
 import com.march.reaper.utils.QueryUtils;
 import java.util.List;
 
@@ -24,7 +25,7 @@ import java.util.List;
  * 推荐页面
  */
 public class AlbumQueryPresenterImpl
-        extends BaseNetFragmentPresenter<AlbumQueryPresenterImpl.AlbumQueryView, RecommendAlbumItem> {
+        extends NetLoadListPresenter<AlbumQueryPresenterImpl.AlbumQueryView, RecommendAlbumItem> {
 
     private String mRecommendType;
 
@@ -37,7 +38,7 @@ public class AlbumQueryPresenterImpl
         void setModeTvText(String txt);
     }
 
-    public AlbumQueryPresenterImpl(AlbumQueryView mView, RootActivity mContext, String mRecommendType) {
+    public AlbumQueryPresenterImpl(AlbumQueryView mView, BaseReaperActivity mContext, String mRecommendType) {
         super(mView, mContext);
         this.mRecommendType = mRecommendType;
     }
@@ -88,7 +89,7 @@ public class AlbumQueryPresenterImpl
             public void bindData4View(RvViewHolder holder, RecommendAlbumItem data, int pos) {
                 holder.setImg(mContext, R.id.albumquery_item_iv, data.getAlbum_cover())
                         .setText(R.id.albumquery_item_tv, data.getAlbum_desc());
-                holder.getView(R.id.album_bg).setBackgroundColor(ColorUtils.randomColor());
+                holder.getView(R.id.album_bg).setBackgroundColor(CommonHelper.randomColor());
             }
 
             @Override

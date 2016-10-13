@@ -11,12 +11,12 @@ import com.march.quickrvlibs.module.LoadMoreModule;
 import com.march.reaper.R;
 import com.march.reaper.common.API;
 import com.march.reaper.common.DbHelper;
+import com.march.reaper.helper.CommonHelper;
+import com.march.reaper.helper.Logger;
 import com.march.reaper.imodel.WholeAlbumResponse;
 import com.march.reaper.ipresenter.BaseNetFragmentPresenter;
-import com.march.reaper.iview.RootActivity;
+import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.reaper.iview.activity.AlbumDetailActivity;
-import com.march.reaper.utils.ColorUtils;
-import com.march.reaper.utils.Lg;
 import com.march.reaper.utils.QueryUtils;
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class AQ4WholePresenterImpl
     private boolean isBig = false;
 
 
-    public AQ4WholePresenterImpl(AlbumQueryPresenterImpl.AlbumQueryView mView, RootActivity mContext) {
+    public AQ4WholePresenterImpl(AlbumQueryPresenterImpl.AlbumQueryView mView, BaseReaperActivity mContext) {
         super(mView, mContext);
     }
 
@@ -83,7 +83,7 @@ public class AQ4WholePresenterImpl
                     holder.setVisibility(R.id.albumquery_item_tv, View.VISIBLE).setText(R.id.albumquery_item_tv, data.getAlbum_desc());
                 else
                     holder.setVisibility(R.id.albumquery_item_tv, View.GONE);
-                holder.getView(R.id.album_bg).setBackgroundColor(ColorUtils.randomColor());
+                holder.getView(R.id.album_bg).setBackgroundColor(CommonHelper.randomColor());
             }
 
             @Override
@@ -106,7 +106,7 @@ public class AQ4WholePresenterImpl
         mAdapter.addLoadMoreModule(mPreLoadNum, new LoadMoreModule.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                Lg.e("加载更多  " + offset);
+                Logger.e("加载更多  " + offset);
                 justQuery();
             }
         });

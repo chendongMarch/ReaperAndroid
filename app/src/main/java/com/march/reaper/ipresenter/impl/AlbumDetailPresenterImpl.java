@@ -16,17 +16,17 @@ import com.march.quickrvlibs.TypeRvAdapter;
 import com.march.quickrvlibs.inter.OnItemClickListener;
 import com.march.quickrvlibs.module.LoadMoreModule;
 import com.march.reaper.R;
+import com.march.reaper.base.mvp.view.BaseRgvView;
 import com.march.reaper.common.API;
 import com.march.reaper.common.Constant;
 import com.march.reaper.common.DbHelper;
+import com.march.reaper.helper.CommonHelper;
+import com.march.reaper.helper.Logger;
 import com.march.reaper.imodel.AlbumDetailResponse;
-import com.march.reaper.ipresenter.BaseNetActivityPresenter;
-import com.march.reaper.iview.BaseView;
-import com.march.reaper.iview.RootActivity;
+import com.march.reaper.ipresenter.NetLoadListPresenter;
 import com.march.reaper.iview.activity.ScanImgActivity;
-import com.march.reaper.utils.ColorUtils;
-import com.march.reaper.utils.Lg;
 import com.march.reaper.utils.QueryUtils;
+import com.march.reaper.widget.RecyclerGroupView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -38,33 +38,33 @@ import java.util.List;
  * 详情
  */
 public class AlbumDetailPresenterImpl
-        extends BaseNetActivityPresenter<AlbumDetailPresenterImpl.AlbumDetailView, AlbumDetail> {
+        extends NetLoadListPresenter<AlbumDetailPresenterImpl.AlbumDetailView, AlbumDetail> {
 
     private boolean isBig = false;
     private Album mAlbumData;
     private boolean isCollection;
     private AlbumItemCollection mCol;
 
-    public interface AlbumDetailView extends BaseView {
+    public interface AlbumDetailView extends BaseRgvView {
         void setModeTvText(String txt);
     }
 
-    public AlbumDetailPresenterImpl(RootActivity mContext) {
-        super(mContext);
+    public AlbumDetailPresenterImpl() {
+        Intent intent = mView.getData();
+        mAlbumData = (Album) intent.getSerializableExtra(Constant.KEY_ALBUM_DETAIL_SHOW);
+        mCol = new AlbumItemCollection(mAlbumData);
+        isCollection = DbHelper.get().isAlbumCollection(mCol);
+    }
+
+    @Override
+    protected RecyclerGroupView getRgv() {
+        return null;
     }
 
     @Override
     public void justQuery() {
         if (checkCanQuery())
             queryNetDatas();
-    }
-
-
-    @Override
-    public void setIntent(Intent intent) {
-        mAlbumData = (Album) intent.getSerializableExtra(Constant.KEY_ALBUM_DETAIL_SHOW);
-        mCol = new AlbumItemCollection(mAlbumData);
-        isCollection = DbHelper.get().isAlbumCollection(mCol);
     }
 
 
@@ -104,12 +104,12 @@ public class AlbumDetailPresenterImpl
     //构建adapter
     @Override
     protected void createRvAdapter() {
-        mAdapter = new TypeRvAdapter<AlbumDetail>(mContext, datas) {
+        mAdapter = new TypeRvAdapter<AlbumDetail>(getContext(), datas) {
             @Override
             public void bindData4View(RvViewHolder holder, AlbumDetail data, int pos, int type) {
-                holder.setImg(mContext, R.id.detail_item_show_iv, data.getPhoto_src());
+                holder.setImg(getContext(), R.id.detail_item_show_iv, data.getPhoto_src());
                 View bgView = holder.getView(R.id.detail_show_bg);
-                bgView.setBackgroundColor(ColorUtils.randomColor());
+                bgView.setBackgroundColor(CommonHelper.randomColor());
             }
 
             @Override
@@ -170,7 +170,7 @@ public class AlbumDetailPresenterImpl
                     TagAdapter<String> adapter = new TagAdapter<String>(keyWds) {
                         @Override
                         public View getView(FlowLayout parent, int position, String s) {
-                            TextView tv = (TextView) mContext.getLayoutInflater().inflate(R.layout.detail_item_keywds,
+                            TextView tv = (TextView) getActivity().getLayoutInflater().inflate(R.layout.detail_item_keywds,
                                     mKeyWdsFlow, false);
                             tv.setText(s);
                             return tv;
@@ -181,13 +181,13 @@ public class AlbumDetailPresenterImpl
             }
         };
 
-        mAdapter.addHeaderOrFooter(R.layout.detail_head_list, R.layout.footer_load_more, mRgv.getRecyclerView());
+        mAdapter.addHeaderOrFooter(R.layout.detail_head_list, R.layout.footer_load_more, getRgv().getRecyclerView());
         mAdapter.addType(AlbumDetail.TYPE_SHU, R.layout.detail_item_show);
         mAdapter.addType(AlbumDetail.TYPE_HENG, R.layout.detail_item_show2);
         mAdapter.addLoadMoreModule(mPreLoadNum, new LoadMoreModule.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                Lg.e("加载更多  " + offset);
+                Logger.e("加载更多  " + offset);
                 justQuery();
             }
         });
@@ -195,7 +195,7 @@ public class AlbumDetailPresenterImpl
         mAdapter.setOnItemClickListener(new OnItemClickListener<RvViewHolder>() {
             @Override
             public void onItemClick(int pos, RvViewHolder holder) {
-                ScanImgActivity.loadActivity(mContext, datas.get(pos - mAdapter.getHeaderCount()));
+                ScanImgActivity.loadActivity(getActivity(), datas.get(pos - mAdapter.getHeaderCount()));
             }
         });
     }
@@ -205,12 +205,12 @@ public class AlbumDetailPresenterImpl
         RecyclerView.LayoutManager layoutManager;
         if (isBig) {
             mView.setModeTvText("小图");
-            layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+            layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         } else {
             mView.setModeTvText("大图");
             layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         }
-        mRgv.setLayoutManager(layoutManager);
-        mRgv.setAdapter(mAdapter);
+        getRgv().setLayoutManager(layoutManager);
+        getRgv().setAdapter(mAdapter);
     }
 }

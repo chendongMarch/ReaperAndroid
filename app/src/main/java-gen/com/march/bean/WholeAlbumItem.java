@@ -80,6 +80,7 @@ public class WholeAlbumItem extends Album  {
     }
 
     // KEEP METHODS - put your custom methods here
+
     // KEEP METHODS END
 
 }

@@ -1,45 +1,47 @@
 package com.march.reaper.iview.fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 
 import com.march.quickrvlibs.RvViewHolder;
 import com.march.quickrvlibs.SimpleRvAdapter;
 import com.march.quickrvlibs.inter.OnItemClickListener;
 import com.march.reaper.R;
+import com.march.reaper.base.fragment.BaseFragment;
 import com.march.reaper.common.API;
 import com.march.reaper.common.Constant;
-import com.march.reaper.listener.OnDialogBtnListener;
+import com.march.reaper.helper.ShareHelper;
+import com.march.reaper.helper.Toaster;
 import com.march.reaper.imodel.VersionResponse;
-import com.march.reaper.mvp.ui.RootDialog;
-import com.march.reaper.iview.TitleFragment;
 import com.march.reaper.iview.activity.AboutActivity;
 import com.march.reaper.iview.activity.AlbumCollectionActivity;
 import com.march.reaper.iview.activity.AlbumDetailActivity;
-import com.march.reaper.mvp.ui.dialog.CommonMsgDialog;
 import com.march.reaper.utils.AppUtils;
 import com.march.reaper.utils.QueryUtils;
-import com.march.reaper.utils.SysShareUtils;
-import com.march.reaper.utils.To;
 
 import butterknife.Bind;
 
 /**
  * 我的页面
  */
-public class MineFragment extends TitleFragment {
+public class MineFragment extends BaseFragment {
 
     @Bind(R.id.rv_mine)
     RecyclerView mContentRv;
 
     @Override
-    protected void destroyPresenter() {
+    protected boolean isInitTitle() {
+        return true;
+    }
 
+    public static MineFragment newInst(){
+        return new MineFragment();
     }
 
     @Override
@@ -56,7 +58,7 @@ public class MineFragment extends TitleFragment {
     @Override
     protected void initViews(View view, Bundle save) {
         super.initViews(view, save);
-        mTitleBar.setText(null, "我的", null);
+        mTitleBarView.setText(null, "我的", null);
         mContentRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         SimpleRvAdapter<String> mContentAdapter = new SimpleRvAdapter<String>(getActivity(), Constant.MINE_CONTENT_LIST, R.layout.mine_item_content) {
             @Override
@@ -65,9 +67,6 @@ public class MineFragment extends TitleFragment {
                     holder.getParentView().getLayoutParams().height = 0;
                     return;
                 }
-//                if (pos == 5) {
-//                    holder.setVisibility(R.id.mine_item_blackline, View.GONE);
-//                }
                 holder.setText(R.id.tv_mine_item_info, data);
             }
         };
@@ -92,11 +91,11 @@ public class MineFragment extends TitleFragment {
                 break;
             case 2:
                 //数据离线
-                To.show("敬请期待");
+                Toaster.get().show(mContext, "敬请期待");
                 break;
             case 3:
                 //分享
-                SysShareUtils.newInst(getActivity()).shareText("Reaper精品美图", "Reaper精选美图,火热上线,访问官网 " + getString(R.string.official_website));
+                ShareHelper.get(mContext).shareText("Reaper精品美图", "Reaper精选美图,火热上线,访问官网 " + getString(R.string.official_website));
                 break;
             case 4:
                 //检查更新
@@ -117,17 +116,27 @@ public class MineFragment extends TitleFragment {
                 int versionCode = rst.getVersionCode();
                 int currentCode = AppUtils.getVersionCode();
                 if (currentCode >= versionCode)
-                    To.show("当前是最新版本.");
-                else
-                    new CommonMsgDialog(getActivity()).setBtn(CommonMsgDialog.Btn_OK, "去更新", new OnDialogBtnListener() {
-                        @Override
-                        public void onBtnClick(RootDialog dialog, TextView btn) {
-                            Uri uri = Uri.parse(getString(R.string.official_website));
-                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                            startActivity(intent);
-                        }
-                    }).setBtn(CommonMsgDialog.Btn_CANCEL)
-                            .show("版本更新", "当前版本:" + currentCode + "\n最新版本:" + versionCode);
+                    Toaster.get().show(mContext, "当前是最新版本.");
+                else {
+                    new AlertDialog.Builder(mContext)
+                            .setTitle("版本更新")
+                            .setMessage("当前版本:" + currentCode + "\n最新版本:" + versionCode)
+                            .setPositiveButton("去更新", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Uri uri = Uri.parse(getString(R.string.official_website));
+                                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                    startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .create().show();
+                }
             }
 
             @Override

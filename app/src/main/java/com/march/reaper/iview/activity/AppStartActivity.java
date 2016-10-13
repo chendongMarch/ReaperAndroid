@@ -10,16 +10,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.march.reaper.R;
-import com.march.reaper.ipresenter.impl.NewAppStartPresenterImpl;
-import com.march.reaper.iview.RootActivity;
-import com.march.reaper.utils.ImgLoadUtils;
+import com.march.reaper.base.activity.BaseReaperActivity;
+import com.march.reaper.base.mvp.life.PresenterFactory;
+import com.march.reaper.base.mvp.life.PresenterLoader;
+import com.march.reaper.helper.ImageHelper;
+import com.march.reaper.helper.Toaster;
+import com.march.reaper.ipresenter.impl.AppStartPresenter;
 import com.march.reaper.utils.SPUtils;
-import com.march.reaper.utils.To;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class NewAppStartActivity extends RootActivity implements NewAppStartPresenterImpl.AppStartView {
+public class AppStartActivity
+        extends BaseReaperActivity<AppStartPresenter.AppStartView, AppStartPresenter>
+        implements AppStartPresenter.AppStartView {
 
     @Bind(R.id.et_name)
     EditText mNameEt;
@@ -29,7 +33,6 @@ public class NewAppStartActivity extends RootActivity implements NewAppStartPres
     TextView mTitleTv;
     @Bind(R.id.first_start_part)
     View mFirstStartView;
-    private NewAppStartPresenterImpl mPresenter;
 
     @Override
     protected int getLayoutId() {
@@ -37,14 +40,8 @@ public class NewAppStartActivity extends RootActivity implements NewAppStartPres
     }
 
     @Override
-    protected void initDatas() {
-        super.initDatas();
-        mPresenter = new NewAppStartPresenterImpl(this);
-    }
-
-    @Override
-    protected void finalOperate() {
-        super.finalOperate();
+    protected void onStartWorks() {
+        super.onStartWorks();
         //加载图片
         mPresenter.queryAppStartFlashImg();
         final View tempView;
@@ -78,9 +75,19 @@ public class NewAppStartActivity extends RootActivity implements NewAppStartPres
         }
     }
 
+    @Override
+    protected PresenterLoader<AppStartPresenter> createPresenterLoader() {
+        return new PresenterLoader<>(this, new PresenterFactory<AppStartPresenter>() {
+            @Override
+            public AppStartPresenter crate() {
+                return new AppStartPresenter();
+            }
+        });
+    }
+
     private void startHomePage() {
         startActivity(HomePageActivity.class);
-        finish();
+        animFinish();
     }
 
     @Override
@@ -88,15 +95,11 @@ public class NewAppStartActivity extends RootActivity implements NewAppStartPres
         return true;
     }
 
-    @Override
-    protected void destroyPresenter() {
-        mPresenter = null;
-    }
 
     //加载图片到iv
     @Override
     public void loadViewImg(String url) {
-        ImgLoadUtils.loadImg(self, url, mRecommendIv);
+        ImageHelper.loadImg(mContext, url, mRecommendIv);
     }
 
     @OnClick({R.id.btn_register_device})
@@ -105,7 +108,7 @@ public class NewAppStartActivity extends RootActivity implements NewAppStartPres
             case R.id.btn_register_device:
                 String name = getText(mNameEt);
                 if (name.length() <= 0) {
-                    To.show("填写称呼之后就可以进入了");
+                    Toaster.get().show(mContext, "填写称呼之后就可以进入了");
                     return;
                 }
                 mPresenter.registerByDeviceId(name);
@@ -114,12 +117,13 @@ public class NewAppStartActivity extends RootActivity implements NewAppStartPres
         }
     }
 
-//
-//    @Subscribe(threadMode = ThreadMode.MAIN)
-//    public void onEventMainThread(SucceedEntryAppEvent event) {
-//        if(event.getMsg().equals(SucceedEntryAppEvent.EVENT_SUCCEED_ENTRY_APP)){
-//            finish();
-//        }
-//    }
+    @Override
+    protected String[] getPermission2Check() {
+        return new String[0];
+    }
 
+    @Override
+    protected boolean isInitTitle() {
+        return false;
+    }
 }

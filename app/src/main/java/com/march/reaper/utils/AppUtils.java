@@ -7,6 +7,7 @@ import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
 import com.march.reaper.base.ReaperApplication;
+import com.march.reaper.helper.Logger;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,17 +41,17 @@ public class AppUtils {
     public static HashMap<String, String> getUserInfo(Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         HashMap<String, String> params = new HashMap<>();
-        String deviceId = tm.getDeviceId();//获取智能设备唯一编号
-        String telephoneId = tm.getLine1Number();//获取本机号码
+//        String deviceId = tm.getDeviceId();//获取智能设备唯一编号
+//        String telephoneId = tm.getLine1Number();//获取本机号码
         String androidId = Settings.System.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
         params.put("time", sdf.format(new Date(System.currentTimeMillis())));
         params.put("model", android.os.Build.MODEL);
-        params.put("deviceId", checkNotNull(deviceId));
-        params.put("telephoneId", checkNotNull(telephoneId));
+//        params.put("deviceId", checkNotNull(deviceId));
+//        params.put("telephoneId", checkNotNull(telephoneId));
         params.put("androidId", checkNotNull(androidId));
         for (String key : params.keySet()) {
-            Lg.e(key + " ---> " + params.get(key));
+            Logger.e(key + " ---> " + params.get(key));
         }
         return params;
     }

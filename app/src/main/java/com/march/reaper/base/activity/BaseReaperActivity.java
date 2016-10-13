@@ -1,0 +1,37 @@
+package com.march.reaper.base.activity;
+
+import android.widget.TextView;
+
+import com.march.reaper.base.mvp.presenter.BasePresenter;
+import com.march.reaper.base.mvp.view.BaseView;
+import com.march.reaper.utils.SPUtils;
+
+import butterknife.ButterKnife;
+
+/**
+ * Created by march on 16/6/6.
+ * activity基类
+ */
+public abstract class BaseReaperActivity<V extends BaseView, P extends BasePresenter> extends BaseLifeActivity<V, P> {
+
+
+    @Override
+    protected void onInitDatas() {
+        super.onInitDatas();
+        ButterKnife.bind(this);
+    }
+
+    protected String getText(TextView tv) {
+        return tv.getText().toString().trim();
+    }
+
+    //授权
+    protected void authority() {
+        SPUtils.get().putIsLogin(true);
+    }
+
+    protected void animFinish() {
+        finish();
+    }
+
+}

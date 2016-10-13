@@ -8,13 +8,13 @@ import android.view.View;
 
 import com.march.bean.Album;
 import com.march.reaper.R;
-import com.march.reaper.common.TitleBarView;
-import com.march.reaper.ipresenter.BaseNetActivityPresenter;
-import com.march.reaper.ipresenter.impl.DetailCollPresenterImpl;
+import com.march.reaper.base.activity.BaseReaperActivity;
+import com.march.reaper.base.mvp.life.PresenterFactory;
+import com.march.reaper.base.mvp.life.PresenterLoader;
 import com.march.reaper.common.Constant;
 import com.march.reaper.ipresenter.impl.AlbumDetailPresenterImpl;
-import com.march.reaper.mvp.ui.TitleActivity;
 import com.march.reaper.widget.RecyclerGroupView;
+import com.march.reaper.widget.TitleBarView;
 
 import butterknife.Bind;
 
@@ -22,12 +22,11 @@ import butterknife.Bind;
  * 专辑详情界面
  */
 public class AlbumDetailActivity
-        extends TitleActivity
+        extends BaseReaperActivity<AlbumDetailPresenterImpl.AlbumDetailView, AlbumDetailPresenterImpl>
         implements AlbumDetailPresenterImpl.AlbumDetailView {
 
     @Bind(R.id.detail_albumlist_rv)
     RecyclerGroupView mRgv;
-    private BaseNetActivityPresenter mPresenter;
     public static final int TYPE_IS_COLLECTION = 0;
     public static final int TYPE_IS_DETAILS = 1;
 
@@ -51,36 +50,47 @@ public class AlbumDetailActivity
         return R.layout.detail_activity;
     }
 
-    @Override
-    protected void destroyPresenter() {
-        mPresenter = null;
-    }
 
     @Override
-    protected void initViews(Bundle save) {
-        super.initViews(save);
+    protected void onInitViews(Bundle save) {
+        super.onInitViews(save);
         mRgv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
     }
 
     @Override
-    protected void initDatas() {
-        super.initDatas();
-        if (getIntent().getIntExtra(Constant.KEY_DETAIL_TYPE, 100) == TYPE_IS_DETAILS) {
-            mPresenter = new AlbumDetailPresenterImpl(self);
-            mPresenter.setIntent(getIntent());
-            mTitleBar.setText("首页", "专辑详情", "大图");
-        } else if (getIntent().getIntExtra(Constant.KEY_DETAIL_TYPE, 100) == TYPE_IS_COLLECTION) {
-            mPresenter = new DetailCollPresenterImpl(self);
-            mTitleBar.setText("我", "图片收藏", "大图");
-        }
-        mPresenter.setRgv(mRgv);
+    protected void onInitDatas() {
+        super.onInitDatas();
+//        if (getIntent().getIntExtra(Constant.KEY_DETAIL_TYPE, 100) == TYPE_IS_DETAILS) {
+//            mPresenter = new AlbumDetailPresenterImpl((BaseReaperActivity) mActivity);
+//            mTitleBarView.setText("首页", "专辑详情", "大图");
+//        }
+//        else if (getIntent().getIntExtra(Constant.KEY_DETAIL_TYPE, 100) == TYPE_IS_COLLECTION) {
+//            mPresenter = new DetailCollPresenterImpl((BaseReaperActivity) mActivity);
+//            mTitleBarView.setText("我", "图片收藏", "大图");
+//        }
+//        mPresenter.justQuery();
+    }
+
+    @Override
+    protected void onStartWorks() {
+        super.onStartWorks();
         mPresenter.justQuery();
     }
 
     @Override
-    protected void initEvents() {
-        super.initEvents();
-        mTitleBar.setListener(TitleBarView.POS_Right, new View.OnClickListener() {
+    protected PresenterLoader<AlbumDetailPresenterImpl> createPresenterLoader() {
+        return new PresenterLoader<>(this, new PresenterFactory<AlbumDetailPresenterImpl>() {
+            @Override
+            public AlbumDetailPresenterImpl crate() {
+                return new AlbumDetailPresenterImpl();
+            }
+        });
+    }
+
+    @Override
+    protected void onInitEvents() {
+        super.onInitEvents();
+        mTitleBarView.setListener(TitleBarView.POS_Right, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPresenter.switchMode();
@@ -90,6 +100,21 @@ public class AlbumDetailActivity
 
     @Override
     public void setModeTvText(String txt) {
-        mTitleBar.get(TitleBarView.POS_Right).setText(txt);
+        mTitleBarView.get(TitleBarView.POS_Right).setText(txt);
+    }
+
+    @Override
+    protected String[] getPermission2Check() {
+        return new String[0];
+    }
+
+    @Override
+    protected boolean isInitTitle() {
+        return true;
+    }
+
+    @Override
+    public RecyclerGroupView getRgv() {
+        return mRgv;
     }
 }

@@ -4,12 +4,11 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-
 import com.march.reaper.R;
+import com.march.reaper.base.fragment.BaseFragment;
 import com.march.reaper.common.Constant;
-import com.march.reaper.iview.RootFragment;
+import com.march.reaper.base.fragment.AbsFragment;
 import com.march.reaper.iview.adapter.VPAlbumAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,13 +18,13 @@ import butterknife.Bind;
  * Created by march on 16/7/1.
  * 推荐页面
  */
-public class RecommendFragment extends RootFragment {
+public class RecommendFragment extends BaseFragment {
 
     @Bind(R.id.recommend_tably)
     TabLayout mTabLy;
     @Bind(R.id.recommend_viewpager)
     ViewPager mTypeAlbumVp;
-    private List<RootFragment> mFragments;
+    private List<AbsFragment> mFragments;
 
 
     @Override
@@ -52,7 +51,7 @@ public class RecommendFragment extends RootFragment {
     @Override
     protected void initEvents() {
         super.initEvents();
-        mTabLy.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        mTabLy.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mTypeAlbumVp.setCurrentItem((int) tab.getTag());
@@ -88,6 +87,11 @@ public class RecommendFragment extends RootFragment {
 
             }
         });
+    }
+
+    @Override
+    protected boolean isInitTitle() {
+        return false;
     }
 
     @Override

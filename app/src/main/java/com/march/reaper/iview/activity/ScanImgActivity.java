@@ -15,12 +15,12 @@ import com.march.bean.Detail;
 import com.march.bean.DetailCollection;
 import com.march.reaper.R;
 import com.march.reaper.base.ReaperApplication;
-import com.march.reaper.common.DbHelper;
-import com.march.reaper.iview.RootActivity;
+import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.reaper.common.Constant;
-import com.march.reaper.utils.DisplayUtils;
-import com.march.reaper.utils.Lg;
-import com.march.reaper.utils.To;
+import com.march.reaper.common.DbHelper;
+import com.march.reaper.helper.ImageHelper;
+import com.march.reaper.helper.Logger;
+import com.march.reaper.helper.Toaster;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,7 +32,7 @@ import butterknife.OnClick;
 /**
  * 图片查看,可以缩放,基于photoview
  */
-public class ScanImgActivity extends RootActivity {
+public class ScanImgActivity extends BaseReaperActivity {
 
     @Bind(R.id.scan_iv)
     ImageView mScanIv;
@@ -60,8 +60,8 @@ public class ScanImgActivity extends RootActivity {
     }
 
     @Override
-    protected void initDatas() {
-        super.initDatas();
+    protected void onInitDatas() {
+        super.onInitDatas();
         mAlbumDetailData = (AlbumDetail) getIntent().getSerializableExtra(Constant.KEY_ALBUM_DETAIL_SCAN);
         mCol = new DetailCollection(mAlbumDetailData);
         isCollection = DbHelper.get().isDetailCollection(mCol);
@@ -69,12 +69,11 @@ public class ScanImgActivity extends RootActivity {
 
 
     @Override
-    protected void initViews(Bundle save) {
-        super.initViews(save);
-        Lg.e(mAlbumDetailData.getWidth() + "  " + DisplayUtils.getScreenWidth());
+    protected void onInitViews(Bundle save) {
+        super.onInitViews(save);
         String url = mAlbumDetailData.getPhoto_src().replaceAll("-\\d+x\\d+.jpg", ".jpg");
-        Lg.e(url);
-        Glide.with(self).load(url).crossFade().into(mScanIv);
+        Logger.e(url);
+        ImageHelper.loadImg(mContext, url, mScanIv);
         mIsColIv.setImageResource(isCollection ? R.drawable.ic_collection : R.drawable.ic_not_collection);
     }
 
@@ -118,11 +117,21 @@ public class ScanImgActivity extends RootActivity {
                         try {
                             File file = new File(downloadDir, fileName);
                             resource.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(file));
-                            To.show("图片下载完毕,保存到 " + file.getAbsolutePath());
+                            Toaster.get().show(mContext, "图片下载完毕,保存到 " + file.getAbsolutePath());
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
                     }
                 });
+    }
+
+    @Override
+    protected String[] getPermission2Check() {
+        return new String[0];
+    }
+
+    @Override
+    protected boolean isInitTitle() {
+        return false;
     }
 }

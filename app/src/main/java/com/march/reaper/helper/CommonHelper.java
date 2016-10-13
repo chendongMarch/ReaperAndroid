@@ -1,15 +1,19 @@
-package com.march.reaper.utils;
+package com.march.reaper.helper;
 
 import android.graphics.Color;
 
 import java.util.Random;
 
 /**
- * Created by march on 16/7/13.
- * 颜色
+ * Project  : Reaper
+ * Package  : com.march.reaper.helper
+ * CreateAt : 2016/10/13
+ * Describe :
+ *
+ * @author chendong
  */
-public class ColorUtils {
 
+public class CommonHelper {
     public static int randomColor() {
         Random random = new Random();
         return Color.rgb(random.nextInt(255), random.nextInt(255), random.nextInt(255));

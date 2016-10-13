@@ -10,6 +10,8 @@ import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.march.reaper.base.ReaperApplication;
+import com.march.reaper.helper.Logger;
+import com.march.reaper.helper.Toaster;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.Callback;
 
@@ -118,14 +120,14 @@ public class QueryUtils {
             @Override
             public T parseNetworkResponse(Response response) throws Exception {
                 String string = response.body().string();
-                Lg.e("数据到达"+ string);
+                Logger.e("数据到达"+ string);
                 return new Gson().fromJson(string, cls);
             }
 
             @Override
             public void onError(Call call, Exception e) {
                 e.printStackTrace();
-                Lg.e("请求出错" + e.toString());
+                Logger.e("请求出错" + e.toString());
                 if (listener != null) {
                     listener.error(e);
                 }
@@ -133,7 +135,7 @@ public class QueryUtils {
 
             @Override
             public void onResponse(T response) {
-                Lg.e("数据接受完毕,开始进行处理");
+                Logger.e("数据接受完毕,开始进行处理");
                 if (listener != null) {
                     listener.queryOver(response);
                 }
@@ -142,34 +144,34 @@ public class QueryUtils {
             @Override
             public void inProgress(float progress) {
                 super.inProgress(progress);
-                Lg.e(progress + "");
+                Logger.e(progress + "");
             }
         };
     }
 
 
     public <T> void query(String url, final Class<T> cls, final OnQueryOverListener<T> listener) {
-        Lg.e("get请求 -> " + url);
+        Logger.e("get请求 -> " + url);
         if(!isNetworkConnected(ReaperApplication.get())){
-            To.show("网络不给力哦");
+            Toaster.get().show(ReaperApplication.get(),"网络不给力哦");
             return;
         }
         OkHttpUtils.get().url(url).build().execute(createCallBack(cls, listener));
     }
 
     public <T> void get(String url, final Class<T> cls, final OnQueryOverListener<T> listener) {
-        Lg.e("get请求 -> " + url);
+        Logger.e("get请求 -> " + url);
         if(!isNetworkConnected(ReaperApplication.get())){
-            To.show("网络不给力哦");
+            Toaster.get().show(ReaperApplication.get(),"网络不给力哦");
             return;
         }
         OkHttpUtils.get().url(url).build().execute(createCallBack(cls, listener));
     }
 
     public <T> void post(String url, final Class<T> cls, HashMap<String, String> params, final OnQueryOverListener<T> listener) {
-        Lg.e("post请求 -> " + url);
+        Logger.e("post请求 -> " + url);
         if(!isNetworkConnected(ReaperApplication.get())){
-            To.show("网络不给力哦");
+            Toaster.get().show(ReaperApplication.get(),"网络不给力哦");
             return;
         }
         OkHttpUtils.post().url(url).params(params).build().execute(createCallBack(cls, listener));

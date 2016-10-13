@@ -38,7 +38,6 @@ public class RecyclerGroupView extends FrameLayout {
         this.mContext = context;
         inflate(context, R.layout.widget_recycler_group_view, this);
         if (isInEditMode()) return;
-
         initViews();
         initRefreshPart();
         initFabPart();

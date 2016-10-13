@@ -6,8 +6,8 @@ import android.view.View;
 
 import com.march.reaper.R;
 import com.march.reaper.ipresenter.impl.SearchPresenterImpl;
-import com.march.reaper.iview.RootActivity;
-import com.march.reaper.iview.TitleFragment;
+import com.march.reaper.base.activity.BaseReaperActivity;
+import com.march.reaper.base.fragment.BaseFragment;
 import com.march.reaper.widget.RecyclerGroupView;
 
 import butterknife.Bind;
@@ -15,11 +15,16 @@ import butterknife.Bind;
 /**
  * 搜索展示
  */
-public class SearchFragment extends TitleFragment implements SearchPresenterImpl.SearchView {
+public class SearchFragment extends BaseFragment implements SearchPresenterImpl.SearchView {
 
     @Bind(R.id.rv_random_list)
     RecyclerGroupView mRandomRgv;
     private SearchPresenterImpl mPresenterImpl;
+
+    @Override
+    protected boolean isInitTitle() {
+        return true;
+    }
 
     @Override
     protected void destroyPresenter() {
@@ -40,11 +45,11 @@ public class SearchFragment extends TitleFragment implements SearchPresenterImpl
     @Override
     protected void initViews(View view, Bundle save) {
         super.initViews(view, save);
-        mTitleBar.setText(null, "发现", null);
+        mTitleBarView.setText(null, "发现", null);
 //        mRandomRgv.enableHeader();
         mRandomRgv.getFloatBtn().setImageResource(R.drawable.ic_random);
         mRandomRgv.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-        mPresenterImpl = new SearchPresenterImpl(this, (RootActivity) getActivity());
+        mPresenterImpl = new SearchPresenterImpl(this, (BaseReaperActivity) getActivity());
         mPresenterImpl.setRgv(mRandomRgv);
         mPresenterImpl.justQuery();
     }

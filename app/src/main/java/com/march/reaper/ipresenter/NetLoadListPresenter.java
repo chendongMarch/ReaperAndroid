@@ -1,11 +1,12 @@
 package com.march.reaper.ipresenter;
 
 import com.march.quickrvlibs.RvAdapter;
+import com.march.reaper.base.ReaperApplication;
+import com.march.reaper.base.mvp.presenter.BasePresenter;
+import com.march.reaper.base.mvp.view.BaseView;
 import com.march.reaper.common.Constant;
-import com.march.reaper.iview.BaseView;
-import com.march.reaper.iview.RootActivity;
-import com.march.reaper.utils.DisplayUtils;
-import com.march.reaper.utils.Lg;
+import com.march.reaper.helper.DimensionHelper;
+import com.march.reaper.helper.Logger;
 import com.march.reaper.widget.RecyclerGroupView;
 
 import java.util.ArrayList;
@@ -15,24 +16,18 @@ import java.util.List;
  * Created by march on 16/7/11.
  * 网络请求列表显示的功能基类,实现类似功能的presenter继承该类
  */
-public abstract class NetLoadListPresenter<V extends BaseView, D> extends WithViewTypePresenter<V> {
+public abstract class NetLoadListPresenter<V extends BaseView, D> extends BasePresenter<V> {
     protected RvAdapter mAdapter;
-    protected RecyclerGroupView mRgv;
     protected static final int mPreLoadNum = Constant.PRE_LOAD_NUM;
     protected int offset = 0, limit = Constant.ONECE_QUERY_DATA_NUM;
     protected boolean isLoadEnd = true;
     protected List<D> datas;
     protected int mWidth;
 
-    public NetLoadListPresenter(V mView, RootActivity mContext) {
-        super(mView, mContext);
-        mWidth = DisplayUtils.getScreenWidth();
+    public NetLoadListPresenter() {
+        mWidth = DimensionHelper.getScreenWidth(ReaperApplication.get());
         datas = new ArrayList<>();
-    }
-
-    public void setRgv(RecyclerGroupView rgv) {
-        this.mRgv = rgv;
-        mRgv.setOnRefreshBeginListener(new RecyclerGroupView.OnRefreshBeginListener() {
+        getRgv().setOnRefreshBeginListener(new RecyclerGroupView.OnRefreshBeginListener() {
             @Override
             public void onRefreshBegin() {
                 reJustQuery();
@@ -46,17 +41,6 @@ public abstract class NetLoadListPresenter<V extends BaseView, D> extends WithVi
         justQuery();
     }
 
-    public NetLoadListPresenter(RootActivity mContext) {
-        super(mContext);
-        mWidth = DisplayUtils.getScreenWidth();
-        datas = new ArrayList<>();
-    }
-
-    /**
-     * 禁用刷新
-     */
-
-
     /**
      * 处理查询后的数据
      *
@@ -65,13 +49,13 @@ public abstract class NetLoadListPresenter<V extends BaseView, D> extends WithVi
     protected void handleDatasAfterQueryReady(List<D> list) {
         if (list.size() <= 0) {
             offset = -1;
-            Lg.e("没有数据了");
+            Logger.e("没有数据了");
             if (mAdapter != null) {
                 mAdapter.setFooterEnable(false);
                 mAdapter.notifyDataSetChanged();
             }
             completeRefresh();
-            isLoadEnd=true;
+            isLoadEnd = true;
             return;
         }
         datas.addAll(list);
@@ -88,12 +72,14 @@ public abstract class NetLoadListPresenter<V extends BaseView, D> extends WithVi
         isLoadEnd = true;
     }
 
+    protected abstract RecyclerGroupView getRgv();
+
     protected void completeRefresh() {
-        mRgv.getPtrLy().refreshComplete();
+        getRgv().getPtrLy().refreshComplete();
     }
 
     protected void setAdapter4RecyclerView(RvAdapter adapter) {
-        mRgv.getRecyclerView().setAdapter(adapter);
+        getRgv().getRecyclerView().setAdapter(adapter);
     }
 
     /**

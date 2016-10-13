@@ -3,10 +3,10 @@ package com.march.reaper.iview.activity;
 import android.os.Bundle;
 
 import com.march.reaper.R;
-import com.march.reaper.mvp.ui.TitleActivity;
+import com.march.reaper.base.activity.BaseReaperActivity;
+import com.march.reaper.base.mvp.life.PresenterLoader;
 
-public class AboutActivity extends TitleActivity {
-
+public class AboutActivity extends BaseReaperActivity {
 
     @Override
     protected int getLayoutId() {
@@ -14,13 +14,22 @@ public class AboutActivity extends TitleActivity {
     }
 
     @Override
-    protected void destroyPresenter() {
-
+    protected void onInitViews(Bundle save) {
+        super.onInitViews(save);
+        mTitleBarView.setText("我", "关于", null);
+    }
+    @Override
+    protected String[] getPermission2Check() {
+        return new String[0];
     }
 
     @Override
-    protected void initViews(Bundle save) {
-        super.initViews(save);
-        mTitleBar.setText("我", "关于", null);
+    protected boolean isInitTitle() {
+        return true;
+    }
+
+    @Override
+    protected PresenterLoader createPresenterLoader() {
+        return null;
     }
 }

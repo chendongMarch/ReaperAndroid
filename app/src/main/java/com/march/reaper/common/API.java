@@ -30,5 +30,5 @@ public class API {
     public static final String POST_CHECK_USER = BASE + "/checkUser";
     public static final String GET_CHECK_VERSION = BASE + "/checkVersion";
     public static final String POST_AUTO_REGISTER = BASE + "/autoRegister";
-    public static final String POST_AUTO_Record= BASE + "/autoRecord";
+    public static final String POST_AUTO_RECORD = BASE + "/autoRecord";
 }

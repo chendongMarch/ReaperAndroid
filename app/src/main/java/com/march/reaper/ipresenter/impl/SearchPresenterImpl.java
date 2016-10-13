@@ -11,8 +11,8 @@ import com.march.reaper.R;
 import com.march.reaper.common.API;
 import com.march.reaper.imodel.WholeAlbumResponse;
 import com.march.reaper.ipresenter.BaseNetFragmentPresenter;
-import com.march.reaper.iview.BaseView;
-import com.march.reaper.iview.RootActivity;
+import com.march.reaper.base.mvp.BaseView;
+import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.reaper.iview.activity.AlbumDetailActivity;
 import com.march.reaper.utils.QueryUtils;
 
@@ -20,11 +20,11 @@ import java.util.List;
 
 /**
  * Created by march on 16/7/13.
- * 发现界面,presenter
+ * 发现界面,mPresenter
  */
 public class SearchPresenterImpl extends BaseNetFragmentPresenter<SearchPresenterImpl.SearchView, WholeAlbumItem> {
 
-    public SearchPresenterImpl(SearchView mView, RootActivity mContext) {
+    public SearchPresenterImpl(SearchView mView, BaseReaperActivity mContext) {
         super(mView, mContext);
     }
 

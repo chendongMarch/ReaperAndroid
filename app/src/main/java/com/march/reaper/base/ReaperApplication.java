@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide;
 import com.march.quickrvlibs.RvQuick;
 import com.march.quickrvlibs.helper.QuickLoad;
 import com.march.reaper.common.DaoHelper;
-import com.march.reaper.common.SMSHelper;
+import com.march.reaper.helper.Logger;
 
 import java.io.File;
 
@@ -25,6 +25,7 @@ public class ReaperApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Logger.e("app create");
         mInst = this;
         initRvQuick();
         DaoHelper.get().setupDatabase(this);
@@ -36,7 +37,7 @@ public class ReaperApplication extends Application {
     }
 
 
-    //    初始化QuickAdapter
+    // 初始化QuickAdapter
     private void initRvQuick() {
         RvQuick.init(new QuickLoad() {
             @Override

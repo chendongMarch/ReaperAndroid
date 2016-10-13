@@ -9,14 +9,11 @@ import com.march.dao.AlbumDetailDao;
 import com.march.dao.AlbumItemCollectionDao;
 import com.march.dao.DetailCollectionDao;
 import com.march.dao.RecommendAlbumItemDao;
-import com.march.reaper.utils.Lg;
 
 import java.util.List;
 
-import de.greenrobot.dao.internal.FastCursor;
 import de.greenrobot.dao.query.Query;
 import de.greenrobot.dao.query.QueryBuilder;
-import de.greenrobot.dao.query.WhereCondition;
 
 /**
  * Created by march on 16/6/30.

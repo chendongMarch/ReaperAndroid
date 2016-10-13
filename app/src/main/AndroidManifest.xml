@@ -2,12 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.march.reaper">
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:name=".base.ReaperApplication"
@@ -29,15 +27,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".iview.activity.NewAppStartActivity"
+            android:name=".iview.activity.AppStartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar.Loading">
 
         </activity>
-        <activity
-            android:name=".iview.activity.AppStartActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeNoActionBar.Loading"/>
         <activity
             android:name=".iview.activity.HomePageActivity"
             android:screenOrientation="portrait"
@@ -62,13 +56,6 @@
             android:name=".iview.activity.AlbumCollectionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <!-- <activity -->
-        <!-- android:name="com.mob.tools.MobUIShell" -->
-        <!-- android:configChanges="keyboardHidden|orientation|screenSize" -->
-        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" -->
-        <!-- android:windowSoftInputMode="stateHidden|adjustResize" /> -->
-        <activity android:name=".iview.activity.RegisterActivity" />
-        <activity android:name=".iview.activity.LoginActivity" />
 
     </application>
 
