@@ -16,7 +16,7 @@ import com.march.reaper.common.Constant;
 import com.march.reaper.common.DbHelper;
 import com.march.reaper.helper.CommonHelper;
 import com.march.reaper.ipresenter.BaseNetActivityPresenter;
-import com.march.reaper.base.activity.BaseReaperActivity;
+import com.march.reaper.base.activity.BaseReaperMVPActivity;
 import com.march.reaper.iview.activity.ScanImgActivity;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class DetailCollPresenterImpl
 
     private boolean isBig = false;
 
-    public DetailCollPresenterImpl(BaseReaperActivity mContext) {
+    public DetailCollPresenterImpl(BaseReaperMVPActivity mContext) {
         super(mContext);
     }
 

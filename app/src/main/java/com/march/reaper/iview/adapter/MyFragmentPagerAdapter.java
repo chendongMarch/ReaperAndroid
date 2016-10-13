@@ -12,15 +12,15 @@ import java.util.List;
  * Created by march on 16/7/1.
  * 推荐页面ViewPager的适配器
  */
-public class VPAlbumAdapter extends FragmentPagerAdapter{
+public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private List<AbsFragment> mFragments;
 
-    public VPAlbumAdapter(FragmentManager fm) {
+    public MyFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public VPAlbumAdapter(FragmentManager fm, List<AbsFragment> mFragments) {
+    public MyFragmentPagerAdapter(FragmentManager fm, List<AbsFragment> mFragments) {
         super(fm);
         this.mFragments = mFragments;
     }

@@ -14,7 +14,7 @@ import android.support.v4.app.FragmentTransaction;
  *
  * @author chendong
  */
-public abstract class MultiFragmentActivity extends BaseReaperActivity {
+public abstract class MultiFragmentActivity extends BaseReaperMVPActivity {
 
     private Fragment mCurrentFragment;
     private FragmentManager mFragmentManager;

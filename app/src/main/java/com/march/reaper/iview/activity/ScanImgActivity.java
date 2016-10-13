@@ -15,7 +15,7 @@ import com.march.bean.Detail;
 import com.march.bean.DetailCollection;
 import com.march.reaper.R;
 import com.march.reaper.base.ReaperApplication;
-import com.march.reaper.base.activity.BaseReaperActivity;
+import com.march.reaper.base.activity.BaseReaperMVPActivity;
 import com.march.reaper.common.Constant;
 import com.march.reaper.common.DbHelper;
 import com.march.reaper.helper.ImageHelper;
@@ -32,7 +32,7 @@ import butterknife.OnClick;
 /**
  * 图片查看,可以缩放,基于photoview
  */
-public class ScanImgActivity extends BaseReaperActivity {
+public class ScanImgActivity extends BaseReaperMVPActivity {
 
     @Bind(R.id.scan_iv)
     ImageView mScanIv;

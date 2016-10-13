@@ -14,7 +14,7 @@ import com.march.reaper.helper.CommonHelper;
 import com.march.reaper.imodel.RecommendAlbumResponse;
 import com.march.reaper.ipresenter.BaseNetFragmentPresenter;
 import com.march.reaper.base.mvp.BaseView;
-import com.march.reaper.base.activity.BaseReaperActivity;
+import com.march.reaper.base.activity.BaseReaperMVPActivity;
 import com.march.reaper.ipresenter.NetLoadListPresenter;
 import com.march.reaper.iview.activity.AlbumDetailActivity;
 import com.march.reaper.utils.QueryUtils;
@@ -38,7 +38,7 @@ public class AlbumQueryPresenterImpl
         void setModeTvText(String txt);
     }
 
-    public AlbumQueryPresenterImpl(AlbumQueryView mView, BaseReaperActivity mContext, String mRecommendType) {
+    public AlbumQueryPresenterImpl(AlbumQueryView mView, BaseReaperMVPActivity mContext, String mRecommendType) {
         super(mView, mContext);
         this.mRecommendType = mRecommendType;
     }

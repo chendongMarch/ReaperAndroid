@@ -3,10 +3,10 @@ package com.march.reaper.iview.activity;
 import android.os.Bundle;
 
 import com.march.reaper.R;
-import com.march.reaper.base.activity.BaseReaperActivity;
+import com.march.reaper.base.activity.BaseReaperMVPActivity;
 import com.march.reaper.base.mvp.life.PresenterLoader;
 
-public class AboutActivity extends BaseReaperActivity {
+public class AboutActivity extends BaseReaperMVPActivity {
 
     @Override
     protected int getLayoutId() {

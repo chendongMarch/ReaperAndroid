@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.march.reaper.R;
-import com.march.reaper.base.activity.BaseReaperActivity;
+import com.march.reaper.base.activity.BaseReaperMVPActivity;
 import com.march.reaper.base.mvp.life.PresenterFactory;
 import com.march.reaper.base.mvp.life.PresenterLoader;
 import com.march.reaper.helper.ImageHelper;
@@ -22,7 +22,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 public class AppStartActivity
-        extends BaseReaperActivity<AppStartPresenter.AppStartView, AppStartPresenter>
+        extends BaseReaperMVPActivity<AppStartPresenter.AppStartView, AppStartPresenter>
         implements AppStartPresenter.AppStartView {
 
     @Bind(R.id.et_name)

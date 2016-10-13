@@ -8,14 +8,14 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.march.reaper.R;
-import com.march.reaper.base.activity.BaseReaperActivity;
+import com.march.reaper.base.activity.BaseReaperMVPActivity;
 import com.march.reaper.base.mvp.life.PresenterLoader;
 import com.march.reaper.helper.Logger;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class GuardActivity extends BaseReaperActivity {
+public class GuardActivity extends BaseReaperMVPActivity {
 
     @Bind(R.id.et_guard)
     EditText mGuardEt;

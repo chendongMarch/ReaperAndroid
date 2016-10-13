@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.march.reaper.widget.TitleBarView;
-
 import butterknife.ButterKnife;
 
 /**
@@ -40,8 +38,8 @@ public abstract class AbsFragment extends Fragment {
             view = getLayoutView();
         }
         ButterKnife.bind(this, view);
-        initViews(view, savedInstanceState);
-        initEvents();
+        onInitViews(view, savedInstanceState);
+        onInitEvents();
         return view;
     }
 
@@ -49,7 +47,7 @@ public abstract class AbsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initDatas();
+        onInitDatas();
     }
 
     protected abstract int getLayoutId();
@@ -58,25 +56,20 @@ public abstract class AbsFragment extends Fragment {
         return null;
     }
 
-    protected void initDatas() {
+    protected void onInitDatas() {
 
     }
 
-    protected boolean isForceUseLayoutId() {
-        return false;
-    }
-
-    protected void initViews(View view, Bundle save) {
+    protected void onInitViews(View view, Bundle save) {
 
     }
 
-    protected void initEvents() {
+    protected void onInitEvents() {
 
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        destroyPresenter();
     }
 }

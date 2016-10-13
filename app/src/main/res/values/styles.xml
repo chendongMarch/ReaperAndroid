@@ -42,6 +42,7 @@
         <item name="android:windowAnimationStyle">@style/dialog_anim_bottom_to_center</item>
         <!-- 无标题，设置的是decorview的背景色 -->
     </style>
+
     <style name="dialog_anim_bottom_to_center" parent="android:Animation">
         <!-- 进入时的动画 -->
         <item name="@android:windowEnterAnimation">@anim/bottom_to_center</item>
@@ -85,5 +86,10 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/line_gray</item>
     </style>
+
+    <style name="TabLayoutStyle" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">16sp</item>
+    </style>
+
 
 </resources>

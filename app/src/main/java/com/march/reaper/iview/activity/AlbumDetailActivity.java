@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.march.bean.Album;
 import com.march.reaper.R;
-import com.march.reaper.base.activity.BaseReaperActivity;
+import com.march.reaper.base.activity.BaseReaperMVPActivity;
 import com.march.reaper.base.mvp.life.PresenterFactory;
 import com.march.reaper.base.mvp.life.PresenterLoader;
 import com.march.reaper.common.Constant;
@@ -22,7 +22,7 @@ import butterknife.Bind;
  * 专辑详情界面
  */
 public class AlbumDetailActivity
-        extends BaseReaperActivity<AlbumDetailPresenterImpl.AlbumDetailView, AlbumDetailPresenterImpl>
+        extends BaseReaperMVPActivity<AlbumDetailPresenterImpl.AlbumDetailView, AlbumDetailPresenterImpl>
         implements AlbumDetailPresenterImpl.AlbumDetailView {
 
     @Bind(R.id.detail_albumlist_rv)

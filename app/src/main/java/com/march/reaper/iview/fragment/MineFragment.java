@@ -50,14 +50,14 @@ public class MineFragment extends BaseFragment {
     }
 
     @Override
-    protected void initDatas() {
-        super.initDatas();
+    protected void onInitDatas() {
+        super.onInitDatas();
         mSelfName = MineFragment.class.getSimpleName();
     }
 
     @Override
-    protected void initViews(View view, Bundle save) {
-        super.initViews(view, save);
+    protected void onInitViews(View view, Bundle save) {
+        super.onInitViews(view, save);
         mTitleBarView.setText(null, "我的", null);
         mContentRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         SimpleRvAdapter<String> mContentAdapter = new SimpleRvAdapter<String>(getActivity(), Constant.MINE_CONTENT_LIST, R.layout.mine_item_content) {

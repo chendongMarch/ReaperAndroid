@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.march.reaper.R;
-import com.march.reaper.base.activity.BaseReaperActivity;
+import com.march.reaper.base.activity.BaseReaperMVPActivity;
 import com.march.reaper.base.mvp.life.PresenterFactory;
 import com.march.reaper.base.mvp.life.PresenterLoader;
 import com.march.reaper.ipresenter.impl.AlbumCollPresenterImpl;
@@ -18,7 +18,7 @@ import butterknife.Bind;
  * 专辑收藏展示
  */
 public class AlbumCollectionActivity
-        extends BaseReaperActivity<AlbumCollPresenterImpl.AlbumCollView, AlbumCollPresenterImpl>
+        extends BaseReaperMVPActivity<AlbumCollPresenterImpl.AlbumCollView, AlbumCollPresenterImpl>
         implements AlbumCollPresenterImpl.AlbumCollView {
 
     @Bind(R.id.albumcol_recycler)
