@@ -4,10 +4,16 @@ package com.march.bean;
 
 // KEEP INCLUDES - put your custom includes here
 // KEEP INCLUDES END
+
+import com.march.reaper.common.API;
+import com.march.reaper.common.RequestCallback;
+import com.march.reaper.imodel.RecommendAlbumResponse;
+import com.march.reaper.utils.QueryUtils;
+
 /**
  * Entity mapped to table "RECOMMEND_ALBUM_ITEM".
  */
-public class RecommendAlbumItem extends Album  {
+public class RecommendAlbumItem extends Album {
 
     private String album_type;
     private String album_link;
@@ -83,6 +89,24 @@ public class RecommendAlbumItem extends Album  {
     @Override
     public String getKey_words() {
         return null;
+    }
+
+
+    public static void queryRecommendAlbumForType
+            (int offset, int limit,
+             String type, final RequestCallback<RecommendAlbumResponse> callback) {
+        final String url = API.GET_SCAN_RECOMMEND + "?offset=" + offset + "&limit=" + limit + "&albumtype=" + type;
+        QueryUtils.get().query(url, RecommendAlbumResponse.class, new QueryUtils.OnQueryOverListener<RecommendAlbumResponse>() {
+            @Override
+            public void queryOver(RecommendAlbumResponse rst) {
+                callback.onSucceed(rst);
+            }
+
+            @Override
+            public void error(Exception e) {
+                callback.onError(e);
+            }
+        });
     }
     // KEEP METHODS END
 

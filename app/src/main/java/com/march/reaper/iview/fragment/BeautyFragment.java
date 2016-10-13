@@ -63,7 +63,7 @@ public class BeautyFragment extends BaseFragment {
         mTabLy.addTab(wholeTab, false);
         mBeautyVp.setAdapter(
                 new MyFragmentPagerAdapter(
-                        getChildFragmentManager(), mFragments));
+                        getFragmentManager(), mFragments));
     }
 
     @Override
