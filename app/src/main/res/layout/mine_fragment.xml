@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/gray_bg"
     android:orientation="vertical"
-    tools:context="com.march.reaper.mvp.ui.fragment.MineFragment">
+    tools:context=".iview.fragment.MineFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_mine"

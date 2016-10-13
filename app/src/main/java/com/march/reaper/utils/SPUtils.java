@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import com.march.bean.AlbumDetail;
 import com.march.bean.RecommendAlbumItem;
 import com.march.bean.WholeAlbumItem;
-import com.march.reaper.RootApplication;
+import com.march.reaper.base.ReaperApplication;
 
 /**
  * Created by march on 16/7/2.
@@ -21,7 +21,7 @@ public class SPUtils {
     private final static String SP_USER_NAME = "SP_USER_NAME";
 
     private SPUtils() {
-        sp = RootApplication.get().getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+        sp = ReaperApplication.get().getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         editor = sp.edit();
     }
 

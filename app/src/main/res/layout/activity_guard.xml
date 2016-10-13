@@ -6,7 +6,7 @@
     android:background="@drawable/bg_appstart"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.march.reaper.mvp.ui.activity.GuardActivity">
+    tools:context=".iview.activity.GuardActivity">
 
     <EditText
         android:inputType="number"

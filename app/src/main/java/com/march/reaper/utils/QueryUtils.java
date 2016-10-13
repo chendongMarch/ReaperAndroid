@@ -9,15 +9,10 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.march.reaper.RootApplication;
+import com.march.reaper.base.ReaperApplication;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.Callback;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.HashMap;
 
 import okhttp3.Call;
@@ -155,7 +150,7 @@ public class QueryUtils {
 
     public <T> void query(String url, final Class<T> cls, final OnQueryOverListener<T> listener) {
         Lg.e("get请求 -> " + url);
-        if(!isNetworkConnected(RootApplication.get())){
+        if(!isNetworkConnected(ReaperApplication.get())){
             To.show("网络不给力哦");
             return;
         }
@@ -164,7 +159,7 @@ public class QueryUtils {
 
     public <T> void get(String url, final Class<T> cls, final OnQueryOverListener<T> listener) {
         Lg.e("get请求 -> " + url);
-        if(!isNetworkConnected(RootApplication.get())){
+        if(!isNetworkConnected(ReaperApplication.get())){
             To.show("网络不给力哦");
             return;
         }
@@ -173,7 +168,7 @@ public class QueryUtils {
 
     public <T> void post(String url, final Class<T> cls, HashMap<String, String> params, final OnQueryOverListener<T> listener) {
         Lg.e("post请求 -> " + url);
-        if(!isNetworkConnected(RootApplication.get())){
+        if(!isNetworkConnected(ReaperApplication.get())){
             To.show("网络不给力哦");
             return;
         }

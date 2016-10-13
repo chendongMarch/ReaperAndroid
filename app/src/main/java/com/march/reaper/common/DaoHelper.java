@@ -13,14 +13,13 @@ import com.march.dao.DaoMaster;
 import com.march.dao.DaoSession;
 import com.march.dao.RecommendAlbumItemDao;
 import com.march.dao.WholeAlbumItemDao;
-import com.march.reaper.mvp.model.AlbumDetailResponse;
-import com.march.reaper.mvp.model.RecommendAlbumResponse;
-import com.march.reaper.mvp.model.WholeAlbumResponse;
+import com.march.reaper.imodel.AlbumDetailResponse;
+import com.march.reaper.imodel.RecommendAlbumResponse;
+import com.march.reaper.imodel.WholeAlbumResponse;
 import com.march.reaper.utils.Lg;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.query.QueryBuilder;
-import de.greenrobot.dao.query.WhereCondition;
 
 /**
  * Created by march on 16/6/30.

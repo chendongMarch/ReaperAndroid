@@ -6,7 +6,7 @@ import android.content.pm.PackageManager;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
-import com.march.reaper.RootApplication;
+import com.march.reaper.base.ReaperApplication;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,7 +21,7 @@ public class AppUtils {
 
     public static int getVersionCode() {
         try {
-            PackageManager manager = RootApplication.get().getPackageManager();
+            PackageManager manager = ReaperApplication.get().getPackageManager();
             PackageInfo info = manager.getPackageInfo("com.march.reaper", 0);
 //            String version = info.versionCode;
             return info.versionCode;

@@ -10,13 +10,13 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
-        android:name=".RootApplication"
+        android:name=".base.ReaperApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionBar">
-        <activity android:name=".mvp.ui.activity.GuardActivity"
+        <activity android:name=".iview.activity.GuardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar.Loading">
             <intent-filter>
@@ -29,37 +29,37 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".mvp.ui.activity.NewAppStartActivity"
+            android:name=".iview.activity.NewAppStartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar.Loading">
 
         </activity>
         <activity
-            android:name=".mvp.ui.activity.AppStartActivity"
+            android:name=".iview.activity.AppStartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar.Loading"/>
         <activity
-            android:name=".mvp.ui.activity.HomePageActivity"
+            android:name=".iview.activity.HomePageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar" />
         <activity
-            android:name=".mvp.ui.activity.OffLineDataActivity"
+            android:name=".iview.activity.OffLineDataActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".mvp.ui.activity.AlbumDetailActivity"
+            android:name=".iview.activity.AlbumDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".mvp.ui.activity.ScanImgActivity"
+            android:name=".iview.activity.ScanImgActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".mvp.ui.activity.AboutActivity"
+            android:name=".iview.activity.AboutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".mvp.ui.activity.AlbumCollectionActivity"
+            android:name=".iview.activity.AlbumCollectionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <!-- <activity -->
@@ -67,8 +67,8 @@
         <!-- android:configChanges="keyboardHidden|orientation|screenSize" -->
         <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" -->
         <!-- android:windowSoftInputMode="stateHidden|adjustResize" /> -->
-        <activity android:name=".mvp.ui.activity.RegisterActivity" />
-        <activity android:name=".mvp.ui.activity.LoginActivity" />
+        <activity android:name=".iview.activity.RegisterActivity" />
+        <activity android:name=".iview.activity.LoginActivity" />
 
     </application>
 

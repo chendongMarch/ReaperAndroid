@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.march.reaper.mvp.ui.activity.AlbumCollectionActivity">
+    tools:context=".iview.activity.AlbumCollectionActivity">
 
     <com.march.reaper.widget.RecyclerGroupView
         android:id="@+id/albumcol_recycler"

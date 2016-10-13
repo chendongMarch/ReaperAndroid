@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context="com.march.reaper.mvp.ui.activity.AlbumDetailActivity">
+    tools:context=".iview.activity.AlbumDetailActivity">
 
     <com.march.reaper.widget.RecyclerGroupView
         android:id="@+id/detail_albumlist_rv"

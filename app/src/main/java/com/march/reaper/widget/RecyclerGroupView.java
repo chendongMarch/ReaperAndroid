@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
-
 import com.march.reaper.R;
 
 import in.srain.cube.views.ptr.PtrDefaultHandler;
