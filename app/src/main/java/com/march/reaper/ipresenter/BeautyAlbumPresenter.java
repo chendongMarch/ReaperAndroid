@@ -1,8 +1,10 @@
 package com.march.reaper.ipresenter;
 
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
-import com.march.bean.RecommendAlbumItem;
+import com.march.bean.BeautyAlbum;
 import com.march.quickrvlibs.RvViewHolder;
 import com.march.quickrvlibs.SimpleRvAdapter;
 import com.march.quickrvlibs.inter.OnItemClickListener;
@@ -12,7 +14,7 @@ import com.march.reaper.base.mvp.view.BaseRgvView;
 import com.march.reaper.common.Constant;
 import com.march.reaper.common.RequestCallback;
 import com.march.reaper.helper.CommonHelper;
-import com.march.reaper.imodel.RecommendAlbumResponse;
+import com.march.reaper.imodel.BeautyAlbumResponse;
 import com.march.reaper.iview.activity.AlbumDetailActivity;
 import com.march.reaper.widget.RecyclerGroupView;
 
@@ -27,17 +29,34 @@ import java.util.List;
  * @author chendong
  */
 
-public class BeautyRecommendPresenter
+public class BeautyAlbumPresenter
         extends NetLoadListPresenter
-        <BeautyRecommendPresenter.BeautyRecommendView, RecommendAlbumItem> {
+        <BeautyAlbumPresenter.BeautyRecommendView, BeautyAlbum> {
+
+    public static final int ALBUM_WHOLE = 1;
+    public static final int ALBUM_RECOMMEND = 2;
+    private int mAlbumType;
+    private int mRecommendAlbumType;
 
     public interface BeautyRecommendView extends BaseRgvView {
 
     }
 
+    public BeautyAlbumPresenter() {
+        Bundle data = mView.getData();
+        mAlbumType = data.getInt(Constant.KEY_BEAUTY_ALBUM_TYPE);
+        mRecommendAlbumType = data.getInt(Constant.KEY_BEAUTY_RECOMMEND_ALBUM_TYPE);
+    }
+
     @Override
     protected RecyclerGroupView getRgv() {
         return mView.getRgv();
+    }
+
+    @Override
+    public void attachView(BeautyRecommendView view) {
+        super.attachView(view);
+        getRgv().getRecyclerView().setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
     }
 
     @Override
@@ -53,12 +72,10 @@ public class BeautyRecommendPresenter
 
     @Override
     protected void queryNetDatas() {
-        RecommendAlbumItem.queryRecommendAlbumForType(
-                offset, limit, Constant.TYPE_ALL_RECOMMEND_ALBUM,
-                new RequestCallback<RecommendAlbumResponse>() {
+        BeautyAlbum.queryRecommendAlbumForType(offset, limit, Constant.TYPE_ALL_RECOMMEND_ALBUM, new RequestCallback<BeautyAlbumResponse>() {
                     @Override
-                    public void onSucceed(RecommendAlbumResponse rst) {
-                        List<RecommendAlbumItem> data = rst.getData();
+                    public void onSucceed(BeautyAlbumResponse rst) {
+                        List<BeautyAlbum> data = rst.getData();
                         handleDatasAfterQueryReady(data);
                     }
 
@@ -73,9 +90,9 @@ public class BeautyRecommendPresenter
     }
 
     protected void createRvAdapter() {
-        mAdapter = new SimpleRvAdapter<RecommendAlbumItem>(mView.getContext(), datas, R.layout.albumquery_item_album) {
+        mAdapter = new SimpleRvAdapter<BeautyAlbum>(mView.getContext(), datas, R.layout.albumquery_item_album) {
             @Override
-            public void bindData4View(RvViewHolder holder, RecommendAlbumItem data, int pos) {
+            public void bindData4View(RvViewHolder holder, BeautyAlbum data, int pos) {
                 holder.setImg(mView.getContext(), R.id.albumquery_item_iv, data.getAlbum_cover())
                         .setText(R.id.albumquery_item_tv, data.getAlbum_desc());
                 holder.getView(R.id.album_bg).setBackgroundColor(CommonHelper.randomColor());

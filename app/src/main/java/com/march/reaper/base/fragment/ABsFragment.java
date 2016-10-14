@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
  * Created by march on 16/7/1.
  * fragment
  */
-public abstract class AbsFragment extends Fragment implements ILife {
+public abstract class ABsFragment extends Fragment implements ILife {
 
     protected String mSelfName;
     protected Context mContext;
@@ -66,20 +66,12 @@ public abstract class AbsFragment extends Fragment implements ILife {
 
     }
 
-    @Override
-    public void onInitIntent(Intent intent) {
-
-    }
 
     @Override
     public void onInitDatas() {
 
     }
 
-    @Override
-    public void onInitViews(Bundle saveData) {
-
-    }
 
     @Override
     public void onInitViews(View view, Bundle saveData) {

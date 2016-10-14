@@ -1,6 +1,5 @@
 package com.march.reaper.base;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -15,13 +14,9 @@ import android.view.View;
 
 public interface ILife {
 
-    void onInitIntent(Bundle intent);
-
-    void onInitIntent(Intent intent);
+    void onInitIntent(Bundle bundle);
 
     void onInitDatas();
-
-    void onInitViews(Bundle saveData);
 
     void onInitViews(View view, Bundle saveData);
 

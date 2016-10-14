@@ -4,9 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import com.march.reaper.R;
-import com.march.reaper.base.activity.BaseReaperMVPActivity;
+import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.reaper.base.mvp.life.PresenterFactory;
 import com.march.reaper.base.mvp.life.PresenterLoader;
 import com.march.reaper.ipresenter.impl.AlbumCollPresenterImpl;
@@ -18,7 +19,7 @@ import butterknife.Bind;
  * 专辑收藏展示
  */
 public class AlbumCollectionActivity
-        extends BaseReaperMVPActivity<AlbumCollPresenterImpl.AlbumCollView, AlbumCollPresenterImpl>
+        extends BaseReaperActivity<AlbumCollPresenterImpl>
         implements AlbumCollPresenterImpl.AlbumCollView {
 
     @Bind(R.id.albumcol_recycler)
@@ -34,27 +35,18 @@ public class AlbumCollectionActivity
         activity.startActivity(new Intent(activity, AlbumCollectionActivity.class));
     }
 
-    @Override
-    protected PresenterLoader<AlbumCollPresenterImpl> createPresenterLoader() {
-        return new PresenterLoader<>(this, new PresenterFactory<AlbumCollPresenterImpl>() {
-            @Override
-            public AlbumCollPresenterImpl crate() {
-                return new AlbumCollPresenterImpl();
-            }
-        });
-    }
 
     @Override
-    protected void onInitViews(Bundle save) {
-        super.onInitViews(save);
+    public void onInitViews(View view, Bundle save) {
+        super.onInitViews(view, save);
         mTitleBarView.setText("我", "专辑收藏", null);
         mAlbumRgv.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         mPresenter.justQuery();
     }
 
     @Override
-    protected String[] getPermission2Check() {
-        return new String[0];
+    protected AlbumCollPresenterImpl createPresenter() {
+        return new AlbumCollPresenterImpl();
     }
 
     @Override

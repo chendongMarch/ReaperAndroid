@@ -8,14 +8,15 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.march.reaper.R;
-import com.march.reaper.base.activity.BaseReaperMVPActivity;
+import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.reaper.base.mvp.life.PresenterLoader;
+import com.march.reaper.base.mvp.presenter.BasePresenter;
 import com.march.reaper.helper.Logger;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class GuardActivity extends BaseReaperMVPActivity {
+public class GuardActivity extends BaseReaperActivity {
 
     @Bind(R.id.et_guard)
     EditText mGuardEt;
@@ -26,13 +27,13 @@ public class GuardActivity extends BaseReaperMVPActivity {
     }
 
     @Override
-    protected void onInitViews(Bundle save) {
-        super.onInitViews(save);
+    public void onInitViews(View view,Bundle save) {
+        super.onInitViews(view,save);
         Logger.e("guard start");
     }
 
     @Override
-    protected void onInitEvents() {
+    public void onInitEvents() {
         super.onInitEvents();
         mGuardEt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -60,8 +61,8 @@ public class GuardActivity extends BaseReaperMVPActivity {
     }
 
     @Override
-    protected String[] getPermission2Check() {
-        return new String[0];
+    protected BasePresenter createPresenter() {
+        return null;
     }
 
     @Override
@@ -69,13 +70,4 @@ public class GuardActivity extends BaseReaperMVPActivity {
         return false;
     }
 
-    @Override
-    protected PresenterLoader createPresenterLoader() {
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(Loader loader, Object data) {
-
-    }
 }

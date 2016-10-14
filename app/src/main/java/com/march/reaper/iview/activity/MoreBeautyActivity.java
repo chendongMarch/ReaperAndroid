@@ -2,8 +2,9 @@ package com.march.reaper.iview.activity;
 
 import android.support.v4.content.Loader;
 
-import com.march.reaper.base.activity.BaseReaperMVPActivity;
+import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.reaper.base.mvp.life.PresenterLoader;
+import com.march.reaper.base.mvp.presenter.BasePresenter;
 
 /**
  * Project  : Reaper
@@ -13,12 +14,13 @@ import com.march.reaper.base.mvp.life.PresenterLoader;
  *
  * @author chendong
  */
-public class MoreBeautyActivity extends BaseReaperMVPActivity{
+public class MoreBeautyActivity extends BaseReaperActivity {
 
     @Override
-    protected String[] getPermission2Check() {
-        return new String[0];
+    protected BasePresenter createPresenter() {
+        return null;
     }
+
 
     @Override
     protected boolean isInitTitle() {
@@ -30,13 +32,4 @@ public class MoreBeautyActivity extends BaseReaperMVPActivity{
         return 0;
     }
 
-    @Override
-    protected PresenterLoader createPresenterLoader() {
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(Loader loader, Object data) {
-
-    }
 }

@@ -7,10 +7,10 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 
-import com.march.reaper.base.fragment.BaseFragment;
 import com.march.reaper.base.mvp.life.PresenterLoader;
 import com.march.reaper.base.mvp.presenter.BasePresenter;
 import com.march.reaper.base.mvp.view.BaseView;
+import com.march.reaper.common.Constant;
 
 import butterknife.ButterKnife;
 
@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
  * @author chendong
  */
 
-public abstract class BaseLifeActivity
+public abstract class BaseLoaderMVPActivity
         <V extends BaseView, P extends BasePresenter>
         extends BaseActivity
         implements BaseView, LoaderManager.LoaderCallbacks<P> {
@@ -38,13 +38,13 @@ public abstract class BaseLifeActivity
     }
 
     @Override
-    protected void onInitDatas() {
+    public void onInitDatas() {
         super.onInitDatas();
         ButterKnife.bind(this);
     }
 
     @Override
-    protected void onStartWorks() {
+    public void onStartWorks() {
         super.onStartWorks();
         //初始化loader
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
@@ -62,7 +62,8 @@ public abstract class BaseLifeActivity
     @Override
     protected void onStart() {
         super.onStart();
-        mPresenter.attachView((V) this);
+        if (mPresenter != null)
+            mPresenter.attachView((V) this);
     }
 
 
@@ -78,7 +79,8 @@ public abstract class BaseLifeActivity
 
     @Override
     protected void onDestroy() {
-        mPresenter.detachView();
+        if (mPresenter != null)
+            mPresenter.detachView();
         super.onDestroy();
     }
 
@@ -93,7 +95,7 @@ public abstract class BaseLifeActivity
     }
 
     @Override
-    public Intent getData() {
-        return getIntent();
+    public Bundle getData() {
+        return getIntent().getBundleExtra(Constant.KEY_DEFAULT_DATA);
     }
 }

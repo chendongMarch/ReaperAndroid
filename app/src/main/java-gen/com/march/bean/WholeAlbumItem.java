@@ -16,6 +16,8 @@ public class WholeAlbumItem extends Album  {
     private String time_stamp;
     private Boolean isFavorite;
 
+
+
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
 

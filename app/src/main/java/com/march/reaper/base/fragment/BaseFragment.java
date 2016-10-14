@@ -6,7 +6,7 @@ import com.march.reaper.widget.TitleBarView;
 /**
  * Created by march on 16/7/9.
  */
-public abstract class BaseFragment extends AbsFragment {
+public abstract class BaseFragment extends ABsFragment {
 
     protected TitleBarView mTitleBarView;
 

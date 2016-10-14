@@ -42,12 +42,13 @@ public class Constant {
                     "检测新版本",
                     "关于"
             };
+    public static final String KEY_DEFAULT_DATA = "KEY_DEFAULT_DATA";
     public static final String TYPE_ALL_RECOMMEND_ALBUM = "all";
 
     //专辑分类的题目
     public static final String KEY_ALBUM_TITLE = "KEY_ALBUM_TITLE";
     //专辑的类型
-    public static final String KEY_ALBUM_RECOMMEND_TYPE = "KEY_ALBUM_RECOMMEND_TYPE";
+    public static final String KEY_BEAUTY_RECOMMEND_ALBUM_TYPE = "KEY_BEAUTY_RECOMMEND_ALBUM_TYPE";
     //是否是全部专辑页面
     public static final String KEY_IS_WHOLE_ALBUM = "KEY_IS_WHOLE_ALBUM";
     //传递给详情页的数据
@@ -60,4 +61,6 @@ public class Constant {
     public static final int PRE_LOAD_NUM = 4;
     //一次请求的数据量
     public static final int ONECE_QUERY_DATA_NUM = 20;
+
+    public static final String KEY_BEAUTY_ALBUM_TYPE = "KEY_BEAUTY_ALBUM_TYPE";
 }

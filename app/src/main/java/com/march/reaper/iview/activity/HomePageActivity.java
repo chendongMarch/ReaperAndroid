@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.march.reaper.R;
 import com.march.reaper.base.activity.MultiFragmentActivity;
 import com.march.reaper.base.mvp.life.PresenterLoader;
+import com.march.reaper.base.mvp.presenter.BasePresenter;
 import com.march.reaper.iview.fragment.BeautyFragment;
 import com.march.reaper.iview.fragment.FunnyFragment;
 import com.march.reaper.iview.fragment.MineFragment;
@@ -75,6 +76,10 @@ public class HomePageActivity extends MultiFragmentActivity {
     }
 
     @Override
+    protected BasePresenter createPresenter() {
+        return null;
+    }
+
     protected String[] getPermission2Check() {
         return new String[0];
     }
@@ -84,13 +89,4 @@ public class HomePageActivity extends MultiFragmentActivity {
         return false;
     }
 
-    @Override
-    protected PresenterLoader createPresenterLoader() {
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(Loader loader, Object data) {
-
-    }
 }

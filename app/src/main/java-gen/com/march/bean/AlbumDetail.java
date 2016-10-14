@@ -9,7 +9,7 @@ import com.march.quickrvlibs.inter.RvQuickInterface;
 /**
  * Entity mapped to table "ALBUM_DETAIL".
  */
-public class AlbumDetail implements RvQuickInterface,Detail {
+public class AlbumDetail implements RvQuickInterface, java.io.Serializable, Detail {
 
     private String album_link;
     private String photo_src;

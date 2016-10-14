@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.march.reaper.R;
-import com.march.reaper.base.fragment.AbsFragment;
+import com.march.reaper.base.fragment.ABsFragment;
 import com.march.reaper.base.fragment.BaseFragment;
 import com.march.reaper.iview.adapter.MyFragmentPagerAdapter;
 
@@ -30,7 +30,7 @@ public class BeautyFragment extends BaseFragment {
     TabLayout mTabLy;
     @Bind(R.id.viewpager)
     ViewPager mBeautyVp;
-    private List<AbsFragment> mFragments;
+    private List<ABsFragment> mFragments;
 
     @Override
     protected boolean isInitTitle() {
@@ -47,15 +47,15 @@ public class BeautyFragment extends BaseFragment {
     }
 
     @Override
-    protected void onInitDatas() {
+    public void onInitDatas() {
         super.onInitDatas();
         mFragments = new ArrayList<>();
-        mFragments.add(BeautyRecommendFragment.newInst());
-        mFragments.add(BeautyWholeFragment.newInst());
+        mFragments.add(BeautyAlbumFragment.newInst());
+        mFragments.add(BeautyAlbumFragment.newInst());
     }
 
     @Override
-    protected void onInitViews(View view, Bundle save) {
+    public void onInitViews(View view, Bundle save) {
         super.onInitViews(view, save);
         TabLayout.Tab recommendTab = mTabLy.newTab().setText("推荐");
         mTabLy.addTab(recommendTab, true);
@@ -67,7 +67,7 @@ public class BeautyFragment extends BaseFragment {
     }
 
     @Override
-    protected void onInitEvents() {
+    public void onInitEvents() {
         super.onInitEvents();
         mTabLy.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

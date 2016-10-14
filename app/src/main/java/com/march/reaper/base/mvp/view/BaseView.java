@@ -2,7 +2,7 @@ package com.march.reaper.base.mvp.view;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+import android.os.Bundle;
 
 /**
  * Project  : Reaper
@@ -13,8 +13,10 @@ import android.content.Intent;
  * @author chendong
  */
 
-public interface BaseView{
+public interface BaseView {
     Context getContext();
+
     Activity getActivity();
-    Intent getData();
+
+    Bundle getData();
 }

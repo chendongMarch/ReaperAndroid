@@ -27,6 +27,12 @@ public abstract class NetLoadListPresenter<V extends BaseView, D> extends BasePr
     public NetLoadListPresenter() {
         mWidth = DimensionHelper.getScreenWidth(ReaperApplication.get());
         datas = new ArrayList<>();
+    }
+
+
+    @Override
+    public void attachView(V view) {
+        super.attachView(view);
         getRgv().setOnRefreshBeginListener(new RecyclerGroupView.OnRefreshBeginListener() {
             @Override
             public void onRefreshBegin() {

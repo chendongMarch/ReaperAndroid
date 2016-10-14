@@ -1,6 +1,5 @@
 package com.march.reaper.ipresenter.impl;
-
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -49,9 +48,12 @@ public class AlbumDetailPresenterImpl
         void setModeTvText(String txt);
     }
 
-    public AlbumDetailPresenterImpl() {
-        Intent intent = mView.getData();
-        mAlbumData = (Album) intent.getSerializableExtra(Constant.KEY_ALBUM_DETAIL_SHOW);
+
+    @Override
+    public void attachView(AlbumDetailView view) {
+        super.attachView(view);
+        Bundle intent = mView.getData();
+        mAlbumData = (Album) intent.getSerializable(Constant.KEY_ALBUM_DETAIL_SHOW);
         mCol = new AlbumItemCollection(mAlbumData);
         isCollection = DbHelper.get().isAlbumCollection(mCol);
     }

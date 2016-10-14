@@ -7,11 +7,10 @@ package com.march.bean;
 import com.march.quickrvlibs.RvQuickAdapter;
 import com.march.quickrvlibs.inter.RvQuickInterface;
 // KEEP INCLUDES END
-
 /**
  * Entity mapped to table "DETAIL_COLLECTION".
  */
-public class DetailCollection implements RvQuickInterface, Detail {
+public class DetailCollection implements RvQuickInterface, java.io.Serializable, Detail {
 
     private String album_link;
     private String photo_src;

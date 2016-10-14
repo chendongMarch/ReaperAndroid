@@ -12,10 +12,10 @@ import butterknife.ButterKnife;
  * Created by march on 16/6/6.
  * activity基类
  */
-public abstract class BaseReaperMVPActivity<V extends BaseView, P extends BasePresenter> extends BaseLifeActivity<V, P> {
+public abstract class BaseReaperActivity<P extends BasePresenter> extends BaseMVPActivity<P> {
 
     @Override
-    protected void onInitDatas() {
+    public void onInitDatas() {
         super.onInitDatas();
         ButterKnife.bind(this);
     }

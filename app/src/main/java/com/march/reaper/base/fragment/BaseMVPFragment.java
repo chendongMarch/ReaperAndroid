@@ -1,9 +1,7 @@
 package com.march.reaper.base.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
 import com.march.reaper.base.mvp.presenter.BasePresenter;
 import com.march.reaper.base.mvp.view.BaseView;
@@ -17,7 +15,7 @@ import com.march.reaper.base.mvp.view.BaseView;
  * @author chendong
  */
 
-public abstract class BaseLifeFragment<P extends BasePresenter>
+public abstract class BaseMVPFragment<P extends BasePresenter, V extends BaseView>
         extends BaseFragment
         implements BaseView {
 
@@ -31,10 +29,16 @@ public abstract class BaseLifeFragment<P extends BasePresenter>
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onInitDatas() {
+        super.onInitDatas();
+    }
+
+    @Override
+    public void onStartWorks() {
+        super.onStartWorks();
         mPresenter = createPresenter();
-        mPresenter.attachView(this);
+        if (mPresenter != null)
+            mPresenter.attachView((V) this);
     }
 
     @Override
@@ -43,8 +47,6 @@ public abstract class BaseLifeFragment<P extends BasePresenter>
         mPresenter.detachView();
     }
 
-    protected abstract P createPresenterLoader();
-
 
     @Override
     public Context getContext() {
@@ -52,12 +54,8 @@ public abstract class BaseLifeFragment<P extends BasePresenter>
     }
 
 
-    public static final String KEY_DEFAULT_DATA = "KEY_DEFAULT_DATA";
-
     @Override
-    public Intent getData() {
-        Intent intent = new Intent();
-        intent.putExtra(KEY_DEFAULT_DATA, getArguments());
-        return intent;
+    public Bundle getData() {
+        return getArguments();
     }
 }

@@ -5,6 +5,7 @@ import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 
 /**
  * Project  : CommonLib
@@ -14,7 +15,7 @@ import android.support.v4.app.FragmentTransaction;
  *
  * @author chendong
  */
-public abstract class MultiFragmentActivity extends BaseReaperMVPActivity {
+public abstract class MultiFragmentActivity extends BaseReaperActivity {
 
     private Fragment mCurrentFragment;
     private FragmentManager mFragmentManager;
@@ -24,8 +25,8 @@ public abstract class MultiFragmentActivity extends BaseReaperMVPActivity {
     private static final String ITEM_SHOW = "mShowItem";
 
     @Override
-    protected void onInitViews(Bundle save) {
-        super.onInitViews(save);
+    public void onInitViews(View view,Bundle save) {
+        super.onInitViews(view,save);
         mFragmentManager = getSupportFragmentManager();
         // 从savedInstanceState获取到保存的mCurrentItem
         if (save != null) {
