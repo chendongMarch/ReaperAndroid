@@ -69,9 +69,7 @@ public class QueryUtils {
                     return true;
                 }
             }
-
         } else {
-
             NetworkInfo[] info = connectivityManager.getAllNetworkInfo();
             if (info != null) {
                 for (int i = 0; i < info.length; i++) {
@@ -80,7 +78,6 @@ public class QueryUtils {
                     }
                 }
             }
-
         }
         return false;
     }
@@ -154,6 +151,7 @@ public class QueryUtils {
         Logger.e("get请求 -> " + url);
         if(!isNetworkConnected(ReaperApplication.get())){
             Toaster.get().show(ReaperApplication.get(),"网络不给力哦");
+            listener.error(new RuntimeException("网络不给力"));
             return;
         }
         OkHttpUtils.get().url(url).build().execute(createCallBack(cls, listener));
@@ -163,6 +161,7 @@ public class QueryUtils {
         Logger.e("get请求 -> " + url);
         if(!isNetworkConnected(ReaperApplication.get())){
             Toaster.get().show(ReaperApplication.get(),"网络不给力哦");
+            listener.error(new RuntimeException("网络不给力"));
             return;
         }
         OkHttpUtils.get().url(url).build().execute(createCallBack(cls, listener));
@@ -172,6 +171,7 @@ public class QueryUtils {
         Logger.e("post请求 -> " + url);
         if(!isNetworkConnected(ReaperApplication.get())){
             Toaster.get().show(ReaperApplication.get(),"网络不给力哦");
+            listener.error(new RuntimeException("网络不给力"));
             return;
         }
         OkHttpUtils.post().url(url).params(params).build().execute(createCallBack(cls, listener));

@@ -37,7 +37,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBar" />
         <activity
-            android:name=".iview.activity.OffLineDataActivity"
+            android:name=".iview.activity.MoreBeautyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
@@ -50,10 +50,6 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".iview.activity.AboutActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".iview.activity.AlbumCollectionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 

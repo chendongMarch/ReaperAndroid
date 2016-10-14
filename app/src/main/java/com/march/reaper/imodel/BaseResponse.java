@@ -5,10 +5,14 @@ import java.util.List;
 /**
  * Created by march on 16/7/2.\
  */
-public class BaseResponse {
-    protected int status;
-    protected int offset;
+public class BaseResponse<D> {
+    private int status;
+    private int offset;
+    private List<D> data;
 
+    public void setData(List<D> data) {
+        this.data = data;
+    }
 
     public BaseResponse() {
     }
@@ -29,7 +33,7 @@ public class BaseResponse {
         this.offset = offset;
     }
 
-    public List getData(){
-        return null;
+    public List<D> getData() {
+        return data;
     }
 }

@@ -56,6 +56,7 @@ public class BeautyAlbumPresenter
 
     @Override
     public void justQuery() {
+        super.justQuery();
         if (checkCanQuery())
             queryNetDatas();
     }

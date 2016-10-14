@@ -24,15 +24,14 @@ public abstract class NetLoadListPresenter<V extends BaseView, D> extends BasePr
     protected List<D> datas;
     protected int mWidth;
 
-    public NetLoadListPresenter() {
-        mWidth = DimensionHelper.getScreenWidth(ReaperApplication.get());
-        datas = new ArrayList<>();
-    }
+
 
 
     @Override
     public void attachView(V view) {
         super.attachView(view);
+        mWidth = DimensionHelper.getScreenWidth(getContext());
+        datas = new ArrayList<>();
         getRgv().setOnRefreshBeginListener(new RecyclerGroupView.OnRefreshBeginListener() {
             @Override
             public void onRefreshBegin() {
@@ -40,6 +39,7 @@ public abstract class NetLoadListPresenter<V extends BaseView, D> extends BasePr
             }
         });
     }
+
 
     public void reJustQuery() {
         datas.clear();
@@ -88,10 +88,14 @@ public abstract class NetLoadListPresenter<V extends BaseView, D> extends BasePr
         getRgv().getRecyclerView().setAdapter(adapter);
     }
 
+
     /**
      * 请求
      */
-    public abstract void justQuery();
+    public void justQuery() {
+        if (offset == 0)
+            getRgv().getPtrLy().autoRefresh();
+    }
 
     protected boolean checkCanQuery() {
         //如果没有数据,截断
@@ -103,6 +107,7 @@ public abstract class NetLoadListPresenter<V extends BaseView, D> extends BasePr
         isLoadEnd = false;
         return true;
     }
+
 
     protected abstract void queryDbDatas();
 

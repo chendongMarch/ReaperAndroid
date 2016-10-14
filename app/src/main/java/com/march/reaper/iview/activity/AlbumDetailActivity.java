@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+
 import com.march.bean.BeautyAlbum;
 import com.march.reaper.R;
 import com.march.reaper.base.activity.BaseReaperActivity;
@@ -40,7 +41,7 @@ public class AlbumDetailActivity
         Bundle bundle = new Bundle();
         bundle.putInt(Constant.KEY_DETAIL_TYPE, TYPE_IS_DETAILS);
         bundle.putParcelable(Constant.KEY_ALBUM_DETAIL_SHOW, album);
-        intent.putExtra(Constant.KEY_DEFAULT_DATA,bundle);
+        intent.putExtra(Constant.KEY_DEFAULT_DATA, bundle);
         activity.startActivity(intent);
     }
 
@@ -49,15 +50,18 @@ public class AlbumDetailActivity
         return R.layout.detail_activity;
     }
 
-
     @Override
-    public void onInitViews(View view,Bundle save) {
-        super.onInitViews(view,save);
+    public void onInitViews(View view, Bundle save) {
+        super.onInitViews(view, save);
         mRgv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mTitleBarView.setText("首页", "专辑详情", "大图");
+        mTitleBarView.setLeftBackListener(mActivity);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        animFinish();
+    }
 
     @Override
     public void onStartWorks() {

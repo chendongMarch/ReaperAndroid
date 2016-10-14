@@ -13,19 +13,5 @@ import java.util.List;
  * @author chendong
  */
 
-public class BeautyAlbumResponse extends BaseResponse {
-    List<BeautyAlbum> data;
-
-    public BeautyAlbumResponse(List<BeautyAlbum> data) {
-        this.data = data;
-    }
-
-    @Override
-    public List<BeautyAlbum> getData() {
-        return data;
-    }
-
-    public void setData(List<BeautyAlbum> data) {
-        this.data = data;
-    }
+public class BeautyAlbumResponse extends BaseResponse<BeautyAlbum> {
 }

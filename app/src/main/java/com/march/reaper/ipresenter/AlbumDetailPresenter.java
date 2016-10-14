@@ -66,6 +66,7 @@ public class AlbumDetailPresenter
 
     @Override
     public void justQuery() {
+        super.justQuery();
         if (checkCanQuery())
             queryNetDatas();
     }

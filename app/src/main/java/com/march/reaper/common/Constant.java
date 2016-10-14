@@ -2,11 +2,11 @@ package com.march.reaper.common;
 
 /**
  * Created by march on 16/6/30.
+ * 常量
  */
 public class Constant {
     public static final String[] mMenuItem =
             new String[]{
-                    "全部推荐",
                     "最新推荐",
                     "性感美女",
                     "少女美女",
@@ -18,14 +18,13 @@ public class Constant {
 //            new String[]{
 //                    "newnew",
 //                    "xinggan",
-//                    "shaonv",
+//                    "shaonv",mMenuItem
 //                    "swmtswmt",
 //                    "mrxtmrxt",
 //                    "wmxzwmxz",
 //                    "wallpaper"};
     public static final String[] mRecommendType =
             new String[]{
-                    null,
                     "new",
                     "xinggan",
                     "shaonv",

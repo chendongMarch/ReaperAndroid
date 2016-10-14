@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.march.reaper.R;
-import com.march.reaper.base.fragment.Absfragment;
+import com.march.reaper.base.fragment.BaseAbsFragment;
 import com.march.reaper.base.fragment.BaseFragment;
 import com.march.reaper.common.Constant;
 import com.march.reaper.iview.activity.MoreBeautyActivity;
@@ -33,7 +33,7 @@ public class HomeBeautyFragment extends BaseFragment {
     TabLayout mTabLy;
     @Bind(R.id.viewpager)
     ViewPager mBeautyVp;
-    private List<Absfragment> mFragments;
+    private List<BaseAbsFragment> mFragments;
 
     @Override
     protected boolean isInitTitle() {
@@ -52,6 +52,7 @@ public class HomeBeautyFragment extends BaseFragment {
     @Override
     public void onInitDatas() {
         super.onInitDatas();
+        mSelfName = "home beauty fragment";
         mFragments = new ArrayList<>();
         mFragments.add(BeautyAlbumFragment.newInst(Constant.ALBUM_RECOMMEND, Constant.TYPE_ALL_RECOMMEND_ALBUM));
         mFragments.add(BeautyAlbumFragment.newInst(Constant.ALBUM_WHOLE, null));
@@ -64,6 +65,7 @@ public class HomeBeautyFragment extends BaseFragment {
         mTabLy.addTab(recommendTab, true);
         TabLayout.Tab wholeTab = mTabLy.newTab().setText("全部");
         mTabLy.addTab(wholeTab, false);
+        mBeautyVp.setOffscreenPageLimit(2);
         mBeautyVp.setAdapter(
                 new MyFragmentPagerAdapter(
                         getFragmentManager(), mFragments));

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.march.reaper.base.ILife;
+import com.march.reaper.helper.Logger;
 
 import butterknife.ButterKnife;
 
@@ -21,6 +22,36 @@ public abstract class BaseAbsFragment extends Fragment implements ILife {
     protected String mSelfName;
     protected Context mContext;
 
+    protected boolean isVisible;
+    private boolean isPrepared;
+    private boolean isFirst = true;
+    private boolean isCreateView;
+    private boolean isLoadOver;
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        isPrepared = true;
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (getUserVisibleHint()) {
+            Logger.e(mSelfName + " 可见 " + isVisible + "  " + isPrepared + "  " + isFirst);
+            isVisible = true;
+            if (isCreateView && !isLoadOver) {
+                onStartWorks();
+                isLoadOver = true;
+            }
+        } else {
+            Logger.e(mSelfName + " 不可见 " + isVisible + "  " + isPrepared + "  " + isFirst);
+            isVisible = false;
+//            onInvisible();
+        }
+    }
 
     @Override
     public void onAttach(Context activity) {
@@ -39,10 +70,15 @@ public abstract class BaseAbsFragment extends Fragment implements ILife {
         } else {
             view = getLayoutView();
         }
+        isCreateView = true;
         ButterKnife.bind(this, view);
         onInitViews(view, savedInstanceState);
         onInitEvents();
-        onStartWorks();
+        if (isVisible) {
+            onStartWorks();
+            isLoadOver = true;
+        }
+        Logger.e(mSelfName + " create view");
         return view;
     }
 

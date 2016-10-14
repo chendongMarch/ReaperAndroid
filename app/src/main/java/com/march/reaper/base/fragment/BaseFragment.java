@@ -10,7 +10,6 @@ public abstract class BaseFragment extends BaseAbsFragment {
 
     protected TitleBarView mTitleBarView;
 
-
     @Override
     protected View getLayoutView() {
         if (isInitTitle()) {

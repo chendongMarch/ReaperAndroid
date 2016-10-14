@@ -2,8 +2,10 @@ package com.march.reaper.imodel;
 
 /**
  * Created by march on 16/7/16.
+ *
  */
 public class VersionResponse extends BaseResponse {
+
     int versionCode;
 
     public int getVersionCode() {
