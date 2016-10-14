@@ -29,11 +29,6 @@ public class AQ4WholePresenterImpl
 
     private boolean isBig = false;
 
-
-    public AQ4WholePresenterImpl(AlbumQueryPresenterImpl.AlbumQueryView mView, BaseReaperActivity mContext) {
-        super(mView, mContext);
-    }
-
     @Override
     public void justQuery() {
         if (checkCanQuery())
