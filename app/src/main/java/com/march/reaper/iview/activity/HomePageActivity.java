@@ -1,18 +1,16 @@
 package com.march.reaper.iview.activity;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.TextView;
 
 import com.march.reaper.R;
 import com.march.reaper.base.activity.MultiFragmentActivity;
-import com.march.reaper.base.mvp.life.PresenterLoader;
 import com.march.reaper.base.mvp.presenter.BasePresenter;
-import com.march.reaper.iview.fragment.BeautyFragment;
-import com.march.reaper.iview.fragment.FunnyFragment;
-import com.march.reaper.iview.fragment.MineFragment;
-import com.march.reaper.iview.fragment.VideoFragment;
+import com.march.reaper.iview.fragment.HomeBeautyFragment;
+import com.march.reaper.iview.fragment.HomeFunnyFragment;
+import com.march.reaper.iview.fragment.HomeMineFragment;
+import com.march.reaper.iview.fragment.HomeVideoFragment;
 
 import java.util.List;
 
@@ -29,7 +27,7 @@ public class HomePageActivity extends MultiFragmentActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.home_activity_page;
+        return R.layout.homepage_activity;
     }
 
     @Override
@@ -47,16 +45,16 @@ public class HomePageActivity extends MultiFragmentActivity {
         Fragment fragment = null;
         switch (showItem) {
             case 0:
-                fragment = VideoFragment.newInst();
+                fragment = HomeVideoFragment.newInst();
                 break;
             case 1:
-                fragment = FunnyFragment.newInst();
+                fragment = HomeFunnyFragment.newInst();
                 break;
             case 2:
-                fragment = BeautyFragment.newInst();
+                fragment = HomeBeautyFragment.newInst();
                 break;
             case 3:
-                fragment = MineFragment.newInst();
+                fragment = HomeMineFragment.newInst();
                 break;
         }
         return fragment;

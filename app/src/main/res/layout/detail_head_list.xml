@@ -31,12 +31,10 @@
             android:src="@drawable/ic_collection" />
 
     </LinearLayout>
-
     <com.zhy.view.flowlayout.TagFlowLayout
         android:id="@+id/head_keywds_flow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="6dp"
         app:max_select="-1" />
-
 </LinearLayout>

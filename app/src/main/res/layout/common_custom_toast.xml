@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_margin="10dp"
-    android:elevation="10dp"
     android:background="@drawable/shape_round_rect_colorprimary"
+    android:elevation="10dp"
     android:orientation="vertical">
 
     <TextView

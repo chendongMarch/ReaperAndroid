@@ -6,14 +6,17 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.march.reaper.R;
-import com.march.reaper.base.fragment.ABsFragment;
+import com.march.reaper.base.fragment.Absfragment;
 import com.march.reaper.base.fragment.BaseFragment;
+import com.march.reaper.common.Constant;
+import com.march.reaper.iview.activity.MoreBeautyActivity;
 import com.march.reaper.iview.adapter.MyFragmentPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Project  : Reaper
@@ -24,13 +27,13 @@ import butterknife.Bind;
  * @author chendong
  */
 
-public class BeautyFragment extends BaseFragment {
+public class HomeBeautyFragment extends BaseFragment {
 
     @Bind(R.id.tably)
     TabLayout mTabLy;
     @Bind(R.id.viewpager)
     ViewPager mBeautyVp;
-    private List<ABsFragment> mFragments;
+    private List<Absfragment> mFragments;
 
     @Override
     protected boolean isInitTitle() {
@@ -42,16 +45,16 @@ public class BeautyFragment extends BaseFragment {
         return R.layout.beauty_fragment;
     }
 
-    public static BeautyFragment newInst() {
-        return new BeautyFragment();
+    public static HomeBeautyFragment newInst() {
+        return new HomeBeautyFragment();
     }
 
     @Override
     public void onInitDatas() {
         super.onInitDatas();
         mFragments = new ArrayList<>();
-        mFragments.add(BeautyAlbumFragment.newInst());
-        mFragments.add(BeautyAlbumFragment.newInst());
+        mFragments.add(BeautyAlbumFragment.newInst(Constant.ALBUM_RECOMMEND, Constant.TYPE_ALL_RECOMMEND_ALBUM));
+        mFragments.add(BeautyAlbumFragment.newInst(Constant.ALBUM_WHOLE, null));
     }
 
     @Override
@@ -64,6 +67,15 @@ public class BeautyFragment extends BaseFragment {
         mBeautyVp.setAdapter(
                 new MyFragmentPagerAdapter(
                         getFragmentManager(), mFragments));
+    }
+
+    @OnClick({R.id.tv_more_album})
+    public void clickBtn(View view) {
+        switch (view.getId()) {
+            case R.id.tv_more_album:
+                MoreBeautyActivity.startMoreBeauty(getActivity());
+                break;
+        }
     }
 
     @Override

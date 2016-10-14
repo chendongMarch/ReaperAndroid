@@ -42,6 +42,9 @@ public class Constant {
                     "检测新版本",
                     "关于"
             };
+
+    public static final int ALBUM_WHOLE = 1;
+    public static final int ALBUM_RECOMMEND = 2;
     public static final String KEY_DEFAULT_DATA = "KEY_DEFAULT_DATA";
     public static final String TYPE_ALL_RECOMMEND_ALBUM = "all";
 

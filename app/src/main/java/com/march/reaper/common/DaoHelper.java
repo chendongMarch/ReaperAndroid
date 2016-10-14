@@ -5,17 +5,14 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.march.bean.AlbumDetail;
 import com.march.bean.AlbumItemCollection;
+import com.march.bean.BeautyAlbum;
 import com.march.bean.DetailCollection;
-import com.march.bean.RecommendAlbumItem;
-import com.march.bean.WholeAlbumItem;
 import com.march.dao.AlbumDetailDao;
+import com.march.dao.BeautyAlbumDao;
 import com.march.dao.DaoMaster;
 import com.march.dao.DaoSession;
-import com.march.dao.RecommendAlbumItemDao;
-import com.march.dao.WholeAlbumItemDao;
 import com.march.reaper.imodel.AlbumDetailResponse;
-import com.march.reaper.imodel.RecommendAlbumResponse;
-import com.march.reaper.imodel.WholeAlbumResponse;
+import com.march.reaper.imodel.BeautyAlbumResponse;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.query.QueryBuilder;
@@ -66,22 +63,17 @@ public class DaoHelper {
         return mDaoSession.getAlbumDetailDao();
     }
 
-    public RecommendAlbumItemDao getRecommendAlbumItemDao() {
-        return mDaoSession.getRecommendAlbumItemDao();
+    public BeautyAlbumDao getBeautyAlbumDao() {
+        return mDaoSession.getBeautyAlbumDao();
     }
 
-    public WholeAlbumItemDao getWholeAlbumItemDao() {
-        return mDaoSession.getWholeAlbumItemDao();
-    }
 
     public <T extends AbstractDao> T getDao(Class cls) {
         if (cls == AlbumDetail.class || cls == AlbumDetailResponse.class) {
             return (T) mDaoSession.getAlbumDetailDao();
-        } else if (cls == RecommendAlbumItem.class || cls == RecommendAlbumResponse.class) {
-            return (T) mDaoSession.getRecommendAlbumItemDao();
-        } else if (cls == WholeAlbumItem.class || cls == WholeAlbumResponse.class) {
-            return (T) mDaoSession.getWholeAlbumItemDao();
-        } else if (cls == AlbumItemCollection.class) {
+        } else if (cls == BeautyAlbum.class || cls == BeautyAlbumResponse.class) {
+            return (T) mDaoSession.getBeautyAlbumDao();
+        } if (cls == AlbumItemCollection.class) {
             return (T) mDaoSession.getAlbumItemCollectionDao();
         } else if (cls == DetailCollection.class) {
             return (T) mDaoSession.getDetailCollectionDao();

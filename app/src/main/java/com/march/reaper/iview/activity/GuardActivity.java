@@ -1,7 +1,6 @@
 package com.march.reaper.iview.activity;
 
 import android.os.Bundle;
-import android.support.v4.content.Loader;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.EditText;
 
 import com.march.reaper.R;
 import com.march.reaper.base.activity.BaseReaperActivity;
-import com.march.reaper.base.mvp.life.PresenterLoader;
 import com.march.reaper.base.mvp.presenter.BasePresenter;
 import com.march.reaper.helper.Logger;
 
@@ -23,7 +21,7 @@ public class GuardActivity extends BaseReaperActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_guard;
+        return R.layout.guard_activity;
     }
 
     @Override

@@ -2,12 +2,13 @@ package com.march.reaper.ipresenter;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 
 import com.march.bean.BeautyAlbum;
 import com.march.quickrvlibs.RvViewHolder;
 import com.march.quickrvlibs.SimpleRvAdapter;
 import com.march.quickrvlibs.inter.OnItemClickListener;
+import com.march.quickrvlibs.inter.OnLoadMoreListener;
+import com.march.quickrvlibs.module.HFModule;
 import com.march.quickrvlibs.module.LoadMoreModule;
 import com.march.reaper.R;
 import com.march.reaper.base.mvp.view.BaseRgvView;
@@ -32,20 +33,11 @@ import java.util.List;
 public class BeautyAlbumPresenter
         extends NetLoadListPresenter
         <BeautyAlbumPresenter.BeautyRecommendView, BeautyAlbum> {
-
-    public static final int ALBUM_WHOLE = 1;
-    public static final int ALBUM_RECOMMEND = 2;
     private int mAlbumType;
-    private int mRecommendAlbumType;
+    private String mRecommendAlbumType;
 
     public interface BeautyRecommendView extends BaseRgvView {
 
-    }
-
-    public BeautyAlbumPresenter() {
-        Bundle data = mView.getData();
-        mAlbumType = data.getInt(Constant.KEY_BEAUTY_ALBUM_TYPE);
-        mRecommendAlbumType = data.getInt(Constant.KEY_BEAUTY_RECOMMEND_ALBUM_TYPE);
     }
 
     @Override
@@ -57,6 +49,9 @@ public class BeautyAlbumPresenter
     public void attachView(BeautyRecommendView view) {
         super.attachView(view);
         getRgv().getRecyclerView().setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        Bundle data = mView.getData();
+        mAlbumType = data.getInt(Constant.KEY_BEAUTY_ALBUM_TYPE);
+        mRecommendAlbumType = data.getString(Constant.KEY_BEAUTY_RECOMMEND_ALBUM_TYPE);
     }
 
     @Override
@@ -72,54 +67,58 @@ public class BeautyAlbumPresenter
 
     @Override
     protected void queryNetDatas() {
-        BeautyAlbum.queryRecommendAlbumForType(offset, limit, Constant.TYPE_ALL_RECOMMEND_ALBUM, new RequestCallback<BeautyAlbumResponse>() {
-                    @Override
-                    public void onSucceed(BeautyAlbumResponse rst) {
-                        List<BeautyAlbum> data = rst.getData();
-                        handleDatasAfterQueryReady(data);
-                    }
+        RequestCallback<BeautyAlbumResponse> callback = new RequestCallback<BeautyAlbumResponse>() {
+            @Override
+            public void onSucceed(BeautyAlbumResponse rst) {
+                List<BeautyAlbum> data = rst.getData();
+                handleDatasAfterQueryReady(data);
+            }
 
-                    @Override
-                    public void onError(Exception e) {
-                        if (mAdapter != null)
-                            mAdapter.finishLoad();
-                        getRgv().getPtrLy().refreshComplete();
-                        isLoadEnd = true;
-                    }
-                });
+            @Override
+            public void onError(Exception e) {
+                if (mAdapter != null)
+                    mAdapter.getLoadMoreModule().finishLoad();
+                getRgv().getPtrLy().refreshComplete();
+                isLoadEnd = true;
+            }
+        };
+        if (mAlbumType == Constant.ALBUM_WHOLE) {
+            BeautyAlbum.getWhole(offset, limit, callback);
+        } else {
+            BeautyAlbum.getRecommend(offset, limit, mRecommendAlbumType, callback);
+        }
+
     }
 
     protected void createRvAdapter() {
-        mAdapter = new SimpleRvAdapter<BeautyAlbum>(mView.getContext(), datas, R.layout.albumquery_item_album) {
+        mAdapter = new SimpleRvAdapter<BeautyAlbum>(mView.getContext(), datas, R.layout.beauty_album_item) {
             @Override
-            public void bindData4View(RvViewHolder holder, BeautyAlbum data, int pos) {
+            public void onBindView(RvViewHolder holder, BeautyAlbum data, int pos,int type) {
                 holder.setImg(mView.getContext(), R.id.albumquery_item_iv, data.getAlbum_cover())
                         .setText(R.id.albumquery_item_tv, data.getAlbum_desc());
                 holder.getView(R.id.album_bg).setBackgroundColor(CommonHelper.randomColor());
             }
 
             @Override
-            public void bindLisAndData4Footer(RvViewHolder footer) {
-                footer.setClickLis(R.id.footer_loadmore, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        justQuery();
-                    }
-                });
+            public void onBindFooter(RvViewHolder footer) {
+                super.onBindFooter(footer);
+
             }
         };
-        mAdapter.addHeaderOrFooter(0, R.layout.footer_load_more, getRgv().getRecyclerView());
+        HFModule hfModule = new HFModule(getContext(), HFModule.NO_RES, R.layout.common_footer_load_more, getRgv().getRecyclerView());
+        mAdapter.addHFModule(hfModule);
         mAdapter.setOnItemClickListener(new OnItemClickListener<RvViewHolder>() {
             @Override
             public void onItemClick(int pos, RvViewHolder holder) {
                 AlbumDetailActivity.loadActivity4DetailShow(getActivity(), datas.get(pos));
             }
         });
-        mAdapter.addLoadMoreModule(mPreLoadNum, new LoadMoreModule.OnLoadMoreListener() {
+        mAdapter.addLoadMoreModule(new LoadMoreModule(mPreLoadNum, new OnLoadMoreListener() {
             @Override
-            public void onLoadMore() {
+            public void onLoadMore(LoadMoreModule mLoadMoreModule) {
                 justQuery();
             }
-        });
+        }));
     }
+
 }

@@ -12,7 +12,7 @@ import com.march.reaper.base.fragment.BaseFragment;
  * @author chendong
  */
 
-public class FunnyFragment extends BaseFragment {
+public class HomeFunnyFragment extends BaseFragment {
     @Override
     protected boolean isInitTitle() {
         return false;
@@ -23,7 +23,7 @@ public class FunnyFragment extends BaseFragment {
         return R.layout.funny_image_fragment;
     }
 
-    public static FunnyFragment newInst() {
-        return new FunnyFragment();
+    public static HomeFunnyFragment newInst() {
+        return new HomeFunnyFragment();
     }
 }

@@ -4,8 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.march.bean.AlbumDetail;
-import com.march.bean.RecommendAlbumItem;
-import com.march.bean.WholeAlbumItem;
+import com.march.bean.BeautyAlbum;
 import com.march.reaper.base.ReaperApplication;
 
 /**
@@ -48,13 +47,8 @@ public class SPUtils {
             }
 
             @Override
-            protected void isRecommendAlbumItem() {
-                mTempKey = RecommendAlbumItem.class.getSimpleName();
-            }
-
-            @Override
-            protected void isWholeAlbumItem() {
-                mTempKey = WholeAlbumItem.class.getSimpleName();
+            protected void isBeautyAlbumItem() {
+                mTempKey = BeautyAlbum.class.getSimpleName();
             }
         }.operate(cls);
     }

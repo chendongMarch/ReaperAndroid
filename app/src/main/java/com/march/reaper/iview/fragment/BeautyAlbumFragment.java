@@ -43,13 +43,14 @@ public class BeautyAlbumFragment
 
     @Override
     protected int getLayoutId() {
-        return R.layout.beauty_recommend_fragment;
+        return R.layout.beauty_album_fragment;
     }
 
 
-    public static BeautyAlbumFragment newInst(int type) {
+    public static BeautyAlbumFragment newInst(int albumType, String recommendType) {
         Bundle bundle = new Bundle();
-        bundle.putInt(Constant.KEY_BEAUTY_ALBUM_TYPE, type);
+        bundle.putInt(Constant.KEY_BEAUTY_ALBUM_TYPE, albumType);
+        bundle.putString(Constant.KEY_BEAUTY_RECOMMEND_ALBUM_TYPE, recommendType);
         BeautyAlbumFragment beautyAlbumFragment = new BeautyAlbumFragment();
         beautyAlbumFragment.setArguments(bundle);
         return beautyAlbumFragment;

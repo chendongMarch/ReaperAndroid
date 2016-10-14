@@ -1,20 +1,21 @@
-package com.march.reaper.ipresenter.impl;
+package com.march.reaper.ipresenter;
 
-import com.march.bean.WholeAlbumItem;
+import com.march.bean.BeautyAlbum;
 import com.march.reaper.base.mvp.presenter.BasePresenter;
 import com.march.reaper.base.mvp.view.BaseView;
 import com.march.reaper.common.API;
+import com.march.reaper.imodel.BeautyAlbumResponse;
 import com.march.reaper.imodel.UserInfo;
-import com.march.reaper.imodel.WholeAlbumResponse;
 import com.march.reaper.utils.QueryUtils;
 import com.march.reaper.utils.SPUtils;
 
 import java.util.List;
 
+
 /**
  * com.march.reaper.mvp.mPresenter.impl
  * Created by chendong on 16/7/19.
- * desc : AppSrart界面的Presenter,
+ * desc : AppStart界面的Presenter,
  */
 public class AppStartPresenter
         extends BasePresenter<AppStartPresenter.AppStartView> {
@@ -45,11 +46,11 @@ public class AppStartPresenter
         if (appStartPhoto != null) {
             mView.loadViewImg(appStartPhoto);
         }
-        QueryUtils.get().query(API.GET_LUCKY + "?limit=1", WholeAlbumResponse.class,
-                new QueryUtils.OnQueryOverListener<WholeAlbumResponse>() {
+        QueryUtils.get().query(API.GET_LUCKY + "?limit=1", BeautyAlbumResponse.class,
+                new QueryUtils.OnQueryOverListener<BeautyAlbumResponse>() {
                     @Override
-                    public void queryOver(WholeAlbumResponse rst) {
-                        List<WholeAlbumItem> data = rst.getData();
+                    public void queryOver(BeautyAlbumResponse rst) {
+                        List<BeautyAlbum> data = rst.getData();
                         String album_cover = data.get(0).getAlbum_cover();
                         if (appStartPhoto == null) {
                             mView.loadViewImg(album_cover);

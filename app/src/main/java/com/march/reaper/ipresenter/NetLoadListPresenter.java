@@ -57,7 +57,7 @@ public abstract class NetLoadListPresenter<V extends BaseView, D> extends BasePr
             offset = -1;
             Logger.e("没有数据了");
             if (mAdapter != null) {
-                mAdapter.setFooterEnable(false);
+                mAdapter.getHFModule().setFooterEnable(false);
                 mAdapter.notifyDataSetChanged();
             }
             completeRefresh();
@@ -73,7 +73,7 @@ public abstract class NetLoadListPresenter<V extends BaseView, D> extends BasePr
         }
         //查询成功,offset增加
         offset += limit;
-        mAdapter.finishLoad();
+        mAdapter.getLoadMoreModule().finishLoad();
         completeRefresh();
         isLoadEnd = true;
     }

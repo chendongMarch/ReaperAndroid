@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
  * Created by march on 16/7/1.
  * fragment
  */
-public abstract class ABsFragment extends Fragment implements ILife {
+public abstract class Absfragment extends Fragment implements ILife {
 
     protected String mSelfName;
     protected Context mContext;

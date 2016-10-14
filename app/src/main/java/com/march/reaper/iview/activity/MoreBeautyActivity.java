@@ -1,9 +1,9 @@
 package com.march.reaper.iview.activity;
 
-import android.support.v4.content.Loader;
+import android.app.Activity;
 
+import com.march.reaper.R;
 import com.march.reaper.base.activity.BaseReaperActivity;
-import com.march.reaper.base.mvp.life.PresenterLoader;
 import com.march.reaper.base.mvp.presenter.BasePresenter;
 
 /**
@@ -15,6 +15,10 @@ import com.march.reaper.base.mvp.presenter.BasePresenter;
  * @author chendong
  */
 public class MoreBeautyActivity extends BaseReaperActivity {
+
+    public static void startMoreBeauty(Activity activity) {
+
+    }
 
     @Override
     protected BasePresenter createPresenter() {
@@ -29,7 +33,7 @@ public class MoreBeautyActivity extends BaseReaperActivity {
 
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.beauty_more_activity;
     }
 
 }

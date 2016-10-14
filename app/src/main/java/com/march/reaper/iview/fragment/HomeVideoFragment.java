@@ -12,7 +12,7 @@ import com.march.reaper.base.fragment.BaseFragment;
  * @author chendong
  */
 
-public class VideoFragment extends BaseFragment {
+public class HomeVideoFragment extends BaseFragment {
     @Override
     protected boolean isInitTitle() {
         return false;
@@ -23,7 +23,7 @@ public class VideoFragment extends BaseFragment {
         return R.layout.video_fragment;
     }
 
-    public static VideoFragment newInst() {
-        return new VideoFragment();
+    public static HomeVideoFragment newInst() {
+        return new HomeVideoFragment();
     }
 }

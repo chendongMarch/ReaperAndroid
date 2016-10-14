@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.march.reaper.base.fragment.ABsFragment;
+import com.march.reaper.base.fragment.Absfragment;
 
 import java.util.List;
 
@@ -14,13 +14,13 @@ import java.util.List;
  */
 public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
-    private List<ABsFragment> mFragments;
+    private List<Absfragment> mFragments;
 
     public MyFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public MyFragmentPagerAdapter(FragmentManager fm, List<ABsFragment> mFragments) {
+    public MyFragmentPagerAdapter(FragmentManager fm, List<Absfragment> mFragments) {
         super(fm);
         this.mFragments = mFragments;
     }

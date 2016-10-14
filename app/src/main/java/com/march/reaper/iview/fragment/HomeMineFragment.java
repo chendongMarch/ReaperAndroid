@@ -20,7 +20,6 @@ import com.march.reaper.helper.ShareHelper;
 import com.march.reaper.helper.Toaster;
 import com.march.reaper.imodel.VersionResponse;
 import com.march.reaper.iview.activity.AboutActivity;
-import com.march.reaper.iview.activity.AlbumCollectionActivity;
 import com.march.reaper.iview.activity.AlbumDetailActivity;
 import com.march.reaper.utils.AppUtils;
 import com.march.reaper.utils.QueryUtils;
@@ -30,7 +29,7 @@ import butterknife.Bind;
 /**
  * 我的页面
  */
-public class MineFragment extends BaseFragment {
+public class HomeMineFragment extends BaseFragment {
 
     @Bind(R.id.rv_mine)
     RecyclerView mContentRv;
@@ -40,8 +39,8 @@ public class MineFragment extends BaseFragment {
         return true;
     }
 
-    public static MineFragment newInst(){
-        return new MineFragment();
+    public static HomeMineFragment newInst(){
+        return new HomeMineFragment();
     }
 
     @Override
@@ -52,7 +51,7 @@ public class MineFragment extends BaseFragment {
     @Override
     public void onInitDatas() {
         super.onInitDatas();
-        mSelfName = MineFragment.class.getSimpleName();
+        mSelfName = HomeMineFragment.class.getSimpleName();
     }
 
     @Override
@@ -87,7 +86,7 @@ public class MineFragment extends BaseFragment {
                 break;
             case 1:
                 //专辑收藏
-                AlbumCollectionActivity.loadActivity(getActivity());
+//                AlbumCollectionActivity.loadActivity(getActivity());
                 break;
             case 2:
                 //数据离线

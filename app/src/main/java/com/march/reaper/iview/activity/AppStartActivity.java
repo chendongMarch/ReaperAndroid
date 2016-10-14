@@ -13,7 +13,7 @@ import com.march.reaper.R;
 import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.reaper.helper.ImageHelper;
 import com.march.reaper.helper.Toaster;
-import com.march.reaper.ipresenter.impl.AppStartPresenter;
+import com.march.reaper.ipresenter.AppStartPresenter;
 import com.march.reaper.utils.SPUtils;
 
 import butterknife.Bind;
@@ -34,7 +34,7 @@ public class AppStartActivity
 
     @Override
     protected int getLayoutId() {
-        return R.layout.app_start_new_activity;
+        return R.layout.app_start_activity;
     }
 
     @Override

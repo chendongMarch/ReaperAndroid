@@ -39,9 +39,16 @@ public abstract class BaseMVPActivity
     @Override
     public void onStartWorks() {
         super.onStartWorks();
-        if(mPresenter!=null){
+        if (mPresenter != null) {
             mPresenter.attachView(this);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mPresenter != null)
+            mPresenter.detachView();
     }
 
     @Override

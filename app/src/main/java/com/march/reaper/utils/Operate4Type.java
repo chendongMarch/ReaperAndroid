@@ -1,11 +1,9 @@
 package com.march.reaper.utils;
 
 import com.march.bean.AlbumDetail;
-import com.march.bean.RecommendAlbumItem;
-import com.march.bean.WholeAlbumItem;
+import com.march.bean.BeautyAlbum;
 import com.march.reaper.imodel.AlbumDetailResponse;
-import com.march.reaper.imodel.RecommendAlbumResponse;
-import com.march.reaper.imodel.WholeAlbumResponse;
+import com.march.reaper.imodel.BeautyAlbumResponse;
 
 /**
  * Created by march on 16/7/2.
@@ -16,16 +14,13 @@ public abstract class Operate4Type {
     public void operate(Class cls) {
         if (cls == AlbumDetail.class || cls == AlbumDetailResponse.class) {
             isAlbumDetail();
-        } else if (cls == RecommendAlbumItem.class || cls == RecommendAlbumResponse.class) {
-            isRecommendAlbumItem();
-        } else if (cls == WholeAlbumItem.class || cls == WholeAlbumResponse.class) {
-            isWholeAlbumItem();
+        } else if (cls == BeautyAlbum.class || cls == BeautyAlbumResponse.class) {
+            isBeautyAlbumItem();
         }
     }
 
     protected abstract void isAlbumDetail();
 
-    protected abstract void isRecommendAlbumItem();
+    protected abstract void isBeautyAlbumItem();
 
-    protected abstract void isWholeAlbumItem();
 }
