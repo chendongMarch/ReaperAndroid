@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
+
 import com.march.bean.DetailCollection;
 import com.march.quickrvlibs.RvViewHolder;
 import com.march.quickrvlibs.TypeRvAdapter;
@@ -15,9 +16,9 @@ import com.march.reaper.R;
 import com.march.reaper.common.Constant;
 import com.march.reaper.common.DbHelper;
 import com.march.reaper.helper.CommonHelper;
-import com.march.reaper.ipresenter.BaseNetActivityPresenter;
-import com.march.reaper.base.activity.BaseReaperMVPActivity;
+import com.march.reaper.ipresenter.NetLoadListPresenter;
 import com.march.reaper.iview.activity.ScanImgActivity;
+import com.march.reaper.widget.RecyclerGroupView;
 
 import java.util.List;
 
@@ -26,13 +27,9 @@ import java.util.List;
  * 展示收藏的照片
  */
 public class DetailCollPresenterImpl
-        extends BaseNetActivityPresenter<AlbumDetailPresenterImpl.AlbumDetailView, DetailCollection> {
+        extends NetLoadListPresenter<AlbumDetailPresenterImpl.AlbumDetailView, DetailCollection> {
 
     private boolean isBig = false;
-
-    public DetailCollPresenterImpl(BaseReaperMVPActivity mContext) {
-        super(mContext);
-    }
 
     @Override
     protected void queryDbDatas() {
@@ -52,6 +49,11 @@ public class DetailCollPresenterImpl
     }
 
     @Override
+    protected RecyclerGroupView getRgv() {
+        return null;
+    }
+
+    @Override
     public void justQuery() {
 
         if (checkCanQuery())
@@ -61,10 +63,10 @@ public class DetailCollPresenterImpl
     //构建adapter
     @Override
     protected void createRvAdapter() {
-        mAdapter = new TypeRvAdapter<DetailCollection>(mContext, datas) {
+        mAdapter = new TypeRvAdapter<DetailCollection>(getContext(), datas) {
             @Override
             public void bindData4View(RvViewHolder holder, DetailCollection data, int pos, int type) {
-                holder.setImg(mContext, R.id.detail_item_show_iv, data.getPhoto_src());
+                holder.setImg(getContext(), R.id.detail_item_show_iv, data.getPhoto_src());
                 View bgView = holder.getView(R.id.detail_show_bg);
                 bgView.setBackgroundColor(CommonHelper.randomColor());
             }
@@ -98,7 +100,7 @@ public class DetailCollPresenterImpl
             }
         };
 
-        mAdapter.addHeaderOrFooter(0, R.layout.footer_load_more, mRgv.getRecyclerView());
+        mAdapter.addHeaderOrFooter(0, R.layout.footer_load_more, getRgv().getRecyclerView());
         mAdapter.addType(DetailCollection.TYPE_SHU, R.layout.detail_item_show);
         mAdapter.addType(DetailCollection.TYPE_HENG, R.layout.detail_item_show2);
         mAdapter.addLoadMoreModule(mPreLoadNum, new LoadMoreModule.OnLoadMoreListener() {
@@ -111,30 +113,24 @@ public class DetailCollPresenterImpl
         mAdapter.setOnItemClickListener(new OnItemClickListener<RvViewHolder>() {
             @Override
             public void onItemClick(int pos, RvViewHolder holder) {
-                Intent intent = new Intent(mContext, ScanImgActivity.class);
+                Intent intent = new Intent(getContext(), ScanImgActivity.class);
                 intent.putExtra(Constant.KEY_ALBUM_DETAIL_SCAN, datas.get(pos));
-                mContext.startActivity(intent);
+                getActivity().startActivity(intent);
             }
         });
     }
 
-    @Override
     public void switchMode() {
         isBig = !isBig;
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         if (isBig) {
             mView.setModeTvText("小图");
         } else {
             mView.setModeTvText("大图");
             layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         }
-        mRgv.setLayoutManager(layoutManager);
-        mRgv.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void setIntent(Intent intent) {
-
+        getRgv().setLayoutManager(layoutManager);
+        getRgv().setAdapter(mAdapter);
     }
 
 }

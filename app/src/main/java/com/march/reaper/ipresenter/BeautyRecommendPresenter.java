@@ -9,9 +9,9 @@ import com.march.quickrvlibs.inter.OnItemClickListener;
 import com.march.quickrvlibs.module.LoadMoreModule;
 import com.march.reaper.R;
 import com.march.reaper.base.mvp.view.BaseRgvView;
+import com.march.reaper.common.Constant;
 import com.march.reaper.common.RequestCallback;
 import com.march.reaper.helper.CommonHelper;
-import com.march.reaper.helper.PageLoadHelper;
 import com.march.reaper.imodel.RecommendAlbumResponse;
 import com.march.reaper.iview.activity.AlbumDetailActivity;
 import com.march.reaper.widget.RecyclerGroupView;
@@ -30,8 +30,6 @@ import java.util.List;
 public class BeautyRecommendPresenter
         extends NetLoadListPresenter
         <BeautyRecommendPresenter.BeautyRecommendView, RecommendAlbumItem> {
-
-
 
     public interface BeautyRecommendView extends BaseRgvView {
 
@@ -55,21 +53,23 @@ public class BeautyRecommendPresenter
 
     @Override
     protected void queryNetDatas() {
-        RecommendAlbumItem.queryRecommendAlbumForType(offset, limit, "all", new RequestCallback<RecommendAlbumResponse>() {
-            @Override
-            public void onSucceed(RecommendAlbumResponse rst) {
-                List<RecommendAlbumItem> data = rst.getData();
-                handleDatasAfterQueryReady(data);
-            }
+        RecommendAlbumItem.queryRecommendAlbumForType(
+                offset, limit, Constant.TYPE_ALL_RECOMMEND_ALBUM,
+                new RequestCallback<RecommendAlbumResponse>() {
+                    @Override
+                    public void onSucceed(RecommendAlbumResponse rst) {
+                        List<RecommendAlbumItem> data = rst.getData();
+                        handleDatasAfterQueryReady(data);
+                    }
 
-            @Override
-            public void onError(Exception e) {
-                if (mAdapter != null)
-                    mAdapter.finishLoad();
-                getRgv().getPtrLy().refreshComplete();
-                isLoadEnd = true;
-            }
-        });
+                    @Override
+                    public void onError(Exception e) {
+                        if (mAdapter != null)
+                            mAdapter.finishLoad();
+                        getRgv().getPtrLy().refreshComplete();
+                        isLoadEnd = true;
+                    }
+                });
     }
 
     protected void createRvAdapter() {

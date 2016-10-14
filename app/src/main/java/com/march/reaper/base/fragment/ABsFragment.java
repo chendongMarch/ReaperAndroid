@@ -1,6 +1,7 @@
 package com.march.reaper.base.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,13 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.march.reaper.base.ILife;
+
 import butterknife.ButterKnife;
 
 /**
  * Created by march on 16/7/1.
  * fragment
  */
-public abstract class AbsFragment extends Fragment {
+public abstract class AbsFragment extends Fragment implements ILife {
 
     protected String mSelfName;
     protected Context mContext;
@@ -40,6 +43,7 @@ public abstract class AbsFragment extends Fragment {
         ButterKnife.bind(this, view);
         onInitViews(view, savedInstanceState);
         onInitEvents();
+        onStartWorks();
         return view;
     }
 
@@ -47,6 +51,7 @@ public abstract class AbsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        onInitIntent(getArguments());
         onInitDatas();
     }
 
@@ -56,20 +61,38 @@ public abstract class AbsFragment extends Fragment {
         return null;
     }
 
-    protected void onInitDatas() {
-
-    }
-
-    protected void onInitViews(View view, Bundle save) {
-
-    }
-
-    protected void onInitEvents() {
+    @Override
+    public void onInitIntent(Bundle intent) {
 
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onInitIntent(Intent intent) {
+
+    }
+
+    @Override
+    public void onInitDatas() {
+
+    }
+
+    @Override
+    public void onInitViews(Bundle saveData) {
+
+    }
+
+    @Override
+    public void onInitViews(View view, Bundle saveData) {
+
+    }
+
+    @Override
+    public void onInitEvents() {
+
+    }
+
+    @Override
+    public void onStartWorks() {
+
     }
 }

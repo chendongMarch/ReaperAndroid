@@ -1,7 +1,8 @@
 package com.march.reaper.iview.fragment;
 
 import com.march.reaper.R;
-import com.march.reaper.base.fragment.BaseFragment;
+import com.march.reaper.base.fragment.BaseLifeFragment;
+import com.march.reaper.ipresenter.BeautyRecommendPresenter;
 import com.march.reaper.widget.RecyclerGroupView;
 
 import butterknife.Bind;
@@ -14,10 +15,23 @@ import butterknife.Bind;
  *
  * @author chendong
  */
-public class BeautyRecommendFragment extends BaseFragment {
+public class BeautyRecommendFragment
+        extends BaseLifeFragment<BeautyRecommendPresenter>
+        implements BeautyRecommendPresenter.BeautyRecommendView {
 
     @Bind(R.id.rgv)
     RecyclerGroupView mRgv;
+
+    @Override
+    protected BeautyRecommendPresenter createPresenter() {
+        return new BeautyRecommendPresenter();
+    }
+
+    @Override
+    public void onStartWorks() {
+        super.onStartWorks();
+        mPresenter.justQuery();
+    }
 
     @Override
     protected boolean isInitTitle() {
@@ -25,13 +39,23 @@ public class BeautyRecommendFragment extends BaseFragment {
     }
 
     @Override
+    protected BeautyRecommendPresenter createPresenterLoader() {
+        return new BeautyRecommendPresenter();
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.beauty_recommend_fragment;
     }
+
 
     public static BeautyRecommendFragment newInst() {
         return new BeautyRecommendFragment();
     }
 
 
+    @Override
+    public RecyclerGroupView getRgv() {
+        return mRgv;
+    }
 }

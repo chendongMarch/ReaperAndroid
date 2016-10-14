@@ -14,7 +14,7 @@ public class Constant {
                     "美乳香臀",
                     "唯美写真",
                     "高清壁纸"};
-//    public static final String[] mMenuItem =
+    //    public static final String[] mMenuItem =
 //            new String[]{
 //                    "newnew",
 //                    "xinggan",
@@ -42,6 +42,7 @@ public class Constant {
                     "检测新版本",
                     "关于"
             };
+    public static final String TYPE_ALL_RECOMMEND_ALBUM = "all";
 
     //专辑分类的题目
     public static final String KEY_ALBUM_TITLE = "KEY_ALBUM_TITLE";
