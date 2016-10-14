@@ -1,7 +1,6 @@
 package com.march.reaper.base.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,7 +16,7 @@ import butterknife.ButterKnife;
  * Created by march on 16/7/1.
  * fragment
  */
-public abstract class Absfragment extends Fragment implements ILife {
+public abstract class BaseAbsFragment extends Fragment implements ILife {
 
     protected String mSelfName;
     protected Context mContext;
