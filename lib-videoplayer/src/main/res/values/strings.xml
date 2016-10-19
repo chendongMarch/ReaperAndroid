@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tips_not_wifi">Wifi网络未连接，继续播放将消耗流量</string>
+    <string name="tips_not_wifi_confirm">继续播放</string>
+    <string name="tips_not_wifi_cancel">停止播放</string>
+    <string name="no_url">无效的链接</string>
+</resources>
