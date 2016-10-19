@@ -10,6 +10,7 @@ import de.greenrobot.dao.identityscope.IdentityScopeType;
 
 import com.march.dao.AlbumDetailDao;
 import com.march.dao.BeautyAlbumDao;
+import com.march.dao.VideoFunDao;
 import com.march.dao.DetailCollectionDao;
 import com.march.dao.AlbumItemCollectionDao;
 
@@ -24,6 +25,7 @@ public class DaoMaster extends AbstractDaoMaster {
     public static void createAllTables(SQLiteDatabase db, boolean ifNotExists) {
         AlbumDetailDao.createTable(db, ifNotExists);
         BeautyAlbumDao.createTable(db, ifNotExists);
+        VideoFunDao.createTable(db, ifNotExists);
         DetailCollectionDao.createTable(db, ifNotExists);
         AlbumItemCollectionDao.createTable(db, ifNotExists);
     }
@@ -32,6 +34,7 @@ public class DaoMaster extends AbstractDaoMaster {
     public static void dropAllTables(SQLiteDatabase db, boolean ifExists) {
         AlbumDetailDao.dropTable(db, ifExists);
         BeautyAlbumDao.dropTable(db, ifExists);
+        VideoFunDao.dropTable(db, ifExists);
         DetailCollectionDao.dropTable(db, ifExists);
         AlbumItemCollectionDao.dropTable(db, ifExists);
     }
@@ -67,6 +70,7 @@ public class DaoMaster extends AbstractDaoMaster {
         super(db, SCHEMA_VERSION);
         registerDaoClass(AlbumDetailDao.class);
         registerDaoClass(BeautyAlbumDao.class);
+        registerDaoClass(VideoFunDao.class);
         registerDaoClass(DetailCollectionDao.class);
         registerDaoClass(AlbumItemCollectionDao.class);
     }

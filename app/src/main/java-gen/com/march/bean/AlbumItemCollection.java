@@ -4,10 +4,7 @@ package com.march.bean;
 
 // KEEP INCLUDES - put your custom includes here
 import com.march.quickrvlibs.inter.RvQuickInterface;
-
 // KEEP INCLUDES END
-
-
 /**
  * Entity mapped to table "ALBUM_ITEM_COLLECTION".
  */

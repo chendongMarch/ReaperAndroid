@@ -47,7 +47,7 @@ public abstract class BaseLoaderMVPActivity
     public void onStartWorks() {
         super.onStartWorks();
         //初始化loader
-        getSupportLoaderManager().initLoader(LOADER_ID, null, this);
+//        getSupportLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
 

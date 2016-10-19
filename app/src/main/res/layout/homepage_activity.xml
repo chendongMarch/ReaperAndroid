@@ -22,7 +22,8 @@
         android:orientation="horizontal"
         app:divider="@drawable/line_gray"
         app:dividerPadding="12dp"
-        app:showDividers="middle">
+        app:showDividers="middle"
+        android:id="@+id/linearLayoutCompat">
 
         <TextView
             android:id="@+id/home_recommend"
@@ -30,7 +31,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="推荐"
+            android:text="视频"
             android:tag="0"
             android:textColor="@color/selector_tab"
             android:textSize="14sp" />
@@ -41,7 +42,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="专辑"
+            android:text="趣图"
 
             android:tag="1"
             android:textColor="@color/selector_tab"
@@ -53,13 +54,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="发现"
+            android:text="美女"
             android:tag="2"
             android:textColor="@color/selector_tab"
             android:textSize="14sp" />
 
         <TextView
-
             android:tag="3"
             android:id="@+id/home_mine"
             android:layout_width="0dp"

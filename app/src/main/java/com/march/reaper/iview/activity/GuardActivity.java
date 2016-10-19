@@ -1,6 +1,8 @@
 package com.march.reaper.iview.activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -24,11 +26,6 @@ public class GuardActivity extends BaseReaperActivity {
         return R.layout.guard_activity;
     }
 
-    @Override
-    public void onInitViews(View view,Bundle save) {
-        super.onInitViews(view,save);
-        Logger.e("guard start");
-    }
 
     @Override
     public void onInitEvents() {
@@ -54,8 +51,11 @@ public class GuardActivity extends BaseReaperActivity {
 
     @OnClick(R.id.btn_check)
     public void clickBtn(View view) {
-        if (getText(mGuardEt).equals("91109123"))
+        if (getText(mGuardEt).equals("91109123")) {
             startActivity(AppStartActivity.class);
+            animFinish();
+        }
+
     }
 
     @Override

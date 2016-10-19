@@ -117,7 +117,7 @@ public class QueryUtils {
             @Override
             public T parseNetworkResponse(Response response) throws Exception {
                 String string = response.body().string();
-                Logger.e("数据到达"+ string);
+                Logger.e("数据到达" + string);
                 return new Gson().fromJson(string, cls);
             }
 
@@ -149,9 +149,7 @@ public class QueryUtils {
 
     public <T> void query(String url, final Class<T> cls, final OnQueryOverListener<T> listener) {
         Logger.e("get请求 -> " + url);
-        if(!isNetworkConnected(ReaperApplication.get())){
-            Toaster.get().show(ReaperApplication.get(),"网络不给力哦");
-            listener.error(new RuntimeException("网络不给力"));
+        if (checkCanNotDoRequest(listener)) {
             return;
         }
         OkHttpUtils.get().url(url).build().execute(createCallBack(cls, listener));
@@ -159,9 +157,7 @@ public class QueryUtils {
 
     public <T> void get(String url, final Class<T> cls, final OnQueryOverListener<T> listener) {
         Logger.e("get请求 -> " + url);
-        if(!isNetworkConnected(ReaperApplication.get())){
-            Toaster.get().show(ReaperApplication.get(),"网络不给力哦");
-            listener.error(new RuntimeException("网络不给力"));
+        if (checkCanNotDoRequest(listener)) {
             return;
         }
         OkHttpUtils.get().url(url).build().execute(createCallBack(cls, listener));
@@ -169,12 +165,19 @@ public class QueryUtils {
 
     public <T> void post(String url, final Class<T> cls, HashMap<String, String> params, final OnQueryOverListener<T> listener) {
         Logger.e("post请求 -> " + url);
-        if(!isNetworkConnected(ReaperApplication.get())){
-            Toaster.get().show(ReaperApplication.get(),"网络不给力哦");
-            listener.error(new RuntimeException("网络不给力"));
+        if (checkCanNotDoRequest(listener)) {
             return;
         }
         OkHttpUtils.post().url(url).params(params).build().execute(createCallBack(cls, listener));
     }
 
+    private static boolean checkCanNotDoRequest(OnQueryOverListener listener) {
+        if (!isNetworkConnected(ReaperApplication.get())) {
+            Toaster.get().show(ReaperApplication.get(), "网络不给力哦");
+            if (listener != null)
+                listener.error(new RuntimeException("网络不给力"));
+            return true;
+        }
+        return false;
+    }
 }

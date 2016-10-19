@@ -74,7 +74,7 @@ public abstract class BaseAbsFragment extends Fragment implements ILife {
         ButterKnife.bind(this, view);
         onInitViews(view, savedInstanceState);
         onInitEvents();
-        if (isVisible) {
+        if (isVisible||forceLoad()) {
             onStartWorks();
             isLoadOver = true;
         }
@@ -99,6 +99,10 @@ public abstract class BaseAbsFragment extends Fragment implements ILife {
     @Override
     public void onInitIntent(Bundle intent) {
 
+    }
+
+    public boolean forceLoad() {
+        return false;
     }
 
 

@@ -29,8 +29,24 @@ public class ExampleDaoGenerator {
     private static void generateBean(Schema schema) {
         addAlbumDetail(schema);
         addBeautyAlbum(schema);
+        addVideo(schema);
         addDetailCollection(schema);
         addAlbumItemCollection(schema);
+    }
+
+    private static void addVideo(Schema schema) {
+        Entity video = schema.addEntity("VideoFun");
+        video.setHasKeepSections(true);
+        video.addStringProperty("time_stamp");
+        video.addStringProperty("describe");
+        video.addStringProperty("linkPageUrl");
+        video.addIntProperty("width");
+        video.addIntProperty("height");
+        video.addIntProperty("publishTime");
+        video.addStringProperty("videoCategory");
+        video.addIntProperty("videoCategoryType");
+        video.addStringProperty("videoType");
+        video.addStringProperty("videoPlayUrl");
     }
 
     private static void addDetailCollection(Schema schema) {

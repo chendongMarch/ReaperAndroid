@@ -1,7 +1,6 @@
 package com.march.reaper.ipresenter;
 
 import com.march.quickrvlibs.RvAdapter;
-import com.march.reaper.base.ReaperApplication;
 import com.march.reaper.base.mvp.presenter.BasePresenter;
 import com.march.reaper.base.mvp.view.BaseView;
 import com.march.reaper.common.Constant;
@@ -25,8 +24,6 @@ public abstract class NetLoadListPresenter<V extends BaseView, D> extends BasePr
     protected int mWidth;
 
 
-
-
     @Override
     public void attachView(V view) {
         super.attachView(view);
@@ -47,6 +44,7 @@ public abstract class NetLoadListPresenter<V extends BaseView, D> extends BasePr
         justQuery();
     }
 
+
     /**
      * 处理查询后的数据
      *
@@ -58,18 +56,23 @@ public abstract class NetLoadListPresenter<V extends BaseView, D> extends BasePr
             Logger.e("没有数据了");
             if (mAdapter != null) {
                 mAdapter.getHFModule().setFooterEnable(false);
-                mAdapter.notifyDataSetChanged();
+                mAdapter.notifyItemChanged(mAdapter.getItemCount() - 1);
             }
             completeRefresh();
             isLoadEnd = true;
             return;
         }
+        int preDataCount = this.datas.size() + 1;
         datas.addAll(list);
         if (mAdapter == null) {
             createRvAdapter();
             setAdapter4RecyclerView(mAdapter);
         } else {
-            mAdapter.notifyDataSetChanged();
+            if (offset == 0)
+                mAdapter.notifyDataSetChanged();
+            else
+                mAdapter.notifyItemRangeInserted(preDataCount, this.datas.size() - preDataCount - 1);
+
         }
         //查询成功,offset增加
         offset += limit;

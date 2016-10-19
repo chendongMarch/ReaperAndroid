@@ -10,12 +10,13 @@ import com.march.reaper.base.mvp.presenter.BasePresenter;
 import com.march.reaper.iview.fragment.HomeBeautyFragment;
 import com.march.reaper.iview.fragment.HomeFunnyFragment;
 import com.march.reaper.iview.fragment.HomeMineFragment;
-import com.march.reaper.iview.fragment.HomeVideoFragment;
+import com.march.reaper.iview.fragment.HomeVideoFunFragment;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 /**
  * 主页分为四个fragment ,第一个fragment是viewpager(包含多个fragment)
@@ -45,7 +46,7 @@ public class HomePageActivity extends MultiFragmentActivity {
         Fragment fragment = null;
         switch (showItem) {
             case 0:
-                fragment = HomeVideoFragment.newInst();
+                fragment = HomeVideoFunFragment.newInst();
                 break;
             case 1:
                 fragment = HomeFunnyFragment.newInst();
@@ -58,6 +59,12 @@ public class HomePageActivity extends MultiFragmentActivity {
                 break;
         }
         return fragment;
+    }
+
+    @Override
+    protected boolean whenShowNotSameFragment(int showItem) {
+        JCVideoPlayer.releaseAllVideos();
+        return super.whenShowNotSameFragment(showItem);
     }
 
     @Override
@@ -87,4 +94,17 @@ public class HomePageActivity extends MultiFragmentActivity {
         return false;
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (JCVideoPlayer.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
 }

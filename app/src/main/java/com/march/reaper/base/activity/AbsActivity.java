@@ -1,5 +1,6 @@
 package com.march.reaper.base.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +33,7 @@ abstract class AbsActivity extends AppCompatActivity implements ILife {
     /**
      * activity
      */
-    protected AppCompatActivity mActivity;
+    protected Activity mActivity;
     /**
      * getApplicationContext()
      */
@@ -42,7 +43,7 @@ abstract class AbsActivity extends AppCompatActivity implements ILife {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivity = this;
-        mContext = getBaseContext();
+        mContext = this;
         mSaveBundle = savedInstanceState;
         createViewShow();
         if (checkPermission())
@@ -118,9 +119,9 @@ abstract class AbsActivity extends AppCompatActivity implements ILife {
     //隐藏actionbar
     private void hideActionBar() {
         if (isNoActionBar()) {
-            if (getSupportActionBar() != null) {
-                getSupportActionBar().hide();
-            }
+//            if (getSupportActionBar() != null) {
+//                getSupportActionBar().hide();
+//            }
             if (getActionBar() != null) {
                 getActionBar().hide();
             }

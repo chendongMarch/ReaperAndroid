@@ -16,6 +16,7 @@ import com.march.reaper.common.DaoHelper;
 import com.march.reaper.helper.ImageHelper;
 import com.march.reaper.helper.Logger;
 import com.march.reaper.helper.Toaster;
+import com.march.reaper.helper.VideoThumbImageHelper;
 
 import java.io.File;
 
@@ -51,6 +52,7 @@ public class ReaperApplication extends Application {
                 tv.setText(msg);
             }
         });
+        VideoThumbImageHelper.get().init(mInst);
     }
 
 

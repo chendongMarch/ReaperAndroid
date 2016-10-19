@@ -57,11 +57,6 @@ public abstract class BaseMVPActivity
     }
 
     @Override
-    protected int getLayoutId() {
-        return 0;
-    }
-
-    @Override
     public Context getContext() {
         return mContext;
     }

@@ -12,7 +12,6 @@ import com.march.reaper.common.RequestCallback;
 import com.march.reaper.imodel.BeautyAlbumResponse;
 import com.march.reaper.utils.QueryUtils;
 // KEEP INCLUDES END
-
 /**
  * Entity mapped to table "BEAUTY_ALBUM".
  */

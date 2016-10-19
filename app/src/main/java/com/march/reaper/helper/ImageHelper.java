@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 
 public class ImageHelper {
     public static void loadImg(Context context, String url, ImageView iv) {
-        Glide.with(context).load(url).crossFade().into(iv);
+        Glide.with(context).load(url)
+                .crossFade().into(iv);
     }
 }

@@ -65,4 +65,5 @@ public class Constant {
     public static final int ONECE_QUERY_DATA_NUM = 20;
 
     public static final String KEY_BEAUTY_ALBUM_TYPE = "KEY_BEAUTY_ALBUM_TYPE";
+    public static boolean IsVideoScrolled = false;
 }
