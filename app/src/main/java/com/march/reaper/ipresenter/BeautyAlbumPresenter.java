@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.march.bean.BeautyAlbum;
-import com.march.quickrvlibs.RvViewHolder;
-import com.march.quickrvlibs.SimpleRvAdapter;
+import com.march.quickrvlibs.adapter.RvViewHolder;
+import com.march.quickrvlibs.adapter.SimpleRvAdapter;
 import com.march.quickrvlibs.inter.OnItemClickListener;
 import com.march.quickrvlibs.inter.OnLoadMoreListener;
 import com.march.quickrvlibs.module.HFModule;
@@ -94,7 +94,7 @@ public class BeautyAlbumPresenter
     protected void createRvAdapter() {
         mAdapter = new SimpleRvAdapter<BeautyAlbum>(mView.getContext(), datas, R.layout.beauty_album_item) {
             @Override
-            public void onBindView(RvViewHolder holder, BeautyAlbum data, int pos,int type) {
+            public void onBindView(RvViewHolder holder, BeautyAlbum data, int pos, int type) {
                 holder.setImg(mView.getContext(), R.id.albumquery_item_iv, data.getAlbum_cover())
                         .setText(R.id.albumquery_item_tv, data.getAlbum_desc());
                 holder.getView(R.id.album_bg).setBackgroundColor(CommonHelper.randomColor());
@@ -108,10 +108,11 @@ public class BeautyAlbumPresenter
         };
         HFModule hfModule = new HFModule(getContext(), HFModule.NO_RES, R.layout.common_footer_load_more, getRgv().getRecyclerView());
         mAdapter.addHFModule(hfModule);
-        mAdapter.setOnItemClickListener(new OnItemClickListener<RvViewHolder>() {
+        mAdapter.setOnItemClickListener(new OnItemClickListener<BeautyAlbum>() {
             @Override
-            public void onItemClick(int pos, RvViewHolder holder) {
-                AlbumDetailActivity.loadActivity4DetailShow(getActivity(), datas.get(pos));
+            public void onItemClick(int pos, RvViewHolder holder, BeautyAlbum data) {
+                AlbumDetailActivity.loadActivity4DetailShow(getActivity(), data);
+
             }
         });
         mAdapter.addLoadMoreModule(new LoadMoreModule(mPreLoadNum, new OnLoadMoreListener() {

@@ -55,26 +55,19 @@ repositories {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:24.2.0'
-    compile 'com.android.support:design:24.2.0'
-    //控件注解
-    compile 'com.jakewharton:butterknife:7.0.1'
-    //recycler view适配
-    compile 'com.march.quickrvlibs:quickrvlibs:2.1.2-beta5'
-    //网络请求
-    compile 'com.zhy:okhttputils:2.2.1'
-    //数据解析
-    compile 'com.google.code.gson:gson:2.4'
-    //数据库
-    compile 'org.greenrobot:greendao:2.2.0'
-    //流式标签
-    compile 'com.zhy:flowlayout-lib:1.0.3'
-    //缩放imageview
-    compile 'com.github.chrisbanes:PhotoView:1.2.6'
-    //下拉刷新
-    compile 'in.srain.cube:ultra-ptr:1.0.11'
-    //图片加载
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.jakewharton:disklrucache:2.0.1'
     compile project(':lib-videoplayer')
+    compile rootProject.ext.support.design
+    compile rootProject.ext.support.appcompat_v7
+    compile rootProject.ext.support.recyclerView_v7
+//    compile rootProject.ext.support.cardView_v7
+    compile rootProject.ext.support.ultra_ptr
+    compile rootProject.ext.support.gson
+    compile rootProject.ext.support.PhotoView
+    compile rootProject.ext.support.butterknife
+    compile rootProject.ext.support.quickRv
+    compile rootProject.ext.support.okhttp_utils
+    compile rootProject.ext.support.greendao
+    compile rootProject.ext.support.flowlayout
+    compile rootProject.ext.support.glide
+    compile rootProject.ext.support.disklrucache
 }

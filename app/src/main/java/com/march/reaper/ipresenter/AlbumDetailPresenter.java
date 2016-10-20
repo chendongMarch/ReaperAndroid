@@ -11,9 +11,9 @@ import android.widget.TextView;
 import com.march.bean.AlbumDetail;
 import com.march.bean.AlbumItemCollection;
 import com.march.bean.BeautyAlbum;
-import com.march.quickrvlibs.RvViewHolder;
-import com.march.quickrvlibs.TypeRvAdapter;
-import com.march.quickrvlibs.inter.OnClickListener;
+import com.march.quickrvlibs.adapter.RvViewHolder;
+import com.march.quickrvlibs.adapter.TypeRvAdapter;
+import com.march.quickrvlibs.inter.OnItemClickListener;
 import com.march.quickrvlibs.inter.OnLoadMoreListener;
 import com.march.quickrvlibs.module.HFModule;
 import com.march.quickrvlibs.module.LoadMoreModule;
@@ -195,10 +195,10 @@ public class AlbumDetailPresenter
             }
         }));
 
-        mAdapter.setOnChildClickListener(new OnClickListener() {
+        mAdapter.setOnItemClickListener(new OnItemClickListener<AlbumDetail>() {
             @Override
-            public void onItemClick(int pos, RvViewHolder holder, Object data) {
-                ScanImgActivity.loadActivity(getActivity(), datas.get(pos));
+            public void onItemClick(int pos, RvViewHolder holder, AlbumDetail data) {
+                ScanImgActivity.loadActivity(getActivity(), data);
             }
         });
     }

@@ -1,7 +1,6 @@
 package com.march.reaper.base.mvp.presenter;
 
 import com.march.quickrvlibs.RvAdapter;
-import com.march.reaper.base.mvp.presenter.BasePresenter;
 import com.march.reaper.base.mvp.view.BaseView;
 import com.march.reaper.common.Constant;
 import com.march.reaper.helper.DimensionHelper;

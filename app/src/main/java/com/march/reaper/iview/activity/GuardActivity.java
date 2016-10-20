@@ -1,8 +1,5 @@
 package com.march.reaper.iview.activity;
 
-import android.content.DialogInterface;
-import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -11,7 +8,6 @@ import android.widget.EditText;
 import com.march.reaper.R;
 import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.reaper.base.mvp.presenter.BasePresenter;
-import com.march.reaper.helper.Logger;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -39,7 +35,7 @@ public class GuardActivity extends BaseReaperActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().equals("91109123"))
-                    startActivity(AppStartActivity.class);
+                    startAppStart();
             }
 
             @Override
@@ -49,13 +45,16 @@ public class GuardActivity extends BaseReaperActivity {
         });
     }
 
+    private void startAppStart() {
+        startActivity(AppStartActivity.class);
+        animFinish();
+    }
+
     @OnClick(R.id.btn_check)
     public void clickBtn(View view) {
         if (getText(mGuardEt).equals("91109123")) {
-            startActivity(AppStartActivity.class);
-            animFinish();
+            startAppStart();
         }
-
     }
 
     @Override
@@ -67,5 +66,4 @@ public class GuardActivity extends BaseReaperActivity {
     protected boolean isInitTitle() {
         return false;
     }
-
 }

@@ -1,0 +1,32 @@
+ext {
+    //官方支持库的版本
+    supportLibrary = '24.2.0'
+
+    //libraries dependencies
+    support = [
+            design         : "com.android.support:design:${supportLibrary}",
+            appcompat_v7   : "com.android.support:appcompat-v7:$supportLibrary",
+            recyclerView_v7: "com.android.support:recyclerview-v7:${supportLibrary}",
+            cardView_v7    : "com.android.support:cardview-v7:${supportLibrary}",
+            //下拉加载库
+            ultra_ptr      : 'in.srain.cube:ultra-ptr:1.0.11',
+            //gson解析
+            gson           : 'com.google.code.gson:gson:2.4',
+            //缩放image view
+            PhotoView      : 'com.github.chrisbanes:PhotoView:1.2.6',
+            //控件注解
+            butterknife    : 'com.jakewharton:butterknife:7.0.1',
+            //recycler view适配
+            quickRv        : 'com.march.quickrvlibs:quickrvlibs:2.1.4',
+            //网络请求
+            okhttp_utils   : 'com.zhy:okhttputils:2.2.1',
+            //数据库
+            greendao       : 'org.greenrobot:greendao:2.2.0',
+            //流式标签
+            flowlayout     : 'com.zhy:flowlayout-lib:1.0.3',
+            //图片加载
+            glide          : 'com.github.bumptech.glide:glide:3.7.0',
+            //文件缓存
+            disklrucache   : 'com.jakewharton:disklrucache:2.0.1'
+    ]
+}

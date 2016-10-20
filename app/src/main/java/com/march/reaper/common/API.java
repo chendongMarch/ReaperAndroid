@@ -13,7 +13,7 @@ public class API {
 //    public static final String BASE_TEST = "http://192.168.31.132:3000";
 
     public static final String BASE_ONLINE = "http://reapernode.tiger.mopaasapp.com";
-    public static final String BASE = BASE_TEST;
+    public static final String BASE = BASE_ONLINE;
     public static final String GET_RECOMMEND_ALBUM = "";
     public static final String GET_WHOLE_ALBUM = "";
     public static final String GET_ALBUM_DETAIL = "";

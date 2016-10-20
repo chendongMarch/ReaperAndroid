@@ -9,8 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.march.quickrvlibs.RvViewHolder;
-import com.march.quickrvlibs.SimpleRvAdapter;
+import com.march.quickrvlibs.adapter.RvViewHolder;
+import com.march.quickrvlibs.adapter.SimpleRvAdapter;
 import com.march.quickrvlibs.inter.OnItemClickListener;
 import com.march.reaper.R;
 import com.march.reaper.base.fragment.BaseFragment;
@@ -69,9 +69,9 @@ public class HomeMineFragment extends BaseFragment {
                 holder.setText(R.id.tv_mine_item_info, data);
             }
         };
-        mContentAdapter.setOnItemClickListener(new OnItemClickListener<RvViewHolder>() {
+        mContentAdapter.setOnItemClickListener(new OnItemClickListener<String>() {
             @Override
-            public void onItemClick(int pos, RvViewHolder holder) {
+            public void onItemClick(int pos, RvViewHolder holder, String data) {
                 handleMineOperate(pos);
             }
         });

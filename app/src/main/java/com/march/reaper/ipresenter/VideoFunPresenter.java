@@ -5,8 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.march.bean.VideoFun;
-import com.march.quickrvlibs.RvViewHolder;
-import com.march.quickrvlibs.SimpleRvAdapter;
+import com.march.quickrvlibs.adapter.RvViewHolder;
+import com.march.quickrvlibs.adapter.SimpleRvAdapter;
 import com.march.quickrvlibs.inter.OnLoadMoreListener;
 import com.march.quickrvlibs.module.HFModule;
 import com.march.quickrvlibs.module.LoadMoreModule;
@@ -96,7 +96,6 @@ public class VideoFunPresenter extends BasePageLoadPresenter<VideoFunPresenter.V
         mAdapter = new SimpleRvAdapter<VideoFun>(getContext(), datas, R.layout.video_item_show) {
             @Override
             public void onBindView(RvViewHolder holder, VideoFun data, int pos, int type) {
-                super.onBindView(holder, data, pos, type);
                 ViewGroup.LayoutParams layoutParams = holder.getParentView().getLayoutParams();
                 int itemWidth = DimensionHelper.getScreenWidth(getContext());
                 int itemHeight = (int) (itemWidth * 1.0f * data.getHeight() / data.getWidth());
@@ -111,12 +110,6 @@ public class VideoFunPresenter extends BasePageLoadPresenter<VideoFunPresenter.V
 
         HFModule hfModule = new HFModule(getContext(), HFModule.NO_RES, R.layout.common_footer_load_more, getRgv().getRecyclerView());
         mAdapter.addHFModule(hfModule);
-//        mAdapter.setOnItemClickListener(new OnItemClickListener<RvViewHolder>() {
-//            @Override
-//            public void onItemClick(int pos, RvViewHolder holder) {
-//                AlbumDetailActivity.loadActivity4DetailShow(getActivity(), datas.get(pos));
-//            }
-//        });
         mAdapter.addLoadMoreModule(new LoadMoreModule(mPreLoadNum, new OnLoadMoreListener() {
             @Override
             public void onLoadMore(LoadMoreModule mLoadMoreModule) {

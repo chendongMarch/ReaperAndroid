@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.march.quickrvlibs.RvQuick;
-import com.march.quickrvlibs.helper.QuickLoad;
+import com.march.quickrvlibs.inter.ILoadImage;
 import com.march.reaper.R;
 import com.march.reaper.common.DaoHelper;
 import com.march.reaper.helper.ImageHelper;
@@ -63,15 +63,10 @@ public class ReaperApplication extends Application {
 
     // 初始化QuickAdapter
     private void initRvQuick() {
-        RvQuick.init(new QuickLoad() {
+        RvQuick.init(new ILoadImage() {
             @Override
-            public void loadImg(Context context, String url, ImageView view) {
+            public void loadImg(Context context, String url, int w, int h, ImageView view) {
                 ImageHelper.loadImg(context, url, view);
-            }
-
-            @Override
-            public void loadSizeImg(Context context, String url, ImageView view, int w, int h, int placeHolder) {
-                super.loadSizeImg(context, url, view, w, h, placeHolder);
             }
         });
     }
