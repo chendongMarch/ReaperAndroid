@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
+
 import com.march.reaper.R;
 
 import in.srain.cube.views.ptr.PtrDefaultHandler;
@@ -53,23 +54,10 @@ public class RecyclerGroupView extends FrameLayout {
 
 
     private void initFabPart() {
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-            }
-        });
-
-
         mFloatBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRecyclerView.smoothScrollToPosition(0);
+                mRecyclerView.scrollToPosition(0);
             }
         });
     }
@@ -108,7 +96,7 @@ public class RecyclerGroupView extends FrameLayout {
         });
     }
 
-    public void enableHeader(){
+    public void enableHeader() {
         mPtrLy.setHeaderView(mDefaultHeader);
     }
 
@@ -126,6 +114,14 @@ public class RecyclerGroupView extends FrameLayout {
 
     public PtrFrameLayout getPtrLy() {
         return mPtrLy;
+    }
+
+    public void refreshComplete() {
+        mPtrLy.refreshComplete();
+    }
+
+    public void autoRefresh() {
+        mPtrLy.autoRefresh();
     }
 
     public void setAdapter(RecyclerView.Adapter adapter) {

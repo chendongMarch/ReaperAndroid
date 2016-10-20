@@ -2,7 +2,6 @@ package com.march.reaper.ipresenter;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
 import android.view.ViewGroup;
 
 import com.march.bean.VideoFun;
@@ -12,6 +11,7 @@ import com.march.quickrvlibs.inter.OnLoadMoreListener;
 import com.march.quickrvlibs.module.HFModule;
 import com.march.quickrvlibs.module.LoadMoreModule;
 import com.march.reaper.R;
+import com.march.reaper.base.mvp.presenter.BasePageLoadPresenter;
 import com.march.reaper.base.mvp.view.BaseRgvView;
 import com.march.reaper.common.Constant;
 import com.march.reaper.common.RequestCallback;
@@ -31,7 +31,7 @@ import java.util.List;
  *
  * @author chendong
  */
-public class VideoFunPresenter extends NetLoadListPresenter<VideoFunPresenter.VideoFunView, VideoFun> {
+public class VideoFunPresenter extends BasePageLoadPresenter<VideoFunPresenter.VideoFunView, VideoFun> {
 
 
     public interface VideoFunView extends BaseRgvView {
@@ -84,7 +84,7 @@ public class VideoFunPresenter extends NetLoadListPresenter<VideoFunPresenter.Vi
             public void onError(Exception e) {
                 if (mAdapter != null)
                     mAdapter.getLoadMoreModule().finishLoad();
-                getRgv().getPtrLy().refreshComplete();
+                getRgv().refreshComplete();
                 isLoadEnd = true;
             }
         };

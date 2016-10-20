@@ -18,6 +18,7 @@ import com.march.quickrvlibs.inter.OnLoadMoreListener;
 import com.march.quickrvlibs.module.HFModule;
 import com.march.quickrvlibs.module.LoadMoreModule;
 import com.march.reaper.R;
+import com.march.reaper.base.mvp.presenter.BasePageLoadPresenter;
 import com.march.reaper.base.mvp.view.BaseRgvView;
 import com.march.reaper.common.API;
 import com.march.reaper.common.Constant;
@@ -38,7 +39,7 @@ import java.util.List;
  * 详情
  */
 public class AlbumDetailPresenter
-        extends NetLoadListPresenter<AlbumDetailPresenter.AlbumDetailView, AlbumDetail> {
+        extends BasePageLoadPresenter<AlbumDetailPresenter.AlbumDetailView, AlbumDetail> {
 
     private boolean isBig = false;
     private BeautyAlbum mAlbumData;

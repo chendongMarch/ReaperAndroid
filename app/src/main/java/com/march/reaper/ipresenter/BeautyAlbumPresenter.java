@@ -11,6 +11,7 @@ import com.march.quickrvlibs.inter.OnLoadMoreListener;
 import com.march.quickrvlibs.module.HFModule;
 import com.march.quickrvlibs.module.LoadMoreModule;
 import com.march.reaper.R;
+import com.march.reaper.base.mvp.presenter.BasePageLoadPresenter;
 import com.march.reaper.base.mvp.view.BaseRgvView;
 import com.march.reaper.common.Constant;
 import com.march.reaper.common.RequestCallback;
@@ -31,8 +32,7 @@ import java.util.List;
  */
 
 public class BeautyAlbumPresenter
-        extends NetLoadListPresenter
-        <BeautyAlbumPresenter.BeautyRecommendView, BeautyAlbum> {
+        extends BasePageLoadPresenter<BeautyAlbumPresenter.BeautyRecommendView, BeautyAlbum> {
     private int mAlbumType;
     private String mRecommendAlbumType;
 
@@ -79,7 +79,7 @@ public class BeautyAlbumPresenter
             public void onError(Exception e) {
                 if (mAdapter != null)
                     mAdapter.getLoadMoreModule().finishLoad();
-                getRgv().getPtrLy().refreshComplete();
+                getRgv().refreshComplete();
                 isLoadEnd = true;
             }
         };

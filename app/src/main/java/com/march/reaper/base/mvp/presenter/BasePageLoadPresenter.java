@@ -1,4 +1,4 @@
-package com.march.reaper.ipresenter;
+package com.march.reaper.base.mvp.presenter;
 
 import com.march.quickrvlibs.RvAdapter;
 import com.march.reaper.base.mvp.presenter.BasePresenter;
@@ -13,9 +13,9 @@ import java.util.List;
 
 /**
  * Created by march on 16/7/11.
- * 网络请求列表显示的功能基类,实现类似功能的presenter继承该类
+ * 分页加载处理
  */
-public abstract class NetLoadListPresenter<V extends BaseView, D> extends BasePresenter<V> {
+public abstract class BasePageLoadPresenter<V extends BaseView, D> extends BasePresenter<V> {
     protected RvAdapter mAdapter;
     protected static final int mPreLoadNum = Constant.PRE_LOAD_NUM;
     protected int offset = 0, limit = Constant.ONECE_QUERY_DATA_NUM;
@@ -84,7 +84,7 @@ public abstract class NetLoadListPresenter<V extends BaseView, D> extends BasePr
     protected abstract RecyclerGroupView getRgv();
 
     protected void completeRefresh() {
-        getRgv().getPtrLy().refreshComplete();
+        getRgv().refreshComplete();
     }
 
     protected void setAdapter4RecyclerView(RvAdapter adapter) {
@@ -97,7 +97,7 @@ public abstract class NetLoadListPresenter<V extends BaseView, D> extends BasePr
      */
     public void justQuery() {
         if (offset == 0)
-            getRgv().getPtrLy().autoRefresh();
+            getRgv().autoRefresh();
     }
 
     protected boolean checkCanQuery() {
