@@ -17,7 +17,6 @@ import java.util.HashMap;
  *
  * @author chendong
  */
-
 public class UserInfo {
 
     private void autoPostInfo(String url, HashMap<String, String> params) {
@@ -29,6 +28,7 @@ public class UserInfo {
         SPUtils.get().putUserName(name);
         HashMap<String, String> userInfo = AppUtils.getUserInfo(context);
         userInfo.put("userName", name);
+        SPUtils.get().putIsLogin(true);
         autoPostInfo(API.POST_AUTO_REGISTER, userInfo);
     }
 

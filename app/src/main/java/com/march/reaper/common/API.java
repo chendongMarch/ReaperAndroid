@@ -7,16 +7,14 @@ package com.march.reaper.common;
  */
 public class API {
 
-    //    public static final String BASE_TEST = "http://192.168.1.132:3000";
+
+    //public static final String BASE_TEST = "http://192.168.1.132:3000";
     public static final String BASE_TEST = "http://192.168.92.112:3000";//y904-2
-//        public static final String BASE_TEST = "http://192.168.2.145:3000";//lengwong
-//    public static final String BASE_TEST = "http://192.168.31.132:3000";
+    //public static final String BASE_TEST = "http://192.168.31.132:3000";
 
     public static final String BASE_ONLINE = "http://reapernode.tiger.mopaasapp.com";
-    public static final String BASE = BASE_TEST;
-    public static final String GET_RECOMMEND_ALBUM = "";
-    public static final String GET_WHOLE_ALBUM = "";
-    public static final String GET_ALBUM_DETAIL = "";
+    public static final String BASE = BASE_ONLINE;
+
     //离线推荐专辑
     public static final String GET_OFFLINE_RECOMMEND = BASE + "/offline/recommend";
     public static final String GET_OFFLINE_WHOLE = BASE + "/offline/whole";
