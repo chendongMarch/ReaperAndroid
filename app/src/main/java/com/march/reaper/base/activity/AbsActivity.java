@@ -1,11 +1,14 @@
 package com.march.reaper.base.activity;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
+
+import com.march.reaper.base.ILife;
+import com.march.reaper.common.Constant;
 
 /**
  * Project  : CommonLib
@@ -21,7 +24,7 @@ import android.view.WindowManager;
  *
  * @author chendong
  */
-abstract class AbsActivity extends AppCompatActivity {
+abstract class AbsActivity extends AppCompatActivity implements ILife {
 
     /**
      * oncreate 保存的bundle
@@ -30,7 +33,7 @@ abstract class AbsActivity extends AppCompatActivity {
     /**
      * activity
      */
-    protected AppCompatActivity mActivity;
+    protected Activity mActivity;
     /**
      * getApplicationContext()
      */
@@ -40,7 +43,7 @@ abstract class AbsActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivity = this;
-        mContext = getBaseContext();
+        mContext = this;
         mSaveBundle = savedInstanceState;
         createViewShow();
         if (checkPermission())
@@ -53,40 +56,6 @@ abstract class AbsActivity extends AppCompatActivity {
      * @return 是否可以继续加载activity
      */
     protected abstract boolean checkPermission();
-
-    /**
-     * 加载完成开始逻辑工作
-     */
-    protected void onStartWorks() {
-    }
-
-    /**
-     * 初始化事件监听
-     */
-    protected void onInitEvents() {
-    }
-
-    /**
-     * 初始化控件
-     *
-     * @param save OnCreate中保存的bundle
-     */
-    protected void onInitViews(Bundle save) {
-    }
-
-    /**
-     * 初始化数据
-     */
-    protected void onInitDatas() {
-    }
-
-    /**
-     * 初始化 获取的Intent
-     *
-     * @param intent intent
-     */
-    protected void onInitIntent(Intent intent) {
-    }
 
     /**
      * 是否全屏默认不全屏
@@ -126,9 +95,9 @@ abstract class AbsActivity extends AppCompatActivity {
      * @param saveData onCreate 保存的bundle
      */
     protected void invokeCommonMethod(Bundle saveData) {
-        onInitIntent(getIntent());
+        onInitIntent(getIntent().getBundleExtra(Constant.KEY_DEFAULT_DATA));
         onInitDatas();
-        onInitViews(saveData);
+        onInitViews(null, saveData);
         onInitEvents();
         onStartWorks();
     }
@@ -150,12 +119,37 @@ abstract class AbsActivity extends AppCompatActivity {
     //隐藏actionbar
     private void hideActionBar() {
         if (isNoActionBar()) {
-            if (getSupportActionBar() != null) {
-                getSupportActionBar().hide();
-            }
+//            if (getSupportActionBar() != null) {
+//                getSupportActionBar().hide();
+//            }
             if (getActionBar() != null) {
                 getActionBar().hide();
             }
         }
+    }
+
+    @Override
+    public void onInitIntent(Bundle intent) {
+
+    }
+
+    @Override
+    public void onInitDatas() {
+
+    }
+
+    @Override
+    public void onInitViews(View view, Bundle saveData) {
+
+    }
+
+    @Override
+    public void onInitEvents() {
+
+    }
+
+    @Override
+    public void onStartWorks() {
+
     }
 }

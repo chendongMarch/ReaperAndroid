@@ -5,6 +5,7 @@ import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 
 /**
  * Project  : CommonLib
@@ -24,8 +25,8 @@ public abstract class MultiFragmentActivity extends BaseReaperActivity {
     private static final String ITEM_SHOW = "mShowItem";
 
     @Override
-    protected void onInitViews(Bundle save) {
-        super.onInitViews(save);
+    public void onInitViews(View view, Bundle save) {
+        super.onInitViews(view, save);
         mFragmentManager = getSupportFragmentManager();
         // 从savedInstanceState获取到保存的mCurrentItem
         if (save != null) {
@@ -122,7 +123,13 @@ public abstract class MultiFragmentActivity extends BaseReaperActivity {
      * @param showItem 显示的item
      * @return 返回false表示忽略此次点击的切换
      */
-    protected abstract boolean whenShowSameFragment(int showItem);
+    protected boolean whenShowSameFragment(int showItem) {
+        return false;
+    }
+
+    protected boolean whenShowNotSameFragment(int showItem) {
+        return true;
+    }
 
     /**
      * 获取当前处于活动状态的fragment'

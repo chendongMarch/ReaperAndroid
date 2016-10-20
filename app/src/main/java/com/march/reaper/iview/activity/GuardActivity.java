@@ -1,7 +1,8 @@
 package com.march.reaper.iview.activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -9,7 +10,7 @@ import android.widget.EditText;
 
 import com.march.reaper.R;
 import com.march.reaper.base.activity.BaseReaperActivity;
-import com.march.reaper.base.mvp.life.PresenterLoader;
+import com.march.reaper.base.mvp.presenter.BasePresenter;
 import com.march.reaper.helper.Logger;
 
 import butterknife.Bind;
@@ -22,17 +23,12 @@ public class GuardActivity extends BaseReaperActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_guard;
+        return R.layout.guard_activity;
     }
 
-    @Override
-    protected void onInitViews(Bundle save) {
-        super.onInitViews(save);
-        Logger.e("guard start");
-    }
 
     @Override
-    protected void onInitEvents() {
+    public void onInitEvents() {
         super.onInitEvents();
         mGuardEt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -55,13 +51,16 @@ public class GuardActivity extends BaseReaperActivity {
 
     @OnClick(R.id.btn_check)
     public void clickBtn(View view) {
-        if (getText(mGuardEt).equals("91109123"))
+        if (getText(mGuardEt).equals("91109123")) {
             startActivity(AppStartActivity.class);
+            animFinish();
+        }
+
     }
 
     @Override
-    protected String[] getPermission2Check() {
-        return new String[0];
+    protected BasePresenter createPresenter() {
+        return null;
     }
 
     @Override
@@ -69,13 +68,4 @@ public class GuardActivity extends BaseReaperActivity {
         return false;
     }
 
-    @Override
-    protected PresenterLoader createPresenterLoader() {
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(Loader loader, Object data) {
-
-    }
 }

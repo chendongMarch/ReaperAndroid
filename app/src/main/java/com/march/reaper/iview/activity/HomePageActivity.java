@@ -1,22 +1,22 @@
 package com.march.reaper.iview.activity;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.TextView;
 
 import com.march.reaper.R;
 import com.march.reaper.base.activity.MultiFragmentActivity;
-import com.march.reaper.base.mvp.life.PresenterLoader;
-import com.march.reaper.iview.fragment.BeautyFragment;
-import com.march.reaper.iview.fragment.FunnyFragment;
-import com.march.reaper.iview.fragment.MineFragment;
-import com.march.reaper.iview.fragment.VideoFragment;
+import com.march.reaper.base.mvp.presenter.BasePresenter;
+import com.march.reaper.iview.fragment.HomeBeautyFragment;
+import com.march.reaper.iview.fragment.HomeFunnyFragment;
+import com.march.reaper.iview.fragment.HomeMineFragment;
+import com.march.reaper.iview.fragment.HomeVideoFunFragment;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 /**
  * 主页分为四个fragment ,第一个fragment是viewpager(包含多个fragment)
@@ -28,7 +28,7 @@ public class HomePageActivity extends MultiFragmentActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.home_activity_page;
+        return R.layout.homepage_activity;
     }
 
     @Override
@@ -46,19 +46,25 @@ public class HomePageActivity extends MultiFragmentActivity {
         Fragment fragment = null;
         switch (showItem) {
             case 0:
-                fragment = VideoFragment.newInst();
+                fragment = HomeVideoFunFragment.newInst();
                 break;
             case 1:
-                fragment = FunnyFragment.newInst();
+                fragment = HomeFunnyFragment.newInst();
                 break;
             case 2:
-                fragment = BeautyFragment.newInst();
+                fragment = HomeBeautyFragment.newInst();
                 break;
             case 3:
-                fragment = MineFragment.newInst();
+                fragment = HomeMineFragment.newInst();
                 break;
         }
         return fragment;
+    }
+
+    @Override
+    protected boolean whenShowNotSameFragment(int showItem) {
+        JCVideoPlayer.releaseAllVideos();
+        return super.whenShowNotSameFragment(showItem);
     }
 
     @Override
@@ -75,6 +81,10 @@ public class HomePageActivity extends MultiFragmentActivity {
     }
 
     @Override
+    protected BasePresenter createPresenter() {
+        return null;
+    }
+
     protected String[] getPermission2Check() {
         return new String[0];
     }
@@ -85,12 +95,16 @@ public class HomePageActivity extends MultiFragmentActivity {
     }
 
     @Override
-    protected PresenterLoader createPresenterLoader() {
-        return null;
+    protected void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
     }
 
     @Override
-    public void onLoadFinished(Loader loader, Object data) {
-
+    public void onBackPressed() {
+        if (JCVideoPlayer.backPress()) {
+            return;
+        }
+        super.onBackPressed();
     }
 }

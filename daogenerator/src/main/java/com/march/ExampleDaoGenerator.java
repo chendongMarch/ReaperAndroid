@@ -28,16 +28,31 @@ public class ExampleDaoGenerator {
 
     private static void generateBean(Schema schema) {
         addAlbumDetail(schema);
-        addRecommendAlbumItem(schema);
-        addWholeAlbumItem(schema);
+        addBeautyAlbum(schema);
+        addVideo(schema);
         addDetailCollection(schema);
         addAlbumItemCollection(schema);
+    }
+
+    private static void addVideo(Schema schema) {
+        Entity video = schema.addEntity("VideoFun");
+        video.setHasKeepSections(true);
+        video.addStringProperty("time_stamp");
+        video.addStringProperty("describe");
+        video.addStringProperty("linkPageUrl");
+        video.addIntProperty("width");
+        video.addIntProperty("height");
+        video.addIntProperty("publishTime");
+        video.addStringProperty("videoCategory");
+        video.addIntProperty("videoCategoryType");
+        video.addStringProperty("videoType");
+        video.addStringProperty("videoPlayUrl");
     }
 
     private static void addDetailCollection(Schema schema) {
         Entity albumDetail = schema.addEntity("DetailCollection");
         albumDetail.setHasKeepSections(true);
-        albumDetail.implementsInterface("RvQuickInterface","java.io.Serializable","Detail");
+        albumDetail.implementsInterface("RvQuickInterface", "java.io.Serializable", "Detail");
         albumDetail.addStringProperty("album_link");
         albumDetail.addStringProperty("photo_src").primaryKey();
         albumDetail.addIntProperty("width");
@@ -47,7 +62,7 @@ public class ExampleDaoGenerator {
     private static void addAlbumItemCollection(Schema schema) {
         Entity wholeAlbumItem = schema.addEntity("AlbumItemCollection");
         wholeAlbumItem.setHasKeepSections(true);
-        wholeAlbumItem.implementsInterface("RvQuickInterface","java.io.Serializable");
+        wholeAlbumItem.implementsInterface("RvQuickInterface", "java.io.Serializable");
         wholeAlbumItem.addStringProperty("album_link").primaryKey();
         wholeAlbumItem.addStringProperty("key_words");
         wholeAlbumItem.addStringProperty("album_cover");
@@ -57,7 +72,7 @@ public class ExampleDaoGenerator {
     private static void addAlbumDetail(Schema schema) {
         Entity albumDetail = schema.addEntity("AlbumDetail");
         albumDetail.setHasKeepSections(true);
-        albumDetail.implementsInterface("RvQuickInterface", "java.io.Serializable","Detail");
+        albumDetail.implementsInterface("RvQuickInterface", "java.io.Serializable", "Detail");
         albumDetail.addStringProperty("album_link");
         albumDetail.addStringProperty("photo_src");
         albumDetail.addIntProperty("width");
@@ -66,31 +81,19 @@ public class ExampleDaoGenerator {
         albumDetail.addBooleanProperty("isFavorite");
     }
 
-    private static void addRecommendAlbumItem(Schema schema) {
-        Entity recommendAlbumItem = schema.addEntity("RecommendAlbumItem");
-        recommendAlbumItem.setHasKeepSections(true);
-        recommendAlbumItem.setSuperclass("Album");
-        recommendAlbumItem.addStringProperty("album_type");
-        recommendAlbumItem.addStringProperty("album_link");
-        recommendAlbumItem.addStringProperty("album_cover");
-        recommendAlbumItem.addStringProperty("album_desc");
-        recommendAlbumItem.addStringProperty("time_stamp");
-        recommendAlbumItem.addBooleanProperty("isFavorite");
-    }
+    private static void addBeautyAlbum(Schema schema) {
+        Entity beautyAlbum = schema.addEntity("BeautyAlbum");
+        beautyAlbum.setHasKeepSections(true);
+        beautyAlbum.implementsInterface("Parcelable");
+        beautyAlbum.addStringProperty("album_type");
+        beautyAlbum.addStringProperty("key_words");
+        beautyAlbum.addStringProperty("album_link");
+        beautyAlbum.addStringProperty("album_cover");
+        beautyAlbum.addStringProperty("album_desc");
+        beautyAlbum.addStringProperty("time_stamp");
+        beautyAlbum.addBooleanProperty("isFavorite");
 
-    private static void addWholeAlbumItem(Schema schema) {
-        Entity wholeAlbumItem = schema.addEntity("WholeAlbumItem");
-        wholeAlbumItem.setHasKeepSections(true);
-        wholeAlbumItem.setSuperclass("Album");
-//        wholeAlbumItem.addStringProperty("_id").primaryKey();
-        wholeAlbumItem.addStringProperty("album_link");
-        wholeAlbumItem.addStringProperty("key_words");
-        wholeAlbumItem.addStringProperty("album_cover");
-        wholeAlbumItem.addStringProperty("album_desc");
-        wholeAlbumItem.addStringProperty("time_stamp");
-        wholeAlbumItem.addBooleanProperty("isFavorite");
     }
-
 
     private static void addNote(Schema schema) {
         // 一个实体（类）就关联到数据库中的一张表，此处表名为「Note」（既类名）
@@ -102,7 +105,7 @@ public class ExampleDaoGenerator {
         //设置继承的父类
         note.setSuperclass("Album");
         // 你也可以重新给表命名
-         note.setTableName("NODE");
+        note.setTableName("NODE");
         // greenDAO 会自动根据实体类的属性值来创建表字段，并赋予默认值
         // 接下来你便可以设置表中的字段：
         note.addIdProperty().autoincrement();

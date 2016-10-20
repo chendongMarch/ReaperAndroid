@@ -88,9 +88,9 @@ public class RecyclerGroupView extends FrameLayout {
         header.setTextColor(getResources().getColor(R.color.black));
         //设置下拉刷新
         mPtrLy.setKeepHeaderWhenRefresh(true);
-        mPtrLy.setDurationToCloseHeader(1000);
-        mPtrLy.setLoadingMinTime(2000);
-        mPtrLy.setRatioOfHeaderHeightToRefresh(2.0f);
+        mPtrLy.setDurationToCloseHeader(600);
+        mPtrLy.setLoadingMinTime(1000);
+        mPtrLy.setRatioOfHeaderHeightToRefresh(1.0f);
         mPtrLy.setHeaderView(header);
         mPtrLy.addPtrUIHandler(header);
         mPtrLy.setPtrHandler(new PtrHandler() {

@@ -1,7 +1,6 @@
 package com.march.reaper.ipresenter;
 
 import com.march.quickrvlibs.RvAdapter;
-import com.march.reaper.base.ReaperApplication;
 import com.march.reaper.base.mvp.presenter.BasePresenter;
 import com.march.reaper.base.mvp.view.BaseView;
 import com.march.reaper.common.Constant;
@@ -24,8 +23,11 @@ public abstract class NetLoadListPresenter<V extends BaseView, D> extends BasePr
     protected List<D> datas;
     protected int mWidth;
 
-    public NetLoadListPresenter() {
-        mWidth = DimensionHelper.getScreenWidth(ReaperApplication.get());
+
+    @Override
+    public void attachView(V view) {
+        super.attachView(view);
+        mWidth = DimensionHelper.getScreenWidth(getContext());
         datas = new ArrayList<>();
         getRgv().setOnRefreshBeginListener(new RecyclerGroupView.OnRefreshBeginListener() {
             @Override
@@ -35,11 +37,13 @@ public abstract class NetLoadListPresenter<V extends BaseView, D> extends BasePr
         });
     }
 
+
     public void reJustQuery() {
         datas.clear();
         offset = 0;
         justQuery();
     }
+
 
     /**
      * 处理查询后的数据
@@ -51,23 +55,28 @@ public abstract class NetLoadListPresenter<V extends BaseView, D> extends BasePr
             offset = -1;
             Logger.e("没有数据了");
             if (mAdapter != null) {
-                mAdapter.setFooterEnable(false);
-                mAdapter.notifyDataSetChanged();
+                mAdapter.getHFModule().setFooterEnable(false);
+                mAdapter.notifyItemChanged(mAdapter.getItemCount() - 1);
             }
             completeRefresh();
             isLoadEnd = true;
             return;
         }
+        int preDataCount = this.datas.size() + 1;
         datas.addAll(list);
         if (mAdapter == null) {
             createRvAdapter();
             setAdapter4RecyclerView(mAdapter);
         } else {
-            mAdapter.notifyDataSetChanged();
+            if (offset == 0)
+                mAdapter.notifyDataSetChanged();
+            else
+                mAdapter.notifyItemRangeInserted(preDataCount, this.datas.size() - preDataCount - 1);
+
         }
         //查询成功,offset增加
         offset += limit;
-        mAdapter.finishLoad();
+        mAdapter.getLoadMoreModule().finishLoad();
         completeRefresh();
         isLoadEnd = true;
     }
@@ -82,10 +91,14 @@ public abstract class NetLoadListPresenter<V extends BaseView, D> extends BasePr
         getRgv().getRecyclerView().setAdapter(adapter);
     }
 
+
     /**
      * 请求
      */
-    public abstract void justQuery();
+    public void justQuery() {
+        if (offset == 0)
+            getRgv().getPtrLy().autoRefresh();
+    }
 
     protected boolean checkCanQuery() {
         //如果没有数据,截断
@@ -97,6 +110,7 @@ public abstract class NetLoadListPresenter<V extends BaseView, D> extends BasePr
         isLoadEnd = false;
         return true;
     }
+
 
     protected abstract void queryDbDatas();
 

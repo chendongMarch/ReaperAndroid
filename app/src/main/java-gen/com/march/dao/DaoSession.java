@@ -10,14 +10,14 @@ import de.greenrobot.dao.identityscope.IdentityScopeType;
 import de.greenrobot.dao.internal.DaoConfig;
 
 import com.march.bean.AlbumDetail;
-import com.march.bean.RecommendAlbumItem;
-import com.march.bean.WholeAlbumItem;
+import com.march.bean.BeautyAlbum;
+import com.march.bean.VideoFun;
 import com.march.bean.DetailCollection;
 import com.march.bean.AlbumItemCollection;
 
 import com.march.dao.AlbumDetailDao;
-import com.march.dao.RecommendAlbumItemDao;
-import com.march.dao.WholeAlbumItemDao;
+import com.march.dao.BeautyAlbumDao;
+import com.march.dao.VideoFunDao;
 import com.march.dao.DetailCollectionDao;
 import com.march.dao.AlbumItemCollectionDao;
 
@@ -31,14 +31,14 @@ import com.march.dao.AlbumItemCollectionDao;
 public class DaoSession extends AbstractDaoSession {
 
     private final DaoConfig albumDetailDaoConfig;
-    private final DaoConfig recommendAlbumItemDaoConfig;
-    private final DaoConfig wholeAlbumItemDaoConfig;
+    private final DaoConfig beautyAlbumDaoConfig;
+    private final DaoConfig videoFunDaoConfig;
     private final DaoConfig detailCollectionDaoConfig;
     private final DaoConfig albumItemCollectionDaoConfig;
 
     private final AlbumDetailDao albumDetailDao;
-    private final RecommendAlbumItemDao recommendAlbumItemDao;
-    private final WholeAlbumItemDao wholeAlbumItemDao;
+    private final BeautyAlbumDao beautyAlbumDao;
+    private final VideoFunDao videoFunDao;
     private final DetailCollectionDao detailCollectionDao;
     private final AlbumItemCollectionDao albumItemCollectionDao;
 
@@ -49,11 +49,11 @@ public class DaoSession extends AbstractDaoSession {
         albumDetailDaoConfig = daoConfigMap.get(AlbumDetailDao.class).clone();
         albumDetailDaoConfig.initIdentityScope(type);
 
-        recommendAlbumItemDaoConfig = daoConfigMap.get(RecommendAlbumItemDao.class).clone();
-        recommendAlbumItemDaoConfig.initIdentityScope(type);
+        beautyAlbumDaoConfig = daoConfigMap.get(BeautyAlbumDao.class).clone();
+        beautyAlbumDaoConfig.initIdentityScope(type);
 
-        wholeAlbumItemDaoConfig = daoConfigMap.get(WholeAlbumItemDao.class).clone();
-        wholeAlbumItemDaoConfig.initIdentityScope(type);
+        videoFunDaoConfig = daoConfigMap.get(VideoFunDao.class).clone();
+        videoFunDaoConfig.initIdentityScope(type);
 
         detailCollectionDaoConfig = daoConfigMap.get(DetailCollectionDao.class).clone();
         detailCollectionDaoConfig.initIdentityScope(type);
@@ -62,22 +62,22 @@ public class DaoSession extends AbstractDaoSession {
         albumItemCollectionDaoConfig.initIdentityScope(type);
 
         albumDetailDao = new AlbumDetailDao(albumDetailDaoConfig, this);
-        recommendAlbumItemDao = new RecommendAlbumItemDao(recommendAlbumItemDaoConfig, this);
-        wholeAlbumItemDao = new WholeAlbumItemDao(wholeAlbumItemDaoConfig, this);
+        beautyAlbumDao = new BeautyAlbumDao(beautyAlbumDaoConfig, this);
+        videoFunDao = new VideoFunDao(videoFunDaoConfig, this);
         detailCollectionDao = new DetailCollectionDao(detailCollectionDaoConfig, this);
         albumItemCollectionDao = new AlbumItemCollectionDao(albumItemCollectionDaoConfig, this);
 
         registerDao(AlbumDetail.class, albumDetailDao);
-        registerDao(RecommendAlbumItem.class, recommendAlbumItemDao);
-        registerDao(WholeAlbumItem.class, wholeAlbumItemDao);
+        registerDao(BeautyAlbum.class, beautyAlbumDao);
+        registerDao(VideoFun.class, videoFunDao);
         registerDao(DetailCollection.class, detailCollectionDao);
         registerDao(AlbumItemCollection.class, albumItemCollectionDao);
     }
     
     public void clear() {
         albumDetailDaoConfig.getIdentityScope().clear();
-        recommendAlbumItemDaoConfig.getIdentityScope().clear();
-        wholeAlbumItemDaoConfig.getIdentityScope().clear();
+        beautyAlbumDaoConfig.getIdentityScope().clear();
+        videoFunDaoConfig.getIdentityScope().clear();
         detailCollectionDaoConfig.getIdentityScope().clear();
         albumItemCollectionDaoConfig.getIdentityScope().clear();
     }
@@ -86,12 +86,12 @@ public class DaoSession extends AbstractDaoSession {
         return albumDetailDao;
     }
 
-    public RecommendAlbumItemDao getRecommendAlbumItemDao() {
-        return recommendAlbumItemDao;
+    public BeautyAlbumDao getBeautyAlbumDao() {
+        return beautyAlbumDao;
     }
 
-    public WholeAlbumItemDao getWholeAlbumItemDao() {
-        return wholeAlbumItemDao;
+    public VideoFunDao getVideoFunDao() {
+        return videoFunDao;
     }
 
     public DetailCollectionDao getDetailCollectionDao() {

@@ -2,13 +2,12 @@ package com.march.reaper.common;
 
 import com.march.bean.AlbumDetail;
 import com.march.bean.AlbumItemCollection;
+import com.march.bean.BeautyAlbum;
 import com.march.bean.DetailCollection;
-import com.march.bean.RecommendAlbumItem;
-import com.march.bean.WholeAlbumItem;
 import com.march.dao.AlbumDetailDao;
 import com.march.dao.AlbumItemCollectionDao;
+import com.march.dao.BeautyAlbumDao;
 import com.march.dao.DetailCollectionDao;
-import com.march.dao.RecommendAlbumItemDao;
 
 import java.util.List;
 
@@ -94,20 +93,19 @@ public class DbHelper {
     }
 
     //分页加载所有的专辑
-
-    public void queryWholeAlbum(final int skip, final int limit, final OnQueryReadyListener<WholeAlbumItem> onQueryReadyListener) {
-        new SimpleQueryTask<WholeAlbumItem>() {
+    public void queryWholeAlbum(final int skip, final int limit, final OnQueryReadyListener<BeautyAlbum> onQueryReadyListener) {
+        new SimpleQueryTask<BeautyAlbum>() {
             @Override
-            protected List<WholeAlbumItem> query() {
-                Query<WholeAlbumItem> query = DaoHelper.get()
-                        .getWholeAlbumItemDao().queryBuilder()
+            protected List<BeautyAlbum> query() {
+                Query<BeautyAlbum> query = DaoHelper.get()
+                        .getBeautyAlbumDao().queryBuilder()
                         .offset(skip).limit(limit)
                         .build();
                 return query.list();
             }
 
             @Override
-            protected void afterQuery(List<WholeAlbumItem> list) {
+            protected void afterQuery(List<BeautyAlbum> list) {
                 if (onQueryReadyListener != null) {
                     onQueryReadyListener.queryReady(list);
                 }
@@ -117,22 +115,22 @@ public class DbHelper {
 
 
     //分页加载   所有推荐专辑 || 某类专辑
-    public void queryAllRecommendAlbum(final String type, final int skip, final int limit, final OnQueryReadyListener<RecommendAlbumItem> onQueryReadyListener) {
-        new SimpleQueryTask<RecommendAlbumItem>() {
+    public void queryAllRecommendAlbum(final String type, final int skip, final int limit, final OnQueryReadyListener<BeautyAlbum> onQueryReadyListener) {
+        new SimpleQueryTask<BeautyAlbum>() {
             @Override
-            protected List<RecommendAlbumItem> query() {
-                queryCount(RecommendAlbumItem.class);
-                QueryBuilder<RecommendAlbumItem> queryBuilder = DaoHelper.get()
-                        .getRecommendAlbumItemDao().queryBuilder();
+            protected List<BeautyAlbum> query() {
+                queryCount(BeautyAlbum.class);
+                QueryBuilder<BeautyAlbum> queryBuilder = DaoHelper.get()
+                        .getBeautyAlbumDao().queryBuilder();
                 queryBuilder.offset(skip).limit(limit);
                 if (type != null)
-                    queryBuilder.where(RecommendAlbumItemDao.Properties.Album_type.eq(type));
+                    queryBuilder.where(BeautyAlbumDao.Properties.Album_type.eq(type));
                 queryBuilder.build();
                 return queryBuilder.list();
             }
 
             @Override
-            protected void afterQuery(List<RecommendAlbumItem> list) {
+            protected void afterQuery(List<BeautyAlbum> list) {
                 if (onQueryReadyListener != null) {
                     onQueryReadyListener.queryReady(list);
                 }

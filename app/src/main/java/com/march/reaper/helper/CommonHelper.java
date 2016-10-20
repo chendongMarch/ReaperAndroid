@@ -1,7 +1,5 @@
 package com.march.reaper.helper;
-
 import android.graphics.Color;
-
 import java.util.Random;
 
 /**
@@ -16,6 +14,9 @@ import java.util.Random;
 public class CommonHelper {
     public static int randomColor() {
         Random random = new Random();
-        return Color.rgb(random.nextInt(255), random.nextInt(255), random.nextInt(255));
+        return Color.rgb(random.nextInt(150), random.nextInt(150), random.nextInt(150));
     }
+
+
+
 }

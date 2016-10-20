@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -16,6 +17,8 @@ import com.march.bean.DetailCollection;
 import com.march.reaper.R;
 import com.march.reaper.base.ReaperApplication;
 import com.march.reaper.base.activity.BaseReaperActivity;
+import com.march.reaper.base.mvp.life.PresenterLoader;
+import com.march.reaper.base.mvp.presenter.BasePresenter;
 import com.march.reaper.common.Constant;
 import com.march.reaper.common.DbHelper;
 import com.march.reaper.helper.ImageHelper;
@@ -47,11 +50,6 @@ public class ScanImgActivity extends BaseReaperActivity {
         return R.layout.scan_img_activity;
     }
 
-    @Override
-    protected void destroyPresenter() {
-
-    }
-
 
     public static void loadActivity(Activity activity, Detail detail) {
         Intent intent = new Intent(activity, ScanImgActivity.class);
@@ -60,7 +58,7 @@ public class ScanImgActivity extends BaseReaperActivity {
     }
 
     @Override
-    protected void onInitDatas() {
+    public void onInitDatas() {
         super.onInitDatas();
         mAlbumDetailData = (AlbumDetail) getIntent().getSerializableExtra(Constant.KEY_ALBUM_DETAIL_SCAN);
         mCol = new DetailCollection(mAlbumDetailData);
@@ -69,8 +67,8 @@ public class ScanImgActivity extends BaseReaperActivity {
 
 
     @Override
-    protected void onInitViews(Bundle save) {
-        super.onInitViews(save);
+    public void onInitViews(View view,Bundle save) {
+        super.onInitViews(view,save);
         String url = mAlbumDetailData.getPhoto_src().replaceAll("-\\d+x\\d+.jpg", ".jpg");
         Logger.e(url);
         ImageHelper.loadImg(mContext, url, mScanIv);
@@ -126,12 +124,13 @@ public class ScanImgActivity extends BaseReaperActivity {
     }
 
     @Override
-    protected String[] getPermission2Check() {
-        return new String[0];
+    protected BasePresenter createPresenter() {
+        return null;
     }
 
     @Override
     protected boolean isInitTitle() {
         return false;
     }
+
 }

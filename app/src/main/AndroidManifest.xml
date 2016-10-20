@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".base.ReaperApplication"
@@ -13,50 +14,51 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppThemeNoActionBar">
-        <activity android:name=".iview.activity.GuardActivity"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".iview.activity.GuardActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeNoActionBar.Loading">
+            android:theme="@style/AppTheme.NoActionBar.Loading">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.CREATE_SHORTCUT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".iview.activity.AppStartActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeNoActionBar.Loading">
+            android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
         <activity
             android:name=".iview.activity.HomePageActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeNoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".iview.activity.OffLineDataActivity"
+            android:name=".iview.activity.MoreBeautyActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".iview.activity.AlbumDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".iview.activity.ScanImgActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".iview.activity.AboutActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".iview.activity.AlbumCollectionActivity"
+            android:name=".TestActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
-
+            android:theme="@style/AppTheme.NoActionBar">
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
     </application>
 
 </manifest>

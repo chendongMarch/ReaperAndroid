@@ -109,6 +109,7 @@ public class Toaster {
      */
     public interface ToastBuilder {
         Toast buildToast(Toast toast, String msg);
+        void setText(Toast toast,String msg);
     }
 
     private void show(final Context context, String msg, int strRes, final int duration) {
@@ -130,7 +131,11 @@ public class Toaster {
                         mToast = Toast.makeText(context, finalMsg2Show, duration);
                     }
                 } else {
-                    mToast.setText(finalMsg2Show);
+                    if (mToastBuilder != null) {
+                        mToastBuilder.setText(mToast,finalMsg2Show);
+                    } else {
+                        mToast.setText(finalMsg2Show);
+                    }
                     mToast.setDuration(duration);
                 }
                 mToast.show();

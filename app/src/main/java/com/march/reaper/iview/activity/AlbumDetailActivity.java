@@ -6,13 +6,11 @@ import android.os.Bundle;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
-import com.march.bean.Album;
+import com.march.bean.BeautyAlbum;
 import com.march.reaper.R;
 import com.march.reaper.base.activity.BaseReaperActivity;
-import com.march.reaper.base.mvp.life.PresenterFactory;
-import com.march.reaper.base.mvp.life.PresenterLoader;
 import com.march.reaper.common.Constant;
-import com.march.reaper.ipresenter.impl.AlbumDetailPresenterImpl;
+import com.march.reaper.ipresenter.AlbumDetailPresenter;
 import com.march.reaper.widget.RecyclerGroupView;
 import com.march.reaper.widget.TitleBarView;
 
@@ -22,8 +20,8 @@ import butterknife.Bind;
  * 专辑详情界面
  */
 public class AlbumDetailActivity
-        extends BaseReaperActivity<AlbumDetailPresenterImpl.AlbumDetailView, AlbumDetailPresenterImpl>
-        implements AlbumDetailPresenterImpl.AlbumDetailView {
+        extends BaseReaperActivity<AlbumDetailPresenter>
+        implements AlbumDetailPresenter.AlbumDetailView {
 
     @Bind(R.id.detail_albumlist_rv)
     RecyclerGroupView mRgv;
@@ -38,10 +36,12 @@ public class AlbumDetailActivity
     }
 
     //展示某一个专辑的详情
-    public static void loadActivity4DetailShow(Activity activity, Album album) {
+    public static void loadActivity4DetailShow(Activity activity, BeautyAlbum album) {
         Intent intent = new Intent(activity, AlbumDetailActivity.class);
-        intent.putExtra(Constant.KEY_DETAIL_TYPE, TYPE_IS_DETAILS);
-        intent.putExtra(Constant.KEY_ALBUM_DETAIL_SHOW, album);
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constant.KEY_DETAIL_TYPE, TYPE_IS_DETAILS);
+        bundle.putParcelable(Constant.KEY_ALBUM_DETAIL_SHOW, album);
+        intent.putExtra(Constant.KEY_DEFAULT_DATA, bundle);
         activity.startActivity(intent);
     }
 
@@ -50,45 +50,27 @@ public class AlbumDetailActivity
         return R.layout.detail_activity;
     }
 
-
     @Override
-    protected void onInitViews(Bundle save) {
-        super.onInitViews(save);
+    public void onInitViews(View view, Bundle save) {
+        super.onInitViews(view, save);
         mRgv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        mTitleBarView.setText("首页", "专辑详情", "大图");
+        mTitleBarView.setLeftBackListener(mActivity);
     }
 
     @Override
-    protected void onInitDatas() {
-        super.onInitDatas();
-//        if (getIntent().getIntExtra(Constant.KEY_DETAIL_TYPE, 100) == TYPE_IS_DETAILS) {
-//            mPresenter = new AlbumDetailPresenterImpl((BaseReaperActivity) mActivity);
-//            mTitleBarView.setText("首页", "专辑详情", "大图");
-//        }
-//        else if (getIntent().getIntExtra(Constant.KEY_DETAIL_TYPE, 100) == TYPE_IS_COLLECTION) {
-//            mPresenter = new DetailCollPresenterImpl((BaseReaperActivity) mActivity);
-//            mTitleBarView.setText("我", "图片收藏", "大图");
-//        }
-//        mPresenter.justQuery();
+    public void onBackPressed() {
+        animFinish();
     }
 
     @Override
-    protected void onStartWorks() {
+    public void onStartWorks() {
         super.onStartWorks();
         mPresenter.justQuery();
     }
 
     @Override
-    protected PresenterLoader<AlbumDetailPresenterImpl> createPresenterLoader() {
-        return new PresenterLoader<>(this, new PresenterFactory<AlbumDetailPresenterImpl>() {
-            @Override
-            public AlbumDetailPresenterImpl crate() {
-                return new AlbumDetailPresenterImpl();
-            }
-        });
-    }
-
-    @Override
-    protected void onInitEvents() {
+    public void onInitEvents() {
         super.onInitEvents();
         mTitleBarView.setListener(TitleBarView.POS_Right, new View.OnClickListener() {
             @Override
@@ -104,8 +86,8 @@ public class AlbumDetailActivity
     }
 
     @Override
-    protected String[] getPermission2Check() {
-        return new String[0];
+    protected AlbumDetailPresenter createPresenter() {
+        return new AlbumDetailPresenter();
     }
 
     @Override

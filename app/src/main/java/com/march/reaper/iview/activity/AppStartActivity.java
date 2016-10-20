@@ -11,18 +11,16 @@ import android.widget.TextView;
 
 import com.march.reaper.R;
 import com.march.reaper.base.activity.BaseReaperActivity;
-import com.march.reaper.base.mvp.life.PresenterFactory;
-import com.march.reaper.base.mvp.life.PresenterLoader;
 import com.march.reaper.helper.ImageHelper;
 import com.march.reaper.helper.Toaster;
-import com.march.reaper.ipresenter.impl.AppStartPresenter;
+import com.march.reaper.ipresenter.AppStartPresenter;
 import com.march.reaper.utils.SPUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
 public class AppStartActivity
-        extends BaseReaperActivity<AppStartPresenter.AppStartView, AppStartPresenter>
+        extends BaseReaperActivity<AppStartPresenter>
         implements AppStartPresenter.AppStartView {
 
     @Bind(R.id.et_name)
@@ -36,11 +34,11 @@ public class AppStartActivity
 
     @Override
     protected int getLayoutId() {
-        return R.layout.app_start_new_activity;
+        return R.layout.app_start_activity;
     }
 
     @Override
-    protected void onStartWorks() {
+    public void onStartWorks() {
         super.onStartWorks();
         //加载图片
         mPresenter.queryAppStartFlashImg();
@@ -75,15 +73,6 @@ public class AppStartActivity
         }
     }
 
-    @Override
-    protected PresenterLoader<AppStartPresenter> createPresenterLoader() {
-        return new PresenterLoader<>(this, new PresenterFactory<AppStartPresenter>() {
-            @Override
-            public AppStartPresenter crate() {
-                return new AppStartPresenter();
-            }
-        });
-    }
 
     private void startHomePage() {
         startActivity(HomePageActivity.class);
@@ -118,8 +107,8 @@ public class AppStartActivity
     }
 
     @Override
-    protected String[] getPermission2Check() {
-        return new String[0];
+    protected AppStartPresenter createPresenter() {
+        return new AppStartPresenter();
     }
 
     @Override
