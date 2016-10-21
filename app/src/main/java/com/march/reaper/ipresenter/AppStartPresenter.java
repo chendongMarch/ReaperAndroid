@@ -6,8 +6,8 @@ import com.march.reaper.base.mvp.view.BaseView;
 import com.march.reaper.common.API;
 import com.march.reaper.imodel.BeautyAlbumResponse;
 import com.march.reaper.imodel.UserInfo;
-import com.march.reaper.utils.QueryUtils;
-import com.march.reaper.utils.SPUtils;
+import com.march.reaper.helper.RequestHelper;
+import com.march.reaper.helper.SharePreferenceHelper;
 
 import java.util.List;
 
@@ -42,12 +42,12 @@ public class AppStartPresenter
 
     //请求图片
     public void queryAppStartFlashImg() {
-        final String appStartPhoto = SPUtils.get().getAppStartPhoto();
+        final String appStartPhoto = SharePreferenceHelper.get().getAppStartPhoto();
         if (appStartPhoto != null) {
             mView.loadViewImg(appStartPhoto);
         }
-        QueryUtils.get().query(API.GET_LUCKY + "?limit=1", BeautyAlbumResponse.class,
-                new QueryUtils.OnQueryOverListener<BeautyAlbumResponse>() {
+        RequestHelper.get().query(API.GET_LUCKY + "?limit=1", BeautyAlbumResponse.class,
+                new RequestHelper.OnQueryOverListener<BeautyAlbumResponse>() {
                     @Override
                     public void queryOver(BeautyAlbumResponse rst) {
                         List<BeautyAlbum> data = rst.getData();
@@ -55,7 +55,7 @@ public class AppStartPresenter
                         if (appStartPhoto == null) {
                             mView.loadViewImg(album_cover);
                         }
-                        SPUtils.get().putAppStartPhoto(album_cover);
+                        SharePreferenceHelper.get().putAppStartPhoto(album_cover);
                     }
 
                     @Override

@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.march.reaper.R;
 import com.march.reaper.base.activity.BaseReaperActivity;
-import com.march.reaper.base.fragment.BaseAbsFragment;
+import com.march.reaper.base.fragment.BaseFragment;
 import com.march.reaper.base.mvp.presenter.BasePresenter;
 import com.march.reaper.common.Constant;
 import com.march.reaper.iview.adapter.MyFragmentPagerAdapter;
@@ -39,7 +39,7 @@ public class MoreBeautyActivity extends BaseReaperActivity {
     TabLayout mTabLy;
     @Bind(R.id.viewpager)
     ViewPager mTypeAlbumVp;
-    private List<BaseAbsFragment> mFragments;
+    private List<BaseFragment> mFragments;
 
 
     @Override
@@ -120,12 +120,10 @@ public class MoreBeautyActivity extends BaseReaperActivity {
         }
     }
 
-
     @Override
     protected BasePresenter createPresenter() {
         return null;
     }
-
 
     @Override
     protected boolean isInitTitle() {
@@ -136,5 +134,4 @@ public class MoreBeautyActivity extends BaseReaperActivity {
     protected int getLayoutId() {
         return R.layout.beauty_more_activity;
     }
-
 }

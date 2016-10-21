@@ -21,8 +21,8 @@ import com.march.reaper.helper.Toaster;
 import com.march.reaper.imodel.VersionResponse;
 import com.march.reaper.iview.activity.AboutActivity;
 import com.march.reaper.iview.activity.AlbumDetailActivity;
-import com.march.reaper.utils.AppUtils;
-import com.march.reaper.utils.QueryUtils;
+import com.march.reaper.helper.AppHelper;
+import com.march.reaper.helper.RequestHelper;
 
 import butterknife.Bind;
 
@@ -109,11 +109,11 @@ public class HomeMineFragment extends BaseFragment {
 
     //监测新版本,打开浏览器下载
     private void checkUpdateVersion() {
-        QueryUtils.get().get(API.GET_CHECK_VERSION, VersionResponse.class, new QueryUtils.OnQueryOverListener<VersionResponse>() {
+        RequestHelper.get().get(API.GET_CHECK_VERSION, VersionResponse.class, new RequestHelper.OnQueryOverListener<VersionResponse>() {
             @Override
             public void queryOver(VersionResponse rst) {
                 int versionCode = rst.getVersionCode();
-                int currentCode = AppUtils.getVersionCode();
+                int currentCode = AppHelper.getVersionCode();
                 if (currentCode >= versionCode)
                     Toaster.get().show(mContext, "当前是最新版本.");
                 else {

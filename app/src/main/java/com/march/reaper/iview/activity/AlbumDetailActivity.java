@@ -37,11 +37,10 @@ public class AlbumDetailActivity
 
     //展示某一个专辑的详情
     public static void loadActivity4DetailShow(Activity activity, BeautyAlbum album) {
-        Intent intent = new Intent(activity, AlbumDetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt(Constant.KEY_DETAIL_TYPE, TYPE_IS_DETAILS);
         bundle.putParcelable(Constant.KEY_ALBUM_DETAIL_SHOW, album);
-        intent.putExtra(Constant.KEY_DEFAULT_DATA, bundle);
+        Intent intent = buildIntent(activity, AlbumDetailActivity.class, bundle);
         activity.startActivity(intent);
     }
 

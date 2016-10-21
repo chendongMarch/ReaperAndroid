@@ -1,5 +1,8 @@
 package com.march.reaper.base.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
 
@@ -39,6 +42,13 @@ abstract class AbsActivityWrap extends AbsActivity {
         }
         return mTitleBarView;
     }
+
+    protected static Intent buildIntent(Context context, Class cls, Bundle bundle) {
+        Intent intent = new Intent(context, cls);
+        intent.putExtra(INTENT_DEFAULT_DATA, bundle);
+        return intent;
+    }
+
 
     /**
      * 监测权限

@@ -10,12 +10,11 @@ import com.march.reaper.base.mvp.view.BaseView;
  * Project  : Reaper
  * Package  : com.march.reaper.base.fragment
  * CreateAt : 2016/10/13
- * Describe :
+ * Describe : fragment基类，主要负责处理MVP相关逻辑
  *
  * @author chendong
  */
-
-public abstract class BaseMVPFragment<P extends BasePresenter, V extends BaseView>
+public abstract class BaseMVPFragment<P extends BasePresenter>
         extends BaseFragment
         implements BaseView {
 
@@ -24,36 +23,24 @@ public abstract class BaseMVPFragment<P extends BasePresenter, V extends BaseVie
     protected abstract P createPresenter();
 
     @Override
-    protected boolean isInitTitle() {
-        return false;
-    }
-
-    @Override
-    public void onInitDatas() {
-        super.onInitDatas();
-    }
-
-    @Override
     public void onStartWorks() {
         super.onStartWorks();
         mPresenter = createPresenter();
         if (mPresenter != null)
-            mPresenter.attachView((V) this);
+            mPresenter.attachView(this);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mPresenter!=null)
-        mPresenter.detachView();
+        if (mPresenter != null)
+            mPresenter.detachView();
     }
-
 
     @Override
     public Context getContext() {
         return mContext;
     }
-
 
     @Override
     public Bundle getData() {

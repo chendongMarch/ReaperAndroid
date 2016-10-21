@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.march.reaper.R;
 import com.march.reaper.base.activity.MultiFragmentActivity;
 import com.march.reaper.base.mvp.presenter.BasePresenter;
+import com.march.reaper.helper.Toaster;
 import com.march.reaper.iview.fragment.HomeBeautyFragment;
 import com.march.reaper.iview.fragment.HomeFunnyFragment;
 import com.march.reaper.iview.fragment.HomeMineFragment;
@@ -100,11 +101,19 @@ public class HomePageActivity extends MultiFragmentActivity {
         JCVideoPlayer.releaseAllVideos();
     }
 
+    private long lastTryBackTime = 0;
+
     @Override
     public void onBackPressed() {
         if (JCVideoPlayer.backPress()) {
             return;
         }
-        super.onBackPressed();
+        long currentTimeMillis = System.currentTimeMillis();
+        if (currentTimeMillis - lastTryBackTime < 1000) {
+            super.onBackPressed();
+        } else {
+            lastTryBackTime = currentTimeMillis;
+            Toaster.get().show(mContext, "再按一下退出");
+        }
     }
 }

@@ -6,7 +6,6 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.march.reaper.R;
-import com.march.reaper.base.fragment.BaseAbsFragment;
 import com.march.reaper.base.fragment.BaseFragment;
 import com.march.reaper.common.Constant;
 import com.march.reaper.iview.activity.MoreBeautyActivity;
@@ -22,7 +21,7 @@ import butterknife.OnClick;
  * Project  : Reaper
  * Package  : com.march.reaper.iview.fragment
  * CreateAt : 2016/10/13
- * Describe :
+ * Describe : viewpager+两个fragment,懒加载
  *
  * @author chendong
  */
@@ -33,7 +32,12 @@ public class HomeBeautyFragment extends BaseFragment {
     TabLayout mTabLy;
     @Bind(R.id.viewpager)
     ViewPager mBeautyVp;
-    private List<BaseAbsFragment> mFragments;
+    private List<BaseFragment> mFragments;
+
+    @Override
+    public boolean forceLoad() {
+        return false;
+    }
 
     @Override
     protected boolean isInitTitle() {

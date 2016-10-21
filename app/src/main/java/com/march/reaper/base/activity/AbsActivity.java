@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.march.reaper.base.ILife;
-import com.march.reaper.common.Constant;
 
 /**
  * Project  : CommonLib
@@ -25,6 +24,7 @@ import com.march.reaper.common.Constant;
  * @author chendong
  */
 abstract class AbsActivity extends AppCompatActivity implements ILife {
+    public static final String INTENT_DEFAULT_DATA = "INTENT_DEFAULT_DATA";
 
     /**
      * oncreate 保存的bundle
@@ -95,7 +95,7 @@ abstract class AbsActivity extends AppCompatActivity implements ILife {
      * @param saveData onCreate 保存的bundle
      */
     protected void invokeCommonMethod(Bundle saveData) {
-        onInitIntent(getIntent().getBundleExtra(Constant.KEY_DEFAULT_DATA));
+        onInitIntent(getIntent().getBundleExtra(INTENT_DEFAULT_DATA));
         onInitDatas();
         onInitViews(null, saveData);
         onInitEvents();

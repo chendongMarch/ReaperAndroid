@@ -9,47 +9,36 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.march.reaper.base.ILife;
-import com.march.reaper.helper.Logger;
 
 import butterknife.ButterKnife;
 
 /**
  * Created by march on 16/7/1.
- * fragment
+ * fragment基类，主要负责处理
+ * 0. 分离逻辑，不对外开放
+ * 1. 加载周期
+ * 2. fragment懒加载相关逻辑
  */
-public abstract class BaseAbsFragment extends Fragment implements ILife {
+abstract class AbsFragment extends Fragment implements ILife {
 
     protected String mSelfName;
     protected Context mContext;
-
     protected boolean isVisible;
-    private boolean isPrepared;
-    private boolean isFirst = true;
     private boolean isCreateView;
     private boolean isLoadOver;
-
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        isPrepared = true;
-    }
 
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()) {
-            Logger.e(mSelfName + " 可见 " + isVisible + "  " + isPrepared + "  " + isFirst);
             isVisible = true;
             if (isCreateView && !isLoadOver) {
                 onStartWorks();
                 isLoadOver = true;
             }
         } else {
-            Logger.e(mSelfName + " 不可见 " + isVisible + "  " + isPrepared + "  " + isFirst);
             isVisible = false;
-//            onInvisible();
         }
     }
 
@@ -59,7 +48,12 @@ public abstract class BaseAbsFragment extends Fragment implements ILife {
         mContext = activity;
     }
 
-    protected abstract boolean isInitTitle();
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        onInitIntent(getArguments());
+        onInitDatas();
+    }
 
     @Nullable
     @Override
@@ -74,23 +68,21 @@ public abstract class BaseAbsFragment extends Fragment implements ILife {
         ButterKnife.bind(this, view);
         onInitViews(view, savedInstanceState);
         onInitEvents();
-        if (isVisible||forceLoad()) {
+        if (isVisible || forceLoad()) {
             onStartWorks();
             isLoadOver = true;
         }
-        Logger.e(mSelfName + " create view");
         return view;
     }
 
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        onInitIntent(getArguments());
-        onInitDatas();
+    //默认不进行懒加载，当viewpager+fragment时需要懒加载
+    public boolean forceLoad() {
+        return true;
     }
 
+
     protected abstract int getLayoutId();
+
 
     protected View getLayoutView() {
         return null;
@@ -100,11 +92,6 @@ public abstract class BaseAbsFragment extends Fragment implements ILife {
     public void onInitIntent(Bundle intent) {
 
     }
-
-    public boolean forceLoad() {
-        return false;
-    }
-
 
     @Override
     public void onInitDatas() {

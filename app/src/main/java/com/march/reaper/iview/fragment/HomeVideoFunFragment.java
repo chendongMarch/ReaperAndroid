@@ -21,7 +21,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
  * @author chendong
  */
 public class HomeVideoFunFragment
-        extends BaseMVPFragment<VideoFunPresenter, VideoFunPresenter.VideoFunView>
+        extends BaseMVPFragment<VideoFunPresenter>
         implements VideoFunPresenter.VideoFunView {
     @Bind(R.id.rgv)
     RecyclerGroupView mVideoRgv;
@@ -35,11 +35,6 @@ public class HomeVideoFunFragment
     public void onInitViews(View view, Bundle saveData) {
         super.onInitViews(view, saveData);
         mTitleBarView.setText(TitleBarView.POS_Center, "视频");
-    }
-
-    @Override
-    public boolean forceLoad() {
-        return true;
     }
 
     @Override
@@ -66,7 +61,6 @@ public class HomeVideoFunFragment
     public RecyclerGroupView getRgv() {
         return mVideoRgv;
     }
-
 
 
     @Override

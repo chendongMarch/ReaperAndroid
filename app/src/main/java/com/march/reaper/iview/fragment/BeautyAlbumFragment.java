@@ -19,12 +19,12 @@ import butterknife.Bind;
  * Project  : Reaper
  * Package  : com.march.reaper.iview.fragment
  * CreateAt : 2016/10/13
- * Describe : 推荐fragment,可以分类展示
+ * Describe : 推荐fragment,可以分类展示(viewpager + 多个fragments懒加载)
  *
  * @author chendong
  */
 public class BeautyAlbumFragment
-        extends BaseMVPFragment<BeautyAlbumPresenter, BeautyAlbumPresenter.BeautyRecommendView>
+        extends BaseMVPFragment<BeautyAlbumPresenter>
         implements BeautyAlbumPresenter.BeautyRecommendView {
 
     @Bind(R.id.rgv)
@@ -41,6 +41,10 @@ public class BeautyAlbumFragment
         mSelfName = "beauty album fragment";
     }
 
+    @Override
+    public boolean forceLoad() {
+        return false;
+    }
 
     @Nullable
     @Override

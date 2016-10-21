@@ -11,15 +11,28 @@
         android:scaleType="centerCrop" />
 
     <TextView
-        android:alpha="1"
-        android:visibility="gone"
         android:id="@+id/app_start_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:alpha="1"
         android:background="#99000000"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/btn_go"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_margin="30dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="去看看(3秒)>>"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp" />
 
     <LinearLayout
         android:id="@+id/first_start_part"
@@ -64,7 +77,6 @@
             android:textSize="14sp" />
 
         <Button
-            android:textColor="@color/white"
             android:id="@+id/btn_register_device"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -73,6 +85,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/shape_round_rect_colorprimary"
             android:text="进入"
+            android:textColor="@color/white"
             android:textSize="16sp" />
     </LinearLayout>
 

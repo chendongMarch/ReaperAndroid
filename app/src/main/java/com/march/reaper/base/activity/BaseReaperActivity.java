@@ -3,8 +3,7 @@ package com.march.reaper.base.activity;
 import android.widget.TextView;
 
 import com.march.reaper.base.mvp.presenter.BasePresenter;
-import com.march.reaper.base.mvp.view.BaseView;
-import com.march.reaper.utils.SPUtils;
+import com.march.reaper.helper.SharePreferenceHelper;
 
 import butterknife.ButterKnife;
 
@@ -26,7 +25,7 @@ public abstract class BaseReaperActivity<P extends BasePresenter> extends BaseMV
 
     //授权
     protected void authority() {
-        SPUtils.get().putIsLogin(true);
+        SharePreferenceHelper.get().putIsLogin(true);
     }
 
     protected void animFinish() {

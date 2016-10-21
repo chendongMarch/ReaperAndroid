@@ -8,7 +8,7 @@ package com.march.bean;
 import com.march.reaper.common.API;
 import com.march.reaper.common.RequestCallback;
 import com.march.reaper.imodel.VideoResponse;
-import com.march.reaper.utils.QueryUtils;
+import com.march.reaper.helper.RequestHelper;
 
 /**
  * Entity mapped to table "VIDEO_FUN".
@@ -131,7 +131,7 @@ public class VideoFun {
                                        final RequestCallback<VideoResponse> callback) {
 
         String url = API.GET_SCAN_VIDEO + "?limit=" + limit + "&offset=" + offset;
-        QueryUtils.get().query(url, VideoResponse.class, new QueryUtils.OnQueryOverListener<VideoResponse>() {
+        RequestHelper.get().query(url, VideoResponse.class, new RequestHelper.OnQueryOverListener<VideoResponse>() {
             @Override
             public void queryOver(VideoResponse rst) {
                 callback.onSucceed(rst);

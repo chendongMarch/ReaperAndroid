@@ -10,7 +10,7 @@ import android.os.Parcelable;
 import com.march.reaper.common.API;
 import com.march.reaper.common.RequestCallback;
 import com.march.reaper.imodel.BeautyAlbumResponse;
-import com.march.reaper.utils.QueryUtils;
+import com.march.reaper.helper.RequestHelper;
 // KEEP INCLUDES END
 /**
  * Entity mapped to table "BEAUTY_ALBUM".
@@ -117,7 +117,7 @@ public class BeautyAlbum implements Parcelable {
     }
 
     private static void queryAlbum(String url, final RequestCallback<BeautyAlbumResponse> callback) {
-        QueryUtils.get().query(url, BeautyAlbumResponse.class, new QueryUtils.OnQueryOverListener<BeautyAlbumResponse>() {
+        RequestHelper.get().query(url, BeautyAlbumResponse.class, new RequestHelper.OnQueryOverListener<BeautyAlbumResponse>() {
             @Override
             public void queryOver(BeautyAlbumResponse rst) {
                 callback.onSucceed(rst);

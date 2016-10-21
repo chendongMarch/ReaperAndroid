@@ -14,7 +14,7 @@ import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.reaper.helper.ImageHelper;
 import com.march.reaper.helper.Toaster;
 import com.march.reaper.ipresenter.AppStartPresenter;
-import com.march.reaper.utils.SPUtils;
+import com.march.reaper.helper.SharePreferenceHelper;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -31,6 +31,8 @@ public class AppStartActivity
     TextView mTitleTv;
     @Bind(R.id.first_start_part)
     View mFirstStartView;
+    @Bind(R.id.btn_go)
+    View mBtnGo;
 
     @Override
     protected int getLayoutId() {
@@ -44,9 +46,9 @@ public class AppStartActivity
         mPresenter.queryAppStartFlashImg();
         final View tempView;
         Handler handler = new Handler();
-        if (SPUtils.get().getIsLogin()) {
+        if (SharePreferenceHelper.get().getIsLogin()) {
             mTitleTv.setVisibility(View.VISIBLE);
-            mTitleTv.setText("Welcome    " + SPUtils.get().getUserName());
+            mTitleTv.setText("Welcome    " + SharePreferenceHelper.get().getUserName());
             //已经登录过了直接过,并且记录一次开启
             mPresenter.recordStartApp();
 //            tempView = mTitleTv;

@@ -1,4 +1,4 @@
-package com.march.reaper.utils;
+package com.march.reaper.helper;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -10,8 +10,6 @@ import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.march.reaper.base.ReaperApplication;
-import com.march.reaper.helper.Logger;
-import com.march.reaper.helper.Toaster;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.Callback;
 
@@ -24,19 +22,18 @@ import okhttp3.Response;
  * Created by march on 16/7/1.
  * 封装的请求类,从网络请求数据
  */
-public class QueryUtils {
+public class RequestHelper {
 
+    private static RequestHelper mInst;
 
-    private static QueryUtils mInst;
-
-    private QueryUtils() {
+    private RequestHelper() {
     }
 
-    public static QueryUtils get() {
+    public static RequestHelper get() {
         if (mInst == null) {
-            synchronized (QueryUtils.class) {
+            synchronized (RequestHelper.class) {
                 if (mInst == null) {
-                    mInst = new QueryUtils();
+                    mInst = new RequestHelper();
                 }
             }
         }

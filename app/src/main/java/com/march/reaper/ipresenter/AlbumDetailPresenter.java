@@ -26,7 +26,7 @@ import com.march.reaper.common.DbHelper;
 import com.march.reaper.helper.CommonHelper;
 import com.march.reaper.imodel.AlbumDetailResponse;
 import com.march.reaper.iview.activity.ScanImgActivity;
-import com.march.reaper.utils.QueryUtils;
+import com.march.reaper.helper.RequestHelper;
 import com.march.reaper.widget.RecyclerGroupView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -88,7 +88,7 @@ public class AlbumDetailPresenter
     @Override
     protected void queryNetDatas() {
         String url = API.GET_SCAN_DETAIL + "?offset=" + offset + "&limit=" + limit + "&albumlink=" + mAlbumData.getAlbum_link();
-        QueryUtils.get().query(url, AlbumDetailResponse.class, new QueryUtils.OnQueryOverListener<AlbumDetailResponse>() {
+        RequestHelper.get().query(url, AlbumDetailResponse.class, new RequestHelper.OnQueryOverListener<AlbumDetailResponse>() {
             @Override
             public void queryOver(AlbumDetailResponse rst) {
                 List<AlbumDetail> data = rst.getData();
