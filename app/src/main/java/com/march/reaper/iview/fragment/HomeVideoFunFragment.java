@@ -3,15 +3,13 @@ package com.march.reaper.iview.fragment;
 import android.os.Bundle;
 import android.view.View;
 
+import com.march.lib_base.widget.TitleBarView;
 import com.march.reaper.R;
-import com.march.reaper.base.fragment.BaseMVPFragment;
+import com.march.reaper.base.fragment.BaseReaperFragment;
 import com.march.reaper.ipresenter.VideoFunPresenter;
 import com.march.reaper.widget.RecyclerGroupView;
-import com.march.reaper.widget.TitleBarView;
 
 import butterknife.Bind;
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
-
 /**
  * Project  : Reaper
  * Package  : com.march.reaper.iview.fragment
@@ -21,7 +19,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
  * @author chendong
  */
 public class HomeVideoFunFragment
-        extends BaseMVPFragment<VideoFunPresenter>
+        extends BaseReaperFragment<VideoFunPresenter>
         implements VideoFunPresenter.VideoFunView {
     @Bind(R.id.rgv)
     RecyclerGroupView mVideoRgv;

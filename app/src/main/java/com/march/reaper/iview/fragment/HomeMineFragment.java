@@ -9,19 +9,21 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.march.lib_base.common.AppHelper;
+import com.march.lib_base.common.Toaster;
+import com.march.lib_base.presenter.BasePresenter;
 import com.march.quickrvlibs.adapter.RvViewHolder;
 import com.march.quickrvlibs.adapter.SimpleRvAdapter;
 import com.march.quickrvlibs.inter.OnItemClickListener;
 import com.march.reaper.R;
-import com.march.reaper.base.fragment.BaseFragment;
+import com.march.reaper.base.ReaperApplication;
+import com.march.reaper.base.fragment.BaseReaperFragment;
 import com.march.reaper.common.API;
 import com.march.reaper.common.Constant;
 import com.march.reaper.helper.ShareHelper;
-import com.march.reaper.helper.Toaster;
 import com.march.reaper.imodel.VersionResponse;
 import com.march.reaper.iview.activity.AboutActivity;
 import com.march.reaper.iview.activity.AlbumDetailActivity;
-import com.march.reaper.helper.AppHelper;
 import com.march.reaper.helper.RequestHelper;
 
 import butterknife.Bind;
@@ -29,7 +31,7 @@ import butterknife.Bind;
 /**
  * 我的页面
  */
-public class HomeMineFragment extends BaseFragment {
+public class HomeMineFragment extends BaseReaperFragment {
 
     @Bind(R.id.rv_mine)
     RecyclerView mContentRv;
@@ -113,7 +115,7 @@ public class HomeMineFragment extends BaseFragment {
             @Override
             public void queryOver(VersionResponse rst) {
                 int versionCode = rst.getVersionCode();
-                int currentCode = AppHelper.getVersionCode();
+                int currentCode = AppHelper.getVersionCode(ReaperApplication.get());
                 if (currentCode >= versionCode)
                     Toaster.get().show(mContext, "当前是最新版本.");
                 else {
@@ -145,4 +147,8 @@ public class HomeMineFragment extends BaseFragment {
         });
     }
 
+    @Override
+    protected BasePresenter createPresenter() {
+        return null;
+    }
 }

@@ -1,7 +1,8 @@
 package com.march.reaper.iview.fragment;
 
+import com.march.lib_base.presenter.BasePresenter;
 import com.march.reaper.R;
-import com.march.reaper.base.fragment.BaseFragment;
+import com.march.reaper.base.fragment.BaseReaperFragment;
 
 /**
  * Project  : Reaper
@@ -12,7 +13,7 @@ import com.march.reaper.base.fragment.BaseFragment;
  * @author chendong
  */
 
-public class HomeFunnyFragment extends BaseFragment {
+public class HomeFunnyFragment extends BaseReaperFragment {
     @Override
     protected boolean isInitTitle() {
         return false;
@@ -25,5 +26,10 @@ public class HomeFunnyFragment extends BaseFragment {
 
     public static HomeFunnyFragment newInst() {
         return new HomeFunnyFragment();
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return null;
     }
 }

@@ -2,7 +2,8 @@ package com.march.reaper.base.activity;
 
 import android.widget.TextView;
 
-import com.march.reaper.base.mvp.presenter.BasePresenter;
+import com.march.lib_base.activity.BaseMVPActivity;
+import com.march.lib_base.presenter.BasePresenter;
 import com.march.reaper.helper.SharePreferenceHelper;
 
 import butterknife.ButterKnife;

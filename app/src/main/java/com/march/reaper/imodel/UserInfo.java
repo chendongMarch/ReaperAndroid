@@ -2,8 +2,8 @@ package com.march.reaper.imodel;
 
 import android.content.Context;
 
+import com.march.lib_base.common.AppHelper;
 import com.march.reaper.common.API;
-import com.march.reaper.helper.AppHelper;
 import com.march.reaper.helper.RequestHelper;
 import com.march.reaper.helper.SharePreferenceHelper;
 

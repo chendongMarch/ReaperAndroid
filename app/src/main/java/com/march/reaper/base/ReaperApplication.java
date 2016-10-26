@@ -9,13 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.march.lib_base.common.Logger;
+import com.march.lib_base.common.Toaster;
 import com.march.quickrvlibs.RvQuick;
 import com.march.quickrvlibs.inter.ILoadImage;
 import com.march.reaper.R;
 import com.march.reaper.common.DaoHelper;
 import com.march.reaper.helper.ImageHelper;
-import com.march.reaper.helper.Logger;
-import com.march.reaper.helper.Toaster;
 import com.march.reaper.helper.VideoThumbImageHelper;
 
 import java.io.File;

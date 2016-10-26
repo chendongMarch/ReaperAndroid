@@ -4,7 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.march.reaper.base.fragment.BaseFragment;
+
+import com.march.lib_base.fragment.BaseFragment;
 
 import java.util.List;
 

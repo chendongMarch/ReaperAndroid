@@ -6,7 +6,7 @@ import android.view.View;
 import com.march.reaper.R;
 import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.reaper.base.mvp.life.PresenterLoader;
-import com.march.reaper.base.mvp.presenter.BasePresenter;
+import com.march.lib_base.presenter.BasePresenter;
 
 public class AboutActivity extends BaseReaperActivity {
 

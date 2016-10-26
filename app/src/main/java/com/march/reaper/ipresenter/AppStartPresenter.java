@@ -1,8 +1,9 @@
 package com.march.reaper.ipresenter;
 
 import com.march.bean.BeautyAlbum;
-import com.march.reaper.base.mvp.presenter.BasePresenter;
-import com.march.reaper.base.mvp.view.BaseView;
+import com.march.lib_base.presenter.BasePresenter;
+import com.march.lib_base.view.BaseView;
+
 import com.march.reaper.common.API;
 import com.march.reaper.imodel.BeautyAlbumResponse;
 import com.march.reaper.imodel.UserInfo;

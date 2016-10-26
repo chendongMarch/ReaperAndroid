@@ -1,10 +1,11 @@
 package com.march.reaper.base.mvp.presenter;
 
+import com.march.lib_base.common.Logger;
+import com.march.lib_base.presenter.BasePresenter;
+import com.march.lib_base.view.BaseView;
 import com.march.quickrvlibs.RvAdapter;
-import com.march.reaper.base.mvp.view.BaseView;
 import com.march.reaper.common.Constant;
 import com.march.reaper.helper.DimensionHelper;
-import com.march.reaper.helper.Logger;
 import com.march.reaper.widget.RecyclerGroupView;
 
 import java.util.ArrayList;

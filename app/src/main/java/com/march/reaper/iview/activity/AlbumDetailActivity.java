@@ -7,12 +7,13 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.march.bean.BeautyAlbum;
+import com.march.lib_base.widget.TitleBarView;
 import com.march.reaper.R;
 import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.reaper.common.Constant;
 import com.march.reaper.ipresenter.AlbumDetailPresenter;
 import com.march.reaper.widget.RecyclerGroupView;
-import com.march.reaper.widget.TitleBarView;
+//import com.march.lib_base.widget.TitleBarView;
 
 import butterknife.Bind;
 

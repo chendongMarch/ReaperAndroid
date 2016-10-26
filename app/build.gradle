@@ -56,18 +56,32 @@ repositories {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':lib-videoplayer')
+    compile project(':lib-base')
     compile rootProject.ext.support.design
+
     compile rootProject.ext.support.appcompat_v7
+
     compile rootProject.ext.support.recyclerView_v7
-//    compile rootProject.ext.support.cardView_v7
+
+    //    compile rootProject.ext.support.cardView_v7
+
     compile rootProject.ext.support.ultra_ptr
+
     compile rootProject.ext.support.gson
+
     compile rootProject.ext.support.PhotoView
+
     compile rootProject.ext.support.butterknife
+
     compile rootProject.ext.support.quickRv
+
     compile rootProject.ext.support.okhttp_utils
+
     compile rootProject.ext.support.greendao
+
     compile rootProject.ext.support.flowlayout
+
     compile rootProject.ext.support.glide
+
     compile rootProject.ext.support.disklrucache
 }

@@ -1,15 +1,15 @@
 package com.march.reaper.base.activity;
 
 import android.app.Activity;
+import android.app.LoaderManager;
 import android.content.Context;
-import android.content.Intent;
+import android.content.Loader;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 
+import com.march.lib_base.activity.BaseActivity;
+import com.march.lib_base.presenter.BasePresenter;
+import com.march.lib_base.view.BaseView;
 import com.march.reaper.base.mvp.life.PresenterLoader;
-import com.march.reaper.base.mvp.presenter.BasePresenter;
-import com.march.reaper.base.mvp.view.BaseView;
 import com.march.reaper.common.Constant;
 
 import butterknife.ButterKnife;
@@ -51,11 +51,11 @@ public abstract class BaseLoaderMVPActivity
     }
 
 
-    @Override
-    public Loader<P> onCreateLoader(int id, Bundle args) {
-        return createPresenterLoader();
-    }
-
+//    @Override
+//    public Loader<P> onCreateLoader(int id, Bundle args) {
+//        return createPresenterLoader();
+//    }
+//
 
     protected abstract PresenterLoader<P> createPresenterLoader();
 

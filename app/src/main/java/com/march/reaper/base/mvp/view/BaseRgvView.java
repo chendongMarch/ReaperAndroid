@@ -1,5 +1,6 @@
 package com.march.reaper.base.mvp.view;
 
+import com.march.lib_base.view.BaseView;
 import com.march.reaper.widget.RecyclerGroupView;
 
 /**

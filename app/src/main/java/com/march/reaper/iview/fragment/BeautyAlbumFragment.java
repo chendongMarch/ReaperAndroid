@@ -6,10 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.march.lib_base.common.Logger;
 import com.march.reaper.R;
-import com.march.reaper.base.fragment.BaseMVPFragment;
+import com.march.reaper.base.fragment.BaseReaperFragment;
 import com.march.reaper.common.Constant;
-import com.march.reaper.helper.Logger;
 import com.march.reaper.ipresenter.BeautyAlbumPresenter;
 import com.march.reaper.widget.RecyclerGroupView;
 
@@ -24,7 +24,7 @@ import butterknife.Bind;
  * @author chendong
  */
 public class BeautyAlbumFragment
-        extends BaseMVPFragment<BeautyAlbumPresenter>
+        extends BaseReaperFragment<BeautyAlbumPresenter>
         implements BeautyAlbumPresenter.BeautyRecommendView {
 
     @Bind(R.id.rgv)

@@ -5,8 +5,10 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.march.lib_base.fragment.BaseFragment;
+import com.march.lib_base.presenter.BasePresenter;
 import com.march.reaper.R;
-import com.march.reaper.base.fragment.BaseFragment;
+import com.march.reaper.base.fragment.BaseReaperFragment;
 import com.march.reaper.common.Constant;
 import com.march.reaper.iview.activity.MoreBeautyActivity;
 import com.march.reaper.iview.adapter.MyFragmentPagerAdapter;
@@ -26,7 +28,7 @@ import butterknife.OnClick;
  * @author chendong
  */
 
-public class HomeBeautyFragment extends BaseFragment {
+public class HomeBeautyFragment extends BaseReaperFragment {
 
     @Bind(R.id.tably)
     TabLayout mTabLy;
@@ -122,5 +124,10 @@ public class HomeBeautyFragment extends BaseFragment {
 
             }
         });
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return null;
     }
 }

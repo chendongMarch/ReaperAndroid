@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.march.reaper.base.activity.BaseReaperActivity;
-import com.march.reaper.base.mvp.presenter.BasePresenter;
+import com.march.lib_base.presenter.BasePresenter;
 import com.march.reaper.helper.VideoThumbImageHelper;
 import com.march.reaper.widget.JCVideoPlayerStandard;
 

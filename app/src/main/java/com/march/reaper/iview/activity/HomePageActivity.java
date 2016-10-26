@@ -4,10 +4,10 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.TextView;
 
+import com.march.lib_base.common.Toaster;
 import com.march.reaper.R;
 import com.march.reaper.base.activity.MultiFragmentActivity;
-import com.march.reaper.base.mvp.presenter.BasePresenter;
-import com.march.reaper.helper.Toaster;
+import com.march.lib_base.presenter.BasePresenter;
 import com.march.reaper.iview.fragment.HomeBeautyFragment;
 import com.march.reaper.iview.fragment.HomeFunnyFragment;
 import com.march.reaper.iview.fragment.HomeMineFragment;
