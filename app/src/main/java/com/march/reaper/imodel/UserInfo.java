@@ -17,7 +17,6 @@ import java.util.HashMap;
  *
  * @author chendong
  */
-
 public class UserInfo {
 
     private void autoPostInfo(String url, HashMap<String, String> params) {
