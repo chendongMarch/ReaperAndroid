@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 
-import com.march.lib_base.fragment.BaseFragment;
+import com.march.lib.core.fragment.BaseFragment;
 
 import java.util.List;
 

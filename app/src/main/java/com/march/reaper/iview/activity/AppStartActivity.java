@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.march.reaper.R;
 import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.reaper.helper.ImageHelper;
-import com.march.lib_base.common.Toaster;
+import com.march.lib.core.common.Toaster;
 import com.march.reaper.ipresenter.AppStartPresenter;
 import com.march.reaper.helper.SharePreferenceHelper;
 

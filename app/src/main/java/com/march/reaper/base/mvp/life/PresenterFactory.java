@@ -1,7 +1,7 @@
 package com.march.reaper.base.mvp.life;
 
 
-import com.march.lib_base.presenter.BasePresenter;
+import com.march.lib.core.presenter.BasePresenter;
 
 /**
  * Project  : Reaper

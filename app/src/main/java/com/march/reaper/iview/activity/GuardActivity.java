@@ -7,7 +7,7 @@ import android.widget.EditText;
 
 import com.march.reaper.R;
 import com.march.reaper.base.activity.BaseReaperActivity;
-import com.march.lib_base.presenter.BasePresenter;
+import com.march.lib.core.presenter.BasePresenter;
 
 import butterknife.Bind;
 import butterknife.OnClick;

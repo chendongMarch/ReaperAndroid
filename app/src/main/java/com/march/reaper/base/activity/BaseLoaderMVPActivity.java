@@ -6,9 +6,9 @@ import android.content.Context;
 import android.content.Loader;
 import android.os.Bundle;
 
-import com.march.lib_base.activity.BaseActivity;
-import com.march.lib_base.presenter.BasePresenter;
-import com.march.lib_base.view.BaseView;
+import com.march.lib.core.activity.BaseActivity;
+import com.march.lib.core.presenter.BasePresenter;
+import com.march.lib.core.view.BaseView;
 import com.march.reaper.base.mvp.life.PresenterLoader;
 import com.march.reaper.common.Constant;
 

@@ -18,12 +18,12 @@ import com.march.reaper.R;
 import com.march.reaper.base.ReaperApplication;
 import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.reaper.base.mvp.life.PresenterLoader;
-import com.march.lib_base.presenter.BasePresenter;
+import com.march.lib.core.presenter.BasePresenter;
 import com.march.reaper.common.Constant;
 import com.march.reaper.common.DbHelper;
 import com.march.reaper.helper.ImageHelper;
-import com.march.lib_base.common.Logger;
-import com.march.lib_base.common.Toaster;
+import com.march.lib.core.common.Logger;
+import com.march.lib.core.common.Toaster;
 
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -23,7 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.march.reaper.common.Constant;
-import com.march.lib_base.common.Logger;
+import com.march.lib.core.common.Logger;
 
 import java.util.Timer;
 import java.util.TimerTask;

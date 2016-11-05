@@ -27,6 +27,7 @@ public abstract class MultiFragmentActivity extends BaseReaperActivity {
     @Override
     public void onInitViews(View view, Bundle save) {
         super.onInitViews(view, save);
+
         mFragmentManager = getSupportFragmentManager();
         // 从savedInstanceState获取到保存的mCurrentItem
         if (save != null) {
@@ -82,6 +83,7 @@ public abstract class MultiFragmentActivity extends BaseReaperActivity {
                 transaction.add(getFragmentContainerId(), mCurrentFragment, toTag);
             }
         }
+
         // 同步状态
         syncSelectState(showItem);
         // 保存当前显示fragment的item

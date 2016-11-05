@@ -1,6 +1,6 @@
 package com.march.reaper.iview.fragment;
 
-import com.march.lib_base.presenter.BasePresenter;
+import com.march.lib.core.presenter.BasePresenter;
 import com.march.reaper.R;
 import com.march.reaper.base.fragment.BaseReaperFragment;
 

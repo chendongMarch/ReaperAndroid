@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/Reaper.iml" filepath="$PROJECT_DIR$/Reaper.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/daogenerator/daogenerator.iml" filepath="$PROJECT_DIR$/daogenerator/daogenerator.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib-base/lib-base.iml" filepath="$PROJECT_DIR$/lib-base/lib-base.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib-videoplayer/lib-videoplayer.iml" filepath="$PROJECT_DIR$/lib-videoplayer/lib-videoplayer.iml" />
     </modules>
   </component>

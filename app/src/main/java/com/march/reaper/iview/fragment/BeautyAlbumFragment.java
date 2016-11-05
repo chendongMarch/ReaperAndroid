@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.march.lib_base.common.Logger;
+import com.march.lib.core.common.Logger;
 import com.march.reaper.R;
 import com.march.reaper.base.fragment.BaseReaperFragment;
 import com.march.reaper.common.Constant;

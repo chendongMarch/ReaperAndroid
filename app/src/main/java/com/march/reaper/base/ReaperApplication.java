@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.march.lib_base.common.Logger;
-import com.march.lib_base.common.Toaster;
+import com.march.lib.core.common.Logger;
+import com.march.lib.core.common.Toaster;
 import com.march.quickrvlibs.RvQuick;
 import com.march.quickrvlibs.inter.ILoadImage;
 import com.march.reaper.R;

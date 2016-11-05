@@ -9,7 +9,7 @@ import android.provider.MediaStore;
 
 import com.bumptech.glide.util.LruCache;
 import com.jakewharton.disklrucache.DiskLruCache;
-import com.march.lib_base.common.Logger;
+import com.march.lib.core.common.Logger;
 
 import java.io.IOException;
 import java.io.OutputStream;

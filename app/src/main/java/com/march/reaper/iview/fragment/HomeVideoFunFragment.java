@@ -3,7 +3,7 @@ package com.march.reaper.iview.fragment;
 import android.os.Bundle;
 import android.view.View;
 
-import com.march.lib_base.widget.TitleBarView;
+import com.march.lib.core.widget.TitleBarView;
 import com.march.reaper.R;
 import com.march.reaper.base.fragment.BaseReaperFragment;
 import com.march.reaper.ipresenter.VideoFunPresenter;

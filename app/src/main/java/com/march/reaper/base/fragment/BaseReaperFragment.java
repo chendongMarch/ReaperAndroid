@@ -3,8 +3,8 @@ package com.march.reaper.base.fragment;
 import android.os.Bundle;
 import android.view.View;
 
-import com.march.lib_base.fragment.BaseMVPFragment;
-import com.march.lib_base.presenter.BasePresenter;
+import com.march.lib.core.fragment.BaseMVPFragment;
+import com.march.lib.core.presenter.BasePresenter;
 
 import butterknife.ButterKnife;
 

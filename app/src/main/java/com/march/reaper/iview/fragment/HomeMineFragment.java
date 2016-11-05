@@ -9,9 +9,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.march.lib_base.common.AppHelper;
-import com.march.lib_base.common.Toaster;
-import com.march.lib_base.presenter.BasePresenter;
+import com.march.lib.core.common.AppHelper;
+import com.march.lib.core.common.Toaster;
+import com.march.lib.core.presenter.BasePresenter;
 import com.march.quickrvlibs.adapter.RvViewHolder;
 import com.march.quickrvlibs.adapter.SimpleRvAdapter;
 import com.march.quickrvlibs.inter.OnItemClickListener;

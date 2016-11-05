@@ -1,13 +1,16 @@
 package com.march.reaper.iview.activity;
 
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.TextView;
 
-import com.march.lib_base.common.Toaster;
+import com.march.lib.core.common.Toaster;
+import com.march.reaper.FragmentHelper;
 import com.march.reaper.R;
-import com.march.reaper.base.activity.MultiFragmentActivity;
-import com.march.lib_base.presenter.BasePresenter;
+import com.march.reaper.base.activity.BaseReaperActivity;
+import com.march.lib.core.presenter.BasePresenter;
 import com.march.reaper.iview.fragment.HomeBeautyFragment;
 import com.march.reaper.iview.fragment.HomeFunnyFragment;
 import com.march.reaper.iview.fragment.HomeMineFragment;
@@ -22,7 +25,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 /**
  * 主页分为四个fragment ,第一个fragment是viewpager(包含多个fragment)
  */
-public class HomePageActivity extends MultiFragmentActivity {
+public class HomePageActivity extends BaseReaperActivity {
 
     @Bind({R.id.home_recommend, R.id.home_album, R.id.home_search, R.id.home_mine})
     List<TextView> mBotTabsTv;
@@ -32,53 +35,65 @@ public class HomePageActivity extends MultiFragmentActivity {
         return R.layout.homepage_activity;
     }
 
-    @Override
-    protected boolean whenShowSameFragment(int showItem) {
-        return false;
-    }
+    private FragmentHelper fragmentHelper;
 
-    @Override
-    protected int getFragmentContainerId() {
-        return R.id.home_container;
-    }
-
-    @Override
-    protected Fragment makeFragment(int showItem) {
-        Fragment fragment = null;
-        switch (showItem) {
-            case 0:
-                fragment = HomeVideoFunFragment.newInst();
-                break;
-            case 1:
-                fragment = HomeFunnyFragment.newInst();
-                break;
-            case 2:
-                fragment = HomeBeautyFragment.newInst();
-                break;
-            case 3:
-                fragment = HomeMineFragment.newInst();
-                break;
+    private FragmentHelper.SimpleFragmentOperator operator = new FragmentHelper.SimpleFragmentOperator() {
+        @Override
+        public int getFragmentContainerId() {
+            return R.id.home_container;
         }
-        return fragment;
-    }
 
-    @Override
-    protected boolean whenShowNotSameFragment(int showItem) {
-        JCVideoPlayer.releaseAllVideos();
-        return super.whenShowNotSameFragment(showItem);
-    }
-
-    @Override
-    protected void syncSelectState(int selectImage) {
-        for (int i = 0; i < mBotTabsTv.size(); i++) {
-            mBotTabsTv.get(i).setSelected(selectImage == i);
+        @Override
+        public Fragment makeFragment(int showItem) {
+            Fragment fragment = null;
+            switch (showItem) {
+                case 0:
+                    fragment = HomeVideoFunFragment.newInst();
+                    break;
+                case 1:
+                    fragment = HomeFunnyFragment.newInst();
+                    break;
+                case 2:
+                    fragment = HomeBeautyFragment.newInst();
+                    break;
+                case 3:
+                    fragment = HomeMineFragment.newInst();
+                    break;
+            }
+            return fragment;
         }
+
+        @Override
+        public void syncSelectState(int selectImage) {
+            for (int i = 0; i < mBotTabsTv.size(); i++) {
+                mBotTabsTv.get(i).setSelected(selectImage == i);
+            }
+        }
+
+        @Override
+        public boolean whenShowNotSameFragment(int showItem) {
+            JCVideoPlayer.releaseAllVideos();
+            return super.whenShowNotSameFragment(showItem);
+        }
+    };
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        fragmentHelper.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onInitViews(View view, Bundle saveData) {
+        super.onInitViews(view, saveData);
+        fragmentHelper = new FragmentHelper(this,operator);
+        fragmentHelper.initFragmentHelper(saveData);
     }
 
     @OnClick({R.id.home_recommend, R.id.home_album, R.id.home_search, R.id.home_mine})
     public void click(View v) {
         int tag = Integer.parseInt(v.getTag().toString());
-        showFragment(tag);
+        fragmentHelper.showFragment(tag);
     }
 
     @Override
@@ -100,6 +115,7 @@ public class HomePageActivity extends MultiFragmentActivity {
         super.onPause();
         JCVideoPlayer.releaseAllVideos();
     }
+
 
     private long lastTryBackTime = 0;
 

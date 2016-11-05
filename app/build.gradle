@@ -56,7 +56,12 @@ repositories {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':lib-videoplayer')
-    compile project(':lib-base')
+//    compile project(':lib-base')
+
+    compile rootProject.ext.support.lib_core
+
+    compile rootProject.ext.support.lib_support
+
     compile rootProject.ext.support.design
 
     compile rootProject.ext.support.appcompat_v7
