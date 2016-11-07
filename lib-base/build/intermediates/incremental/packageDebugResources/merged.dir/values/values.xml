@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="Indigo_colorPrimary">#00A091</color>
+    <color name="Indigo_colorPrimaryDark">#00A091</color>
+    <color name="Indigo_nav_color">#00A091</color>
+    <color name="black">#000</color>
+    <color name="blue">#0f0</color>
+    <color name="colorAccent">#00A091</color>
+    <color name="colorControlHighlight">#60E5DA</color>
+    <color name="colorPrimary">#00A091</color>
+    <color name="colorPrimaryDark">#00A091</color>
+    <color name="color_60E5DA">#60e5da</color>
+    <color name="color_AAFFFFFF">#aaffffff</color>
+    <color name="gray">#888</color>
+    <color name="gray_bg">#eaeaea</color>
+    <color name="light_gray">#d3d3d3</color>
+    <color name="line_gray">#808080</color>
+    <color name="newgray">#eaeaea</color>
+    <color name="red">#f00</color>
+    <color name="transparent">#bf000000</color>
+    <color name="white">#fff</color>
+    <style name="AppTheme.DrawerArrowToggle" parent="Base.Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@android:color/white</item>
+    </style>
+    <style name="DragTheme" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+    <style name="TabLayoutStyle" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="common_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@color/line_gray</item>
+    </style>
+    <style name="common_line_v">
+        <item name="android:layout_width">1px</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/line_gray</item>
+    </style>
+    <style name="dialog_anim_bottom_to_center" parent="android:Animation">
+        <!-- 进入时的动画 -->
+        <item name="@android:windowEnterAnimation">@anim/bottom_to_center</item>
+        <!-- 退出时的动画 -->
+        <item name="@android:windowExitAnimation">@anim/center_to_bottom</item>
+    </style>
+    <style name="dialog_theme" parent="android:Theme.Holo.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <!--除去title-->
+        <item name="android:background">#00000000</item>
+        <!-- 设置自定义布局的背景透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 设置window背景透明，也就是去边框 -->
+    </style>
+    <style name="dim_dialog" parent="Theme.AppCompat.Light.Dialog">
+        <!--修改了progressbar的颜色-->
+        <!--背景波纹颜色-->
+        <!--<item name="colorControlHighlight">@color/dialog_color</item>-->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 无标题，设置的是decorview的背景色 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 默认是有阴影背景的,加以下属性可以改变阴影度阴影 -->
+    </style>
+    <style name="dim_up_down_anim_dialog" parent="dim_dialog">
+        <item name="android:windowAnimationStyle">@style/dialog_anim_bottom_to_center</item>
+        <!-- 无标题，设置的是decorview的背景色 -->
+    </style>
+</resources>
