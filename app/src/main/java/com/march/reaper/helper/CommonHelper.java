@@ -17,6 +17,4 @@ public class CommonHelper {
         return Color.rgb(random.nextInt(150), random.nextInt(150), random.nextInt(150));
     }
 
-
-
 }

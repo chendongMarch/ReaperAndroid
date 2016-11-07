@@ -26,7 +26,7 @@ public class UserInfo {
     //使用deviceId注册
     public void registerByDeviceId(Context context, String name) {
         SharePreferenceHelper.get().putUserName(name);
-        HashMap<String, String> userInfo = AppHelper.getUserInfo(context);
+        HashMap<String, String> userInfo = getUserInfo(context);
         userInfo.put("userName", name);
         SharePreferenceHelper.get().putIsLogin(true);
         autoPostInfo(API.POST_AUTO_REGISTER, userInfo);
@@ -34,8 +34,14 @@ public class UserInfo {
 
     //向服务器发开启记录
     public void recordStartApp(Context context) {
-        HashMap<String, String> userInfo = AppHelper.getUserInfo(context);
+        HashMap<String, String> userInfo = getUserInfo(context);
         userInfo.put("userName", SharePreferenceHelper.get().getUserName());
         autoPostInfo(API.POST_AUTO_RECORD, userInfo);
     }
+
+    private HashMap<String,String> getUserInfo(Context context) {
+       return new HashMap<>();
+    }
+
+
 }

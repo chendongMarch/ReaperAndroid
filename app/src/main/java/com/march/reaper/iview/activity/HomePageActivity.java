@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.TextView;
 
+import com.march.lib.core.common.FragmentHelper;
 import com.march.lib.core.common.Toaster;
-import com.march.reaper.FragmentHelper;
 import com.march.reaper.R;
 import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.lib.core.presenter.BasePresenter;
@@ -17,7 +17,6 @@ import com.march.reaper.iview.fragment.HomeMineFragment;
 import com.march.reaper.iview.fragment.HomeVideoFunFragment;
 
 import java.util.List;
-
 import butterknife.Bind;
 import butterknife.OnClick;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;

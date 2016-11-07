@@ -19,7 +19,6 @@ public class SharePreferenceHelper {
 
     private SharePreferenceHelper() {
         sp = ReaperApplication.get().getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
-        editor = sp.edit();
     }
 
     private static SharePreferenceHelper inst;
@@ -40,8 +39,7 @@ public class SharePreferenceHelper {
     }
 
     public void putAppStartPhoto(String str) {
-        editor.putString(SP_APP_START_PHOTO, str);
-        editor.apply();
+        sp.edit().putString(SP_APP_START_PHOTO, str).apply();
     }
 
     public boolean getIsLogin() {
@@ -49,16 +47,14 @@ public class SharePreferenceHelper {
     }
 
     public void putIsLogin(boolean isLogin) {
-        editor.putBoolean(SP_IS_LOGIN, isLogin);
-        editor.apply();
+        sp.edit().putBoolean(SP_IS_LOGIN, isLogin).apply();
     }
 
     public String getUserName() {
-        return sp.getString(SP_USER_NAME,"");
+        return sp.getString(SP_USER_NAME, "");
     }
 
     public void putUserName(String name) {
-        editor.putString(SP_USER_NAME, name);
-        editor.apply();
+        sp.edit().putString(SP_USER_NAME, name).apply();
     }
 }
