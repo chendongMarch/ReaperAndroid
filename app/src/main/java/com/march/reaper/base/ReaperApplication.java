@@ -9,16 +9,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.antfortune.freeline.FreelineCore;
 import com.march.lib.core.common.Logger;
 import com.march.lib.core.common.Toaster;
-import com.march.quickrvlibs.RvQuick;
-import com.march.quickrvlibs.inter.ILoadImage;
+import com.march.reaper.BuildConfig;
 import com.march.reaper.R;
+import com.march.reaper.common.API;
 import com.march.reaper.common.DaoHelper;
 import com.march.reaper.helper.ImageHelper;
 import com.march.reaper.helper.VideoThumbImageHelper;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
 
 
 /**
@@ -34,9 +38,10 @@ public class ReaperApplication extends Application {
         super.onCreate();
         Logger.e("app create");
         mInst = this;
-        initRvQuick();
         DaoHelper.get().setupDatabase(this);
-        Toaster.get().initToastBulder(new Toaster.ToastBuilder() {
+
+
+        Toaster.get().initToastBuilder(new Toaster.ToastBuilder() {
             @Override
             public Toast buildToast(Toast toast, String msg) {
                 View inflate = LayoutInflater.from(mInst).inflate(R.layout.common_custom_toast, null);
@@ -52,23 +57,15 @@ public class ReaperApplication extends Application {
                 tv.setText(msg);
             }
         });
+
+        FreelineCore.init(this);
+        API.init();
         VideoThumbImageHelper.get().init(mInst);
     }
 
 
     public static ReaperApplication get() {
         return mInst;
-    }
-
-
-    // 初始化QuickAdapter
-    private void initRvQuick() {
-        RvQuick.init(new ILoadImage() {
-            @Override
-            public void loadImg(Context context, String url, int w, int h, ImageView view) {
-                ImageHelper.loadImg(context, url, view);
-            }
-        });
     }
 
 

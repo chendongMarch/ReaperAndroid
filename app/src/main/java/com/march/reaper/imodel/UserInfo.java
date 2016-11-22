@@ -1,13 +1,10 @@
 package com.march.reaper.imodel;
 
-import android.content.Context;
-
-import com.march.lib.core.common.AppHelper;
 import com.march.reaper.common.API;
-import com.march.reaper.helper.RequestHelper;
+import com.march.reaper.common.RequestCallback;
 import com.march.reaper.helper.SharePreferenceHelper;
 
-import java.util.HashMap;
+import io.reactivex.Flowable;
 
 /**
  * Project  : Reaper
@@ -19,29 +16,34 @@ import java.util.HashMap;
  */
 public class UserInfo {
 
-    private void autoPostInfo(String url, HashMap<String, String> params) {
-        RequestHelper.get().post(url, BaseResponse.class, params, null);
+    private String userName;
+
+    public String getUserName() {
+        return userName;
     }
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public UserInfo(String userName) {
+        this.userName = userName;
+    }
+
+
     //使用deviceId注册
-    public void registerByDeviceId(Context context, String name) {
+    public static void registerByDeviceId(String name, RequestCallback<BaseResponse> callback) {
         SharePreferenceHelper.get().putUserName(name);
-        HashMap<String, String> userInfo = getUserInfo(context);
-        userInfo.put("userName", name);
         SharePreferenceHelper.get().putIsLogin(true);
-        autoPostInfo(API.POST_AUTO_REGISTER, userInfo);
+        Flowable<BaseResponse> baseResponseFlowable = API.api().postRegister(new UserInfo(name));
+        API.enqueue(baseResponseFlowable, callback);
     }
 
     //向服务器发开启记录
-    public void recordStartApp(Context context) {
-        HashMap<String, String> userInfo = getUserInfo(context);
-        userInfo.put("userName", SharePreferenceHelper.get().getUserName());
-        autoPostInfo(API.POST_AUTO_RECORD, userInfo);
+    public static void recordStartApp(RequestCallback<BaseResponse> callback) {
+        String name = SharePreferenceHelper.get().getUserName();
+        Flowable<BaseResponse> baseResponseFlowable = API.api().postRecord(new UserInfo(name));
+        API.enqueue(baseResponseFlowable, callback);
     }
-
-    private HashMap<String,String> getUserInfo(Context context) {
-       return new HashMap<>();
-    }
-
 
 }

@@ -3,7 +3,17 @@
     android:id="@+id/scan_swipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@color/black">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="返回"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
 
     <uk.co.senab.photoview.PhotoView
         android:id="@+id/scan_iv"
@@ -14,8 +24,8 @@
 
 
     <ImageView
+        android:visibility="gone"
         android:id="@+id/scan_is_collection"
-
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="right|bottom"
@@ -25,7 +35,6 @@
         android:src="@drawable/ic_collection" />
 
     <ImageView
-        android:padding="5dp"
         android:id="@+id/scan_is_download"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -33,6 +42,7 @@
         android:layout_marginBottom="60dp"
         android:layout_marginRight="150dp"
         android:background="@drawable/shape_circle_primarycolor"
+        android:padding="5dp"
         android:scaleType="centerInside"
         android:src="@drawable/ic_download" />
 

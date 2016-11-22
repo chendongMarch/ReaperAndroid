@@ -70,13 +70,16 @@ public class RecyclerGroupView extends FrameLayout {
 //    mPtrFrame.setDurationToClose(200);
 //    mPtrFrame.setPullToRefresh(false);
 
-        final StoreHouseHeader header = new StoreHouseHeader(mContext);
-        header.setPadding(0, 40, 0, 40);
-        header.initWithString("Reaper");
-        header.setTextColor(getResources().getColor(R.color.black));
+//        final StoreHouseHeader header = new StoreHouseHeader(mContext);
+//        header.setPadding(0, 40, 0, 40);
+//        header.initWithString("Reaper");
+//        header.setTextColor(getResources().getColor(R.color.black));
+//
+        RefreshHeader header = new RefreshHeader(getContext());
+
         //设置下拉刷新
         mPtrLy.setKeepHeaderWhenRefresh(true);
-        mPtrLy.setDurationToCloseHeader(600);
+        mPtrLy.setDurationToCloseHeader(500);
         mPtrLy.setLoadingMinTime(1000);
         mPtrLy.setRatioOfHeaderHeightToRefresh(1.0f);
         mPtrLy.setHeaderView(header);

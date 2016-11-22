@@ -12,9 +12,14 @@ buildscript {
     }
 
     dependencies {
+        //gradle
         classpath 'com.android.tools.build:gradle:2.2.2'
+        //freeline
+        classpath 'com.antfortune.freeline:gradle:0.8.2'
         //fir插件依赖
         classpath 'im.fir:gradle-fir-publisher:1.0.2'
+        //greedao
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.0.0'
     }
 }
 

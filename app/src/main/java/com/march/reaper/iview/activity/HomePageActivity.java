@@ -1,25 +1,29 @@
 package com.march.reaper.iview.activity;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.TextView;
 
-import com.march.lib.core.common.FragmentHelper;
+import com.march.lib.core.common.Logger;
 import com.march.lib.core.common.Toaster;
+import com.march.lib.core.mvp.presenter.BasePresenter;
 import com.march.reaper.R;
 import com.march.reaper.base.activity.BaseReaperActivity;
-import com.march.lib.core.presenter.BasePresenter;
+import com.march.reaper.common.FragmentHelper;
 import com.march.reaper.iview.fragment.HomeBeautyFragment;
 import com.march.reaper.iview.fragment.HomeFunnyFragment;
 import com.march.reaper.iview.fragment.HomeMineFragment;
 import com.march.reaper.iview.fragment.HomeVideoFunFragment;
 
 import java.util.List;
+
 import butterknife.Bind;
 import butterknife.OnClick;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+
+//import com.march.lib.core.common.FragmentHelper;
 
 /**
  * 主页分为四个fragment ,第一个fragment是viewpager(包含多个fragment)
@@ -63,6 +67,11 @@ public class HomePageActivity extends BaseReaperActivity {
         }
 
         @Override
+        public void beginTransaction(FragmentTransaction transaction) {
+            super.beginTransaction(transaction);
+        }
+
+        @Override
         public void syncSelectState(int selectImage) {
             for (int i = 0; i < mBotTabsTv.size(); i++) {
                 mBotTabsTv.get(i).setSelected(selectImage == i);
@@ -76,17 +85,12 @@ public class HomePageActivity extends BaseReaperActivity {
         }
     };
 
-    @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-        fragmentHelper.onSaveInstanceState(outState);
-    }
 
     @Override
     public void onInitViews(View view, Bundle saveData) {
         super.onInitViews(view, saveData);
-        fragmentHelper = new FragmentHelper(this,operator);
-        fragmentHelper.initFragmentHelper(saveData);
+        fragmentHelper = new FragmentHelper(getSupportFragmentManager(), operator);
+        fragmentHelper.showFragment(2);
     }
 
     @OnClick({R.id.home_recommend, R.id.home_album, R.id.home_search, R.id.home_mine})

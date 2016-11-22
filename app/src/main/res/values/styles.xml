@@ -1,4 +1,11 @@
 <resources>
 
+    <style name="AppTheme.NoActionBar.SwipeTheme">
+        //背景透明，不设滑动关闭时背景就是黑的。
+        <item name="android:windowIsTranslucent">true</item>
+        //Activity右滑进出的动画，觉得这个不好看随便换成自己的
+        <!--<item name="android:windowAnimationStyle">@style/SlideRightAnimation</item>-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 
 </resources>

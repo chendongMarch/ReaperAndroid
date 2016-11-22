@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+
+    android:background="@color/background_material_light"
     android:orientation="vertical"
     tools:context=".iview.activity.AlbumDetailActivity">
 
@@ -11,5 +12,4 @@
         android:id="@+id/detail_albumlist_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 </LinearLayout>

@@ -3,19 +3,21 @@ package com.march.reaper.common;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.march.bean.AlbumDetail;
-import com.march.bean.AlbumItemCollection;
-import com.march.bean.BeautyAlbum;
-import com.march.bean.DetailCollection;
-import com.march.dao.AlbumDetailDao;
-import com.march.dao.BeautyAlbumDao;
-import com.march.dao.DaoMaster;
-import com.march.dao.DaoSession;
+import com.march.reaper.db.AlbumDetailDao;
+import com.march.reaper.db.BeautyAlbumDao;
+import com.march.reaper.db.DaoMaster;
+import com.march.reaper.db.DaoSession;
+import com.march.reaper.db.DetailCollectionDao;
 import com.march.reaper.imodel.AlbumDetailResponse;
 import com.march.reaper.imodel.BeautyAlbumResponse;
+import com.march.reaper.imodel.bean.AlbumDetail;
+import com.march.reaper.imodel.bean.AlbumItemCollection;
+import com.march.reaper.imodel.bean.BeautyAlbum;
+import com.march.reaper.imodel.bean.DetailCollection;
 
-import de.greenrobot.dao.AbstractDao;
-import de.greenrobot.dao.query.QueryBuilder;
+import org.greenrobot.greendao.AbstractDao;
+import org.greenrobot.greendao.query.QueryBuilder;
+
 
 /**
  * Created by march on 16/6/30.
@@ -61,6 +63,10 @@ public class DaoHelper {
 
     public AlbumDetailDao getAlbumDetailDao() {
         return mDaoSession.getAlbumDetailDao();
+    }
+
+    public DetailCollectionDao getDetailCollectionDao() {
+        return mDaoSession.getDetailCollectionDao();
     }
 
     public BeautyAlbumDao getBeautyAlbumDao() {

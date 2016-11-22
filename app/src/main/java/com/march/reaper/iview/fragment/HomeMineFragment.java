@@ -9,24 +9,24 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.march.lib.core.common.AppHelper;
+import com.march.lib.adapter.common.SimpleItemListener;
+import com.march.lib.adapter.core.BaseViewHolder;
+import com.march.lib.adapter.core.SimpleRvAdapter;
 import com.march.lib.core.common.Toaster;
-import com.march.lib.core.presenter.BasePresenter;
-import com.march.quickrvlibs.adapter.RvViewHolder;
-import com.march.quickrvlibs.adapter.SimpleRvAdapter;
-import com.march.quickrvlibs.inter.OnItemClickListener;
+import com.march.lib.core.mvp.presenter.BasePresenter;
 import com.march.reaper.R;
-import com.march.reaper.base.ReaperApplication;
 import com.march.reaper.base.fragment.BaseReaperFragment;
 import com.march.reaper.common.API;
 import com.march.reaper.common.Constant;
+import com.march.reaper.common.RequestCallback;
+import com.march.reaper.helper.CommonHelper;
 import com.march.reaper.helper.ShareHelper;
 import com.march.reaper.imodel.VersionResponse;
 import com.march.reaper.iview.activity.AboutActivity;
 import com.march.reaper.iview.activity.AlbumDetailActivity;
-import com.march.reaper.helper.RequestHelper;
 
 import butterknife.Bind;
+import io.reactivex.Flowable;
 
 /**
  * 我的页面
@@ -41,7 +41,7 @@ public class HomeMineFragment extends BaseReaperFragment {
         return true;
     }
 
-    public static HomeMineFragment newInst(){
+    public static HomeMineFragment newInst() {
         return new HomeMineFragment();
     }
 
@@ -62,8 +62,9 @@ public class HomeMineFragment extends BaseReaperFragment {
         mTitleBarView.setText(null, "我的", null);
         mContentRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         SimpleRvAdapter<String> mContentAdapter = new SimpleRvAdapter<String>(getActivity(), Constant.MINE_CONTENT_LIST, R.layout.mine_item_content) {
+
             @Override
-            public void bindData4View(RvViewHolder holder, String data, int pos) {
+            public void onBindView(BaseViewHolder holder, String data, int pos, int type) {
                 if (pos == 2) {
                     holder.getParentView().getLayoutParams().height = 0;
                     return;
@@ -71,9 +72,9 @@ public class HomeMineFragment extends BaseReaperFragment {
                 holder.setText(R.id.tv_mine_item_info, data);
             }
         };
-        mContentAdapter.setOnItemClickListener(new OnItemClickListener<String>() {
+        mContentAdapter.setItemListener(new SimpleItemListener<String>() {
             @Override
-            public void onItemClick(int pos, RvViewHolder holder, String data) {
+            public void onClick(int pos, BaseViewHolder holder, String data) {
                 handleMineOperate(pos);
             }
         });
@@ -111,11 +112,12 @@ public class HomeMineFragment extends BaseReaperFragment {
 
     //监测新版本,打开浏览器下载
     private void checkUpdateVersion() {
-        RequestHelper.get().get(API.GET_CHECK_VERSION, VersionResponse.class, new RequestHelper.OnQueryOverListener<VersionResponse>() {
+        RequestCallback<VersionResponse> callback = new RequestCallback<VersionResponse>() {
             @Override
-            public void queryOver(VersionResponse rst) {
-                int versionCode = rst.getVersionCode();
-                int currentCode = AppHelper.getVersionCode(ReaperApplication.get());
+            public void onSucceed(VersionResponse data) {
+                int versionCode = data.getVersionCode();
+
+                int currentCode = CommonHelper.getVersionCode(mContext);
                 if (currentCode >= versionCode)
                     Toaster.get().show(mContext, "当前是最新版本.");
                 else {
@@ -141,10 +143,12 @@ public class HomeMineFragment extends BaseReaperFragment {
             }
 
             @Override
-            public void error(Exception e) {
+            public void onError(Throwable e) {
 
             }
-        });
+        };
+        Flowable<VersionResponse> lastVersion = API.api().getLastVersion();
+        API.enqueue(lastVersion, callback);
     }
 
     @Override

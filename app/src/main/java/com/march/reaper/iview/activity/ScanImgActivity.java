@@ -4,30 +4,30 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.march.bean.AlbumDetail;
-import com.march.bean.Detail;
-import com.march.bean.DetailCollection;
+import com.march.lib.core.common.Logger;
+import com.march.lib.core.common.Toaster;
+import com.march.lib.core.mvp.presenter.BasePresenter;
 import com.march.reaper.R;
 import com.march.reaper.base.ReaperApplication;
 import com.march.reaper.base.activity.BaseReaperActivity;
-import com.march.reaper.base.mvp.life.PresenterLoader;
-import com.march.lib.core.presenter.BasePresenter;
 import com.march.reaper.common.Constant;
 import com.march.reaper.common.DbHelper;
 import com.march.reaper.helper.ImageHelper;
-import com.march.lib.core.common.Logger;
-import com.march.lib.core.common.Toaster;
+import com.march.reaper.imodel.bean.AlbumDetail;
+import com.march.reaper.imodel.bean.Detail;
+import com.march.reaper.imodel.bean.DetailCollection;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -56,7 +56,6 @@ public class ScanImgActivity extends BaseReaperActivity {
         intent.putExtra(Constant.KEY_ALBUM_DETAIL_SCAN, detail);
         activity.startActivity(intent);
     }
-
     @Override
     public void onInitDatas() {
         super.onInitDatas();
@@ -67,12 +66,13 @@ public class ScanImgActivity extends BaseReaperActivity {
 
 
     @Override
-    public void onInitViews(View view,Bundle save) {
-        super.onInitViews(view,save);
+    public void onInitViews(View view, Bundle save) {
+        super.onInitViews(view, save);
         String url = mAlbumDetailData.getPhoto_src().replaceAll("-\\d+x\\d+.jpg", ".jpg");
         Logger.e(url);
         ImageHelper.loadImg(mContext, url, mScanIv);
         mIsColIv.setImageResource(isCollection ? R.drawable.ic_collection : R.drawable.ic_not_collection);
+
     }
 
 
@@ -104,6 +104,7 @@ public class ScanImgActivity extends BaseReaperActivity {
 
     //下载图片
     private void downloadPic() {
+        Logger.e(mAlbumDetailData.getPhoto_src());
         Glide.with(ReaperApplication.get().getApplicationContext())
                 .load(mAlbumDetailData.getPhoto_src())
                 .asBitmap()

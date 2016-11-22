@@ -1,6 +1,8 @@
 package com.march.reaper.imodel;
 
-import com.march.bean.BeautyAlbum;
+//import com.march.reaper.imodel.bean.BeautyAlbum;
+
+import com.march.reaper.imodel.bean.BeautyAlbum;
 
 import java.util.List;
 

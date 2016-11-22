@@ -36,4 +36,13 @@ public class BaseResponse<D> {
     public List<D> getData() {
         return data;
     }
+
+    @Override
+    public String toString() {
+        return "BaseResponse{" +
+                "status=" + status +
+                ", offset=" + offset +
+                ", data=" + data.toString() +
+                '}';
+    }
 }

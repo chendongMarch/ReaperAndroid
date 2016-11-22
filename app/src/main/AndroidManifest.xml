@@ -41,9 +41,13 @@
         <activity
             android:name=".iview.activity.AlbumDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.SwipeTheme" />
         <activity
             android:name=".iview.activity.ScanImgActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".iview.activity.ScanImgListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

@@ -10,7 +10,7 @@ import android.view.View;
 import com.march.lib.core.fragment.BaseFragment;
 import com.march.reaper.R;
 import com.march.reaper.base.activity.BaseReaperActivity;
-import com.march.lib.core.presenter.BasePresenter;
+import com.march.lib.core.mvp.presenter.BasePresenter;
 import com.march.reaper.common.Constant;
 import com.march.reaper.iview.adapter.MyFragmentPagerAdapter;
 import com.march.reaper.iview.fragment.BeautyAlbumFragment;

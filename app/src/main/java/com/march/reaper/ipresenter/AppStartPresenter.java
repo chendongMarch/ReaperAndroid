@@ -1,16 +1,19 @@
 package com.march.reaper.ipresenter;
 
-import com.march.bean.BeautyAlbum;
-import com.march.lib.core.presenter.BasePresenter;
-import com.march.lib.core.view.BaseView;
-
+import com.march.reaper.imodel.bean.BeautyAlbum;
+import com.march.lib.core.mvp.presenter.BasePresenter;
+import com.march.lib.core.mvp.view.BaseView;
 import com.march.reaper.common.API;
+import com.march.reaper.common.EmptyRequestCallback;
+import com.march.reaper.common.RequestCallback;
+import com.march.reaper.helper.SharePreferenceHelper;
+import com.march.reaper.imodel.BaseResponse;
 import com.march.reaper.imodel.BeautyAlbumResponse;
 import com.march.reaper.imodel.UserInfo;
-import com.march.reaper.helper.RequestHelper;
-import com.march.reaper.helper.SharePreferenceHelper;
 
 import java.util.List;
+
+import io.reactivex.Flowable;
 
 
 /**
@@ -21,24 +24,22 @@ import java.util.List;
 public class AppStartPresenter
         extends BasePresenter<AppStartPresenter.AppStartView> {
 
-    private UserInfo mUserInfo;
 
     public interface AppStartView extends BaseView {
         void loadViewImg(String url);
     }
 
     public AppStartPresenter() {
-        this.mUserInfo = new UserInfo();
     }
 
     //使用deviceId注册
     public void registerByDeviceId(String name) {
-        mUserInfo.registerByDeviceId(mView.getContext(), name);
+        UserInfo.registerByDeviceId(name, new EmptyRequestCallback<>());
     }
 
     //向服务器发开启记录
     public void recordStartApp() {
-        mUserInfo.recordStartApp(mView.getContext());
+        UserInfo.recordStartApp(new EmptyRequestCallback<>());
     }
 
     //请求图片
@@ -47,22 +48,24 @@ public class AppStartPresenter
         if (appStartPhoto != null) {
             mView.loadViewImg(appStartPhoto);
         }
-        RequestHelper.get().query(API.GET_LUCKY + "?limit=1", BeautyAlbumResponse.class,
-                new RequestHelper.OnQueryOverListener<BeautyAlbumResponse>() {
-                    @Override
-                    public void queryOver(BeautyAlbumResponse rst) {
-                        List<BeautyAlbum> data = rst.getData();
-                        String album_cover = data.get(0).getAlbum_cover();
-                        if (appStartPhoto == null) {
-                            mView.loadViewImg(album_cover);
-                        }
-                        SharePreferenceHelper.get().putAppStartPhoto(album_cover);
-                    }
 
-                    @Override
-                    public void error(Exception e) {
+        RequestCallback<BeautyAlbumResponse> callback = new RequestCallback<BeautyAlbumResponse>() {
+            @Override
+            public void onSucceed(BeautyAlbumResponse data) {
+                List<BeautyAlbum> list = data.getData();
+                String album_cover = list.get(0).getAlbum_cover();
+                if (appStartPhoto == null) {
+                    mView.loadViewImg(album_cover);
+                }
+                SharePreferenceHelper.get().putAppStartPhoto(album_cover);
+            }
 
-                    }
-                });
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        };
+        Flowable<BeautyAlbumResponse> luckAlbum = API.api().getLuckAlbum(1);
+        API.enqueue(luckAlbum, callback);
     }
 }

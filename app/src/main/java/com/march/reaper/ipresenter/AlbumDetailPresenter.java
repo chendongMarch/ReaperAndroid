@@ -8,25 +8,25 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.march.bean.AlbumDetail;
-import com.march.bean.AlbumItemCollection;
-import com.march.bean.BeautyAlbum;
-import com.march.quickrvlibs.adapter.RvViewHolder;
-import com.march.quickrvlibs.adapter.TypeRvAdapter;
-import com.march.quickrvlibs.inter.OnItemClickListener;
-import com.march.quickrvlibs.inter.OnLoadMoreListener;
-import com.march.quickrvlibs.module.HFModule;
-import com.march.quickrvlibs.module.LoadMoreModule;
+import com.march.lib.adapter.common.OnLoadMoreListener;
+import com.march.lib.adapter.common.SimpleItemListener;
+import com.march.lib.adapter.core.BaseViewHolder;
+import com.march.lib.adapter.core.TypeRvAdapter;
+import com.march.lib.adapter.module.HFModule;
+import com.march.lib.adapter.module.LoadMoreModule;
 import com.march.reaper.R;
 import com.march.reaper.base.mvp.presenter.BasePageLoadPresenter;
 import com.march.reaper.base.mvp.view.BaseRgvView;
-import com.march.reaper.common.API;
 import com.march.reaper.common.Constant;
 import com.march.reaper.common.DbHelper;
+import com.march.reaper.common.RequestCallback;
 import com.march.reaper.helper.CommonHelper;
+import com.march.reaper.helper.ImageHelper;
 import com.march.reaper.imodel.AlbumDetailResponse;
-import com.march.reaper.iview.activity.ScanImgActivity;
-import com.march.reaper.helper.RequestHelper;
+import com.march.reaper.imodel.bean.AlbumDetail;
+import com.march.reaper.imodel.bean.AlbumItemCollection;
+import com.march.reaper.imodel.bean.BeautyAlbum;
+import com.march.reaper.iview.activity.ScanImgListActivity;
 import com.march.reaper.widget.RecyclerGroupView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -39,7 +39,7 @@ import java.util.List;
  * 详情
  */
 public class AlbumDetailPresenter
-        extends BasePageLoadPresenter<AlbumDetailPresenter.AlbumDetailView, AlbumDetail> {
+        extends BasePageLoadPresenter<AlbumDetailPresenter.AlbumDetailView, AlbumDetail, TypeRvAdapter<AlbumDetail>> {
 
     private boolean isBig = false;
     private BeautyAlbum mAlbumData;
@@ -48,6 +48,8 @@ public class AlbumDetailPresenter
 
     public interface AlbumDetailView extends BaseRgvView {
         void setModeTvText(String txt);
+
+        void loadHeaderZoomView(String url);
     }
 
 
@@ -55,6 +57,8 @@ public class AlbumDetailPresenter
     public void attachView(AlbumDetailView view) {
         super.attachView(view);
         Bundle intent = mView.getData();
+        mView.getRgv().setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+//        mView.getRgv().setLayoutManager(new ExpandGridLayoutManager(mView.getContext(), 2));
         mAlbumData = intent.getParcelable(Constant.KEY_ALBUM_DETAIL_SHOW);
         mCol = new AlbumItemCollection(mAlbumData);
         isCollection = DbHelper.get().isAlbumCollection(mCol);
@@ -87,22 +91,26 @@ public class AlbumDetailPresenter
     //从网络获取数据
     @Override
     protected void queryNetDatas() {
-        String url = API.GET_SCAN_DETAIL + "?offset=" + offset + "&limit=" + limit + "&albumlink=" + mAlbumData.getAlbum_link();
-        RequestHelper.get().query(url, AlbumDetailResponse.class, new RequestHelper.OnQueryOverListener<AlbumDetailResponse>() {
+
+        RequestCallback<AlbumDetailResponse> callback = new RequestCallback<AlbumDetailResponse>() {
             @Override
-            public void queryOver(AlbumDetailResponse rst) {
-                List<AlbumDetail> data = rst.getData();
-                handleDatasAfterQueryReady(data);
+            public void onSucceed(AlbumDetailResponse data) {
+                if (offset == 0 && data.getData() != null && data.getData().size() > 1) {
+                    mView.loadHeaderZoomView(data.getData().get(0).getPhoto_src());
+                }
+                List<AlbumDetail> list = data.getData();
+                handleDatasAfterQueryReady(list);
             }
 
             @Override
-            public void error(Exception e) {
+            public void onError(Throwable e) {
                 if (mAdapter != null)
                     mAdapter.getLoadMoreModule().finishLoad();
                 completeRefresh();
                 isLoadEnd = true;
             }
-        });
+        };
+        AlbumDetail.getAlbumDetail(offset, limit, mAlbumData.getAlbum_link(), callback);
     }
 
 
@@ -111,19 +119,18 @@ public class AlbumDetailPresenter
     protected void createRvAdapter() {
         mAdapter = new TypeRvAdapter<AlbumDetail>(getContext(), datas) {
             @Override
-            public void onBindView(RvViewHolder holder, AlbumDetail data, int pos, int type) {
-                holder.setImg(getContext(), R.id.detail_item_show_iv, data.getPhoto_src());
+            public void onBindView(BaseViewHolder holder, AlbumDetail data, int pos, int type) {
+                View iv = holder.getView(R.id.detail_item_show_iv);
+                ImageHelper.loadImg(getContext(), data.getPhoto_src(), (ImageView) iv);
                 View bgView = holder.getView(R.id.detail_show_bg);
                 bgView.setBackgroundColor(CommonHelper.randomColor());
 
-                ImageView iv = (ImageView) holder.getView(R.id.detail_item_show_iv);
                 float rate;
                 if (type == AlbumDetail.TYPE_SHU) {
                     rate = 1024 * 1.0f / 683;
                 } else {
                     rate = 683 * 1.0f / 1024;
                 }
-
                 if (isBig) {
                     iv.getLayoutParams().height = (int) (mWidth * rate);
                 } else {
@@ -131,9 +138,8 @@ public class AlbumDetailPresenter
                 }
             }
 
-
             @Override
-            public void onBindFooter(RvViewHolder footer) {
+            public void onBindFooter(BaseViewHolder footer) {
                 super.onBindFooter(footer);
                 footer.setClickLis(R.id.footer_loadmore, new View.OnClickListener() {
                     @Override
@@ -144,7 +150,7 @@ public class AlbumDetailPresenter
             }
 
             @Override
-            public void onBindHeader(RvViewHolder header) {
+            public void onBindHeader(BaseViewHolder header) {
                 super.onBindHeader(header);
                 final ImageView mIsColIv = (ImageView) header.getView(R.id.iv_is_collection);
                 //喜爱
@@ -186,8 +192,8 @@ public class AlbumDetailPresenter
         };
         HFModule hfModule = new HFModule(getContext(), R.layout.detail_head_list, R.layout.common_footer_load_more, getRgv().getRecyclerView());
         mAdapter.addHFModule(hfModule);
-        ((TypeRvAdapter) mAdapter).addType(AlbumDetail.TYPE_SHU, R.layout.detail_item_show);
-        ((TypeRvAdapter) mAdapter).addType(AlbumDetail.TYPE_HENG, R.layout.detail_item_show2);
+        mAdapter.addType(AlbumDetail.TYPE_SHU, R.layout.detail_item_show);
+        mAdapter.addType(AlbumDetail.TYPE_HENG, R.layout.detail_item_show);
         mAdapter.addLoadMoreModule(new LoadMoreModule(mPreLoadNum, new OnLoadMoreListener() {
             @Override
             public void onLoadMore(LoadMoreModule mLoadMoreModule) {
@@ -195,10 +201,11 @@ public class AlbumDetailPresenter
             }
         }));
 
-        mAdapter.setOnItemClickListener(new OnItemClickListener<AlbumDetail>() {
+        mAdapter.setItemListener(new SimpleItemListener<AlbumDetail>() {
             @Override
-            public void onItemClick(int pos, RvViewHolder holder, AlbumDetail data) {
-                ScanImgActivity.loadActivity(getActivity(), data);
+            public void onClick(int pos, BaseViewHolder holder, AlbumDetail data) {
+//                ScanImgActivity.loadActivity(getActivity(), data);
+                ScanImgListActivity.loadActivity(getActivity(), datas, pos);
             }
         });
     }

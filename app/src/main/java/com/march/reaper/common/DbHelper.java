@@ -1,18 +1,19 @@
 package com.march.reaper.common;
 
-import com.march.bean.AlbumDetail;
-import com.march.bean.AlbumItemCollection;
-import com.march.bean.BeautyAlbum;
-import com.march.bean.DetailCollection;
-import com.march.dao.AlbumDetailDao;
-import com.march.dao.AlbumItemCollectionDao;
-import com.march.dao.BeautyAlbumDao;
-import com.march.dao.DetailCollectionDao;
+
+import com.march.reaper.db.AlbumDetailDao;
+import com.march.reaper.db.AlbumItemCollectionDao;
+import com.march.reaper.db.BeautyAlbumDao;
+import com.march.reaper.db.DetailCollectionDao;
+import com.march.reaper.imodel.bean.AlbumDetail;
+import com.march.reaper.imodel.bean.AlbumItemCollection;
+import com.march.reaper.imodel.bean.BeautyAlbum;
+import com.march.reaper.imodel.bean.DetailCollection;
+
+import org.greenrobot.greendao.query.Query;
+import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.List;
-
-import de.greenrobot.dao.query.Query;
-import de.greenrobot.dao.query.QueryBuilder;
 
 /**
  * Created by march on 16/6/30.

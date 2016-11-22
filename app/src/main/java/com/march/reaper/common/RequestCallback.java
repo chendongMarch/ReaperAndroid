@@ -14,5 +14,5 @@ import com.march.reaper.imodel.BaseResponse;
 public interface RequestCallback<D extends BaseResponse> {
     void onSucceed(D data);
 
-    void onError(Exception e);
+    void onError(Throwable e);
 }

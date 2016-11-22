@@ -1,1 +1,1 @@
-include ':app', ':daogenerator', ':lib-videoplayer'
+include ':app', ':lib-videoplayer'

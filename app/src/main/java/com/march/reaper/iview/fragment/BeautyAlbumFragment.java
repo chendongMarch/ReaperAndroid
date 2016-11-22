@@ -49,13 +49,13 @@ public class BeautyAlbumFragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Logger.e("onCreateView");
+//        Logger.e("onCreateView");
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-        Logger.e("setUserVisibleHint");
+//        Logger.e("setUserVisibleHint");
         super.setUserVisibleHint(isVisibleToUser);
     }
 

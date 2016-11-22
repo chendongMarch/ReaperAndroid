@@ -12,8 +12,6 @@ import com.google.gson.Gson;
 import com.march.lib.core.common.Logger;
 import com.march.lib.core.common.Toaster;
 import com.march.reaper.base.ReaperApplication;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.Callback;
 
 import java.util.HashMap;
 
@@ -109,65 +107,6 @@ public class RequestHelper {
             }
         }
         return false;
-    }
-
-    private <T> Callback<T> createCallBack(final Class<T> cls, final OnQueryOverListener<T> listener) {
-        return new Callback<T>() {
-            @Override
-            public T parseNetworkResponse(Response response) throws Exception {
-                String string = response.body().string();
-                Logger.e("数据到达" + string);
-                return new Gson().fromJson(string, cls);
-            }
-
-            @Override
-            public void onError(Call call, Exception e) {
-                e.printStackTrace();
-                Logger.e("请求出错" + e.toString());
-                if (listener != null) {
-                    listener.error(e);
-                }
-            }
-
-            @Override
-            public void onResponse(T response) {
-                Logger.e("数据接受完毕,开始进行处理");
-                if (listener != null) {
-                    listener.queryOver(response);
-                }
-            }
-
-            @Override
-            public void inProgress(float progress) {
-                super.inProgress(progress);
-                Logger.e(progress + "");
-            }
-        };
-    }
-
-
-    public <T> void query(String url, final Class<T> cls, final OnQueryOverListener<T> listener) {
-        Logger.e("get请求 -> " + url);
-        if (checkCanNotDoRequest(listener)) {
-            return;
-        }
-        OkHttpUtils.get().url(url).build().execute(createCallBack(cls, listener));
-    }
-
-    public <T> void get(String url, final Class<T> cls, final OnQueryOverListener<T> listener) {
-        Logger.e("get请求 -> " + url);
-        if (checkCanNotDoRequest(listener)) {
-            return;
-        }
-        OkHttpUtils.get().url(url).build().execute(createCallBack(cls, listener));
-    }
-
-    public <T> void post(String url, final Class<T> cls, HashMap<String, String> params, final OnQueryOverListener<T> listener) {
-        Logger.e("post请求 -> " + url);
-        if (checkCanNotDoRequest(listener)) {
-            return;
-        }
-        OkHttpUtils.post().url(url).params(params).build().execute(createCallBack(cls, listener));
     }
 
     private static boolean checkCanNotDoRequest(OnQueryOverListener listener) {

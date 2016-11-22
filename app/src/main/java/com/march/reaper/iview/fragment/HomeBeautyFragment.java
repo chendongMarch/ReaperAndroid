@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.march.lib.core.fragment.BaseFragment;
-import com.march.lib.core.presenter.BasePresenter;
+import com.march.lib.core.mvp.presenter.BasePresenter;
 import com.march.reaper.R;
 import com.march.reaper.base.fragment.BaseReaperFragment;
 import com.march.reaper.common.Constant;

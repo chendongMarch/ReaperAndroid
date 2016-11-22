@@ -4,20 +4,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.march.bean.VideoFun;
-import com.march.quickrvlibs.adapter.RvViewHolder;
-import com.march.quickrvlibs.adapter.SimpleRvAdapter;
-import com.march.quickrvlibs.inter.OnLoadMoreListener;
-import com.march.quickrvlibs.module.HFModule;
-import com.march.quickrvlibs.module.LoadMoreModule;
+import com.march.reaper.imodel.bean.VideoFun;
+import com.march.lib.adapter.common.OnLoadMoreListener;
+import com.march.lib.adapter.core.BaseViewHolder;
+import com.march.lib.adapter.core.SimpleRvAdapter;
+import com.march.lib.adapter.module.HFModule;
+import com.march.lib.adapter.module.LoadMoreModule;
+import com.march.lib.core.common.DimensionHelper;
 import com.march.reaper.R;
 import com.march.reaper.base.mvp.presenter.BasePageLoadPresenter;
 import com.march.reaper.base.mvp.view.BaseRgvView;
 import com.march.reaper.common.Constant;
 import com.march.reaper.common.RequestCallback;
 import com.march.reaper.helper.CommonHelper;
-import com.march.reaper.helper.DimensionHelper;
-import com.march.reaper.imodel.VideoResponse;
+import com.march.reaper.imodel.VideoFunResponse;
 import com.march.reaper.widget.JCVideoPlayerStandard;
 import com.march.reaper.widget.RecyclerGroupView;
 
@@ -31,7 +31,7 @@ import java.util.List;
  *
  * @author chendong
  */
-public class VideoFunPresenter extends BasePageLoadPresenter<VideoFunPresenter.VideoFunView, VideoFun> {
+public class VideoFunPresenter extends BasePageLoadPresenter<VideoFunPresenter.VideoFunView, VideoFun,SimpleRvAdapter<VideoFun>> {
 
 
     public interface VideoFunView extends BaseRgvView {
@@ -73,15 +73,15 @@ public class VideoFunPresenter extends BasePageLoadPresenter<VideoFunPresenter.V
 
     @Override
     protected void queryNetDatas() {
-        RequestCallback<VideoResponse> requestCallback = new RequestCallback<VideoResponse>() {
+        RequestCallback<VideoFunResponse> requestCallback = new RequestCallback<VideoFunResponse>() {
             @Override
-            public void onSucceed(VideoResponse rst) {
+            public void onSucceed(VideoFunResponse rst) {
                 List<VideoFun> data = rst.getData();
                 handleDatasAfterQueryReady(data);
             }
 
             @Override
-            public void onError(Exception e) {
+            public void onError(Throwable e) {
                 if (mAdapter != null)
                     mAdapter.getLoadMoreModule().finishLoad();
                 getRgv().refreshComplete();
@@ -95,7 +95,7 @@ public class VideoFunPresenter extends BasePageLoadPresenter<VideoFunPresenter.V
     protected void createRvAdapter() {
         mAdapter = new SimpleRvAdapter<VideoFun>(getContext(), datas, R.layout.video_item_show) {
             @Override
-            public void onBindView(RvViewHolder holder, VideoFun data, int pos, int type) {
+            public void onBindView(BaseViewHolder holder, VideoFun data, int pos, int type) {
                 ViewGroup.LayoutParams layoutParams = holder.getParentView().getLayoutParams();
                 int itemWidth = DimensionHelper.getScreenWidth(getContext());
                 int itemHeight = (int) (itemWidth * 1.0f * data.getHeight() / data.getWidth());

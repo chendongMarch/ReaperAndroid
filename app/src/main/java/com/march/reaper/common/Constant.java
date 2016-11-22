@@ -5,6 +5,9 @@ package com.march.reaper.common;
  * 常量
  */
 public class Constant {
+
+    public static long lastRefreshTime = 0;
+
     public static final String[] mMenuItem =
             new String[]{
                     "最新推荐",
@@ -57,6 +60,7 @@ public class Constant {
     public static final String KEY_ALBUM_DETAIL_SHOW = "KEY_ALBUM_DETAIL_SHOW";
     //查看照片
     public static final String KEY_ALBUM_DETAIL_SCAN = "KEY_ALBUM_DETAIL_SCAN";
+    public static final String KEY_ALBUM_DETAIL_LIST_SCAN = "KEY_ALBUM_DETAIL_LIST_SCAN";
     //启动详情页的形式
     public static final String KEY_DETAIL_TYPE = "KEY_DETAIL_TYPE";
     //提前预加载的数量
@@ -65,5 +69,6 @@ public class Constant {
     public static final int ONECE_QUERY_DATA_NUM = 20;
 
     public static final String KEY_BEAUTY_ALBUM_TYPE = "KEY_BEAUTY_ALBUM_TYPE";
+    public static final String KEY_POS = "KEY_POS";
     public static boolean IsVideoScrolled = false;
 }

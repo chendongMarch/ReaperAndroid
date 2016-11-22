@@ -1,7 +1,7 @@
 package com.march.reaper.imodel;
 
 
-import com.march.bean.AlbumDetail;
+import com.march.reaper.imodel.bean.AlbumDetail;
 
 /**
  * Created by march on 16/7/1.

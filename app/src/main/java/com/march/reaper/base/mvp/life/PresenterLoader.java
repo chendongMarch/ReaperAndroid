@@ -3,7 +3,9 @@ package com.march.reaper.base.mvp.life;
 import android.content.Context;
 import android.support.v4.content.Loader;
 
-import com.march.lib.core.presenter.BasePresenter;
+import com.march.lib.core.mvp.presenter.BasePresenter;
+
+//import com.march.lib.core.mvp.presenter.BasePresenter;
 
 
 /**
