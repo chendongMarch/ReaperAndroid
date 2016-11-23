@@ -1,28 +1,21 @@
 package com.march.reaper.base;
 
 import android.app.Application;
-import android.content.Context;
 import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.antfortune.freeline.FreelineCore;
 import com.march.lib.core.common.Logger;
 import com.march.lib.core.common.Toaster;
-import com.march.reaper.BuildConfig;
 import com.march.reaper.R;
 import com.march.reaper.common.API;
 import com.march.reaper.common.DaoHelper;
-import com.march.reaper.helper.ImageHelper;
 import com.march.reaper.helper.VideoThumbImageHelper;
 
 import java.io.File;
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.OkHttpClient;
 
 
 /**
@@ -70,10 +63,17 @@ public class ReaperApplication extends Application {
 
 
     public File getDownloadDir() {
-        File downloadDir = new File(Environment.getExternalStorageDirectory(), "/reaperDownload");
+        File downloadDir = new File(Environment.getExternalStorageDirectory(), "/reaper/download");
         if (!downloadDir.exists())
             downloadDir.mkdirs();
         return downloadDir;
+    }
+
+    public File getThumbnailDir() {
+        File thumbDir = new File(Environment.getExternalStorageDirectory(), "/reaper/.thumb");
+        if (!thumbDir.exists())
+            thumbDir.mkdirs();
+        return thumbDir;
     }
 
 

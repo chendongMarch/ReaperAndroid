@@ -3,7 +3,6 @@ package com.march.reaper.iview.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 
 import com.march.lib.core.widget.TitleBarView;
@@ -12,7 +11,6 @@ import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.reaper.common.Constant;
 import com.march.reaper.imodel.bean.BeautyAlbum;
 import com.march.reaper.ipresenter.AlbumDetailPresenter2;
-import com.march.reaper.iview.LoadingDialog;
 import com.march.reaper.widget.RecyclerGroupView;
 import com.r0adkll.slidr.Slidr;
 

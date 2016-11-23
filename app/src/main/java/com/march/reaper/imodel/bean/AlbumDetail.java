@@ -1,5 +1,7 @@
 package com.march.reaper.imodel.bean;
 
+import android.os.Parcel;
+
 import com.march.lib.adapter.common.IAdapterModel;
 import com.march.reaper.common.API;
 import com.march.reaper.common.RequestCallback;
@@ -13,7 +15,7 @@ import org.greenrobot.greendao.annotation.Transient;
 import io.reactivex.Flowable;
 
 @Entity
-public class AlbumDetail implements IAdapterModel, java.io.Serializable, Detail {
+public class AlbumDetail implements IAdapterModel, Detail {
 
     @Transient
     public static final int TYPE_SHU = 0;
@@ -102,4 +104,41 @@ public class AlbumDetail implements IAdapterModel, java.io.Serializable, Detail 
             return 1;
     }
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.album_link);
+        dest.writeString(this.photo_src);
+        dest.writeValue(this.width);
+        dest.writeValue(this.height);
+        dest.writeString(this.time_stamp);
+        dest.writeValue(this.isFavorite);
+    }
+
+    protected AlbumDetail(Parcel in) {
+        this.album_link = in.readString();
+        this.photo_src = in.readString();
+        this.width = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.height = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.time_stamp = in.readString();
+        this.isFavorite = (Boolean) in.readValue(Boolean.class.getClassLoader());
+    }
+
+    @Transient
+    public static final Creator<AlbumDetail> CREATOR = new Creator<AlbumDetail>() {
+        @Override
+        public AlbumDetail createFromParcel(Parcel source) {
+            return new AlbumDetail(source);
+        }
+
+        @Override
+        public AlbumDetail[] newArray(int size) {
+            return new AlbumDetail[size];
+        }
+    };
 }

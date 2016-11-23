@@ -1,5 +1,7 @@
 package com.march.reaper.imodel.bean;
 
+import android.os.Parcel;
+
 import com.march.lib.adapter.common.IAdapterModel;
 
 import org.greenrobot.greendao.annotation.Entity;
@@ -9,7 +11,7 @@ import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.Transient;
 
 @Entity
-public class DetailCollection implements IAdapterModel, java.io.Serializable, com.march.reaper.imodel.bean.Detail {
+public class DetailCollection implements IAdapterModel, com.march.reaper.imodel.bean.Detail {
 
 
     @Transient
@@ -88,4 +90,37 @@ public class DetailCollection implements IAdapterModel, java.io.Serializable, co
             return 1;
     }
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.album_link);
+        dest.writeString(this.photo_src);
+        dest.writeValue(this.width);
+        dest.writeValue(this.height);
+    }
+
+    protected DetailCollection(Parcel in) {
+        this.album_link = in.readString();
+        this.photo_src = in.readString();
+        this.width = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.height = (Integer) in.readValue(Integer.class.getClassLoader());
+    }
+
+    @Transient
+    public static final Creator<DetailCollection> CREATOR = new Creator<DetailCollection>() {
+        @Override
+        public DetailCollection createFromParcel(Parcel source) {
+            return new DetailCollection(source);
+        }
+
+        @Override
+        public DetailCollection[] newArray(int size) {
+            return new DetailCollection[size];
+        }
+    };
 }

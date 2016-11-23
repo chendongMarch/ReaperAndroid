@@ -1,11 +1,10 @@
-package com.march.reaper.iview;
+package com.march.reaper.iview.dialog;
 
 import android.content.Context;
 import android.view.Gravity;
 
 import com.march.lib.core.dialog.BaseDialog;
 import com.march.reaper.R;
-
 import com.march.reaper.widget.LeProgressView;
 
 /**
@@ -42,8 +41,9 @@ public class LoadingDialog extends BaseDialog {
     @Override
     public void show() {
         super.show();
-        mLpv.startLoadingWithPrepare();
+        mLpv.startLoading();
     }
+
 
     @Override
     public void dismiss() {

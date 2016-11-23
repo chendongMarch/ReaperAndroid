@@ -1,9 +1,18 @@
 package com.march.reaper.helper;
 
+import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.march.lib.core.common.Toaster;
+import com.march.reaper.iview.dialog.LoadingDialog;
+
+import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -35,5 +44,6 @@ public class CommonHelper {
         }
         return 0;
     }
+
 
 }
