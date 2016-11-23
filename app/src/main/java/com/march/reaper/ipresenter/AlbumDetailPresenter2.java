@@ -102,9 +102,6 @@ public class AlbumDetailPresenter2
         RequestCallback<AlbumDetailResponse> callback = new RequestCallback<AlbumDetailResponse>() {
             @Override
             public void onSucceed(AlbumDetailResponse data) {
-                if (offset == 0 && data.getData() != null && data.getData().size() > 1) {
-                    mView.loadHeaderZoomView(data.getData().get(0).getPhoto_src());
-                }
                 List<AlbumDetail> list = data.getData();
                 handleDatasAfterQueryReady(list);
             }

@@ -50,7 +50,9 @@ public class ScanImgListActivity extends BaseReaperActivity {
 
     private SparseArrayCompat<PhotoView> mCachePhotoView;
     private List<Detail> mDetailList;
-    private MenuDialog mMenuDialog;
+    private MenuDialog mMoreMenuDialog;
+    private MenuDialog mWallPaperMenuDialog;
+
     private Runnable mEndRunnable;
 
     @Override
@@ -89,24 +91,25 @@ public class ScanImgListActivity extends BaseReaperActivity {
             }
         };
         List<MenuDialog.MyMenu> myMenus = new ArrayList<>();
-        myMenus.add(new MenuDialog.MyMenu(0, "下载"));
+        myMenus.add(new MenuDialog.MyMenu(0, "下载到本地"));
         myMenus.add(new MenuDialog.MyMenu(1, "设置为壁纸"));
-        myMenus.add(new MenuDialog.MyMenu(2, "分享"));
-        mMenuDialog = new MenuDialog(mContext, myMenus, new MenuDialog.OnMyMenuItemClickListener() {
+        myMenus.add(new MenuDialog.MyMenu(2, "分享给好友"));
+
+        mMoreMenuDialog = new MenuDialog(mContext, "更多", myMenus, new MenuDialog.OnMyMenuItemClickListener() {
             @Override
             public void onClick(MenuDialog dialog, int pos, View view, MenuDialog.MyMenu menu) {
                 String photo_src = mDetailList.get(mPos).getPhoto_src();
-                showLoading(true);
                 switch (menu.id) {
                     case 0:
+                        showLoading(true);
                         ImageHelper.saveToLocal(mContext, photo_src, false, mEndRunnable);
                         break;
                     case 1:
-                        ImageHelper.setWallPaper(mContext, true, false, photo_src, mEndRunnable);
+                        dialogToSetWallPaper(photo_src);
                         break;
                     case 2:
+                        showLoading(true);
                         ImageHelper.saveToLocal(mContext, photo_src, true, mEndRunnable);
-
                         break;
                 }
             }
@@ -160,11 +163,38 @@ public class ScanImgListActivity extends BaseReaperActivity {
                 finish();
                 break;
             case R.id.right_tv:
-                mMenuDialog.show();
+                mMoreMenuDialog.show();
                 break;
         }
     }
 
+
+    private void dialogToSetWallPaper(final String photo_src) {
+        if (mWallPaperMenuDialog == null) {
+            List<MenuDialog.MyMenu> menus = new ArrayList<>();
+            menus.add(new MenuDialog.MyMenu(0, "锁屏壁纸"));
+            menus.add(new MenuDialog.MyMenu(1, "桌面壁纸"));
+            menus.add(new MenuDialog.MyMenu(2, "同时设置"));
+            mWallPaperMenuDialog = new MenuDialog(mContext, "设置壁纸", menus, new MenuDialog.OnMyMenuItemClickListener() {
+                @Override
+                public void onClick(MenuDialog dialog, int pos, View view, MenuDialog.MyMenu menu) {
+                    showLoading(true);
+                    switch (menu.id) {
+                        case 0:
+                            ImageHelper.setWallPaper(mContext, false, true, photo_src, mEndRunnable);
+                            break;
+                        case 1:
+                            ImageHelper.setWallPaper(mContext, true, false, photo_src, mEndRunnable);
+                            break;
+                        case 2:
+                            ImageHelper.setWallPaper(mContext, true, true, photo_src, mEndRunnable);
+                            break;
+                    }
+                }
+            });
+        }
+        mWallPaperMenuDialog.show();
+    }
 
     private void showTitleBar() {
         if (isShown)
