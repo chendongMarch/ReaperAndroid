@@ -12,6 +12,8 @@ import com.march.reaper.imodel.UserInfo;
 import com.march.reaper.imodel.VersionResponse;
 import com.march.reaper.imodel.VideoFunResponse;
 
+import java.util.List;
+
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -105,8 +107,8 @@ public class API {
                 .subscribe(new Consumer<T>() {
                     @Override
                     public void accept(T t) throws Exception {
-                        Logger.e("获取到数据 " +
-                                t.getData().size());
+                        List data = t.getData();
+                        Logger.e("获取到数据 " + (data == null ? "" : data.size()));
                         callback.onSucceed(t);
                     }
                 }, new Consumer<Throwable>() {

@@ -78,6 +78,7 @@ public class RecyclerGroupView extends FrameLayout {
         RefreshHeader header = new RefreshHeader(getContext());
 
         //设置下拉刷新
+        mPtrLy.setResistance(3f);
         mPtrLy.setKeepHeaderWhenRefresh(true);
         mPtrLy.setDurationToCloseHeader(500);
         mPtrLy.setLoadingMinTime(1000);

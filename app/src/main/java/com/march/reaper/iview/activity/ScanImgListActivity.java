@@ -90,33 +90,8 @@ public class ScanImgListActivity extends BaseReaperActivity {
                 showLoading(false);
             }
         };
-        List<MenuDialog.MyMenu> myMenus = new ArrayList<>();
-        myMenus.add(new MenuDialog.MyMenu(0, "下载到本地"));
-        myMenus.add(new MenuDialog.MyMenu(1, "设置为壁纸"));
-        myMenus.add(new MenuDialog.MyMenu(2, "分享给好友"));
 
-        mMoreMenuDialog = new MenuDialog(mContext, "更多", myMenus, new MenuDialog.OnMyMenuItemClickListener() {
-            @Override
-            public void onClick(MenuDialog dialog, int pos, View view, MenuDialog.MyMenu menu) {
-                String photo_src = mDetailList.get(mPos).getPhoto_src();
-                switch (menu.id) {
-                    case 0:
-                        showLoading(true);
-                        ImageHelper.saveToLocal(mContext, photo_src, false, mEndRunnable);
-                        break;
-                    case 1:
-                        dialogToSetWallPaper(photo_src);
-                        break;
-                    case 2:
-                        showLoading(true);
-                        ImageHelper.saveToLocal(mContext, photo_src, true, mEndRunnable);
-                        break;
-                }
-            }
-        });
-
-        final ImgListPagerAdapter imgListPagerAdapter = new ImgListPagerAdapter();
-        mImgListVp.setAdapter(imgListPagerAdapter);
+        mImgListVp.setAdapter(new ImgListPagerAdapter());
         mImgListVp.setOffscreenPageLimit(3);
         mImgListVp.setCurrentItem(mPos);
     }
@@ -152,6 +127,39 @@ public class ScanImgListActivity extends BaseReaperActivity {
         });
     }
 
+    /**
+     * 显示菜单
+     */
+    private void showMoreMenuDialog() {
+        if (checkDialog2Show(mMoreMenuDialog))
+            return;
+        List<MenuDialog.MyMenu> myMenus = new ArrayList<>();
+        myMenus.add(new MenuDialog.MyMenu(0, "下载到本地"));
+        myMenus.add(new MenuDialog.MyMenu(1, "设置为壁纸"));
+        myMenus.add(new MenuDialog.MyMenu(2, "分享给好友"));
+
+        mMoreMenuDialog = new MenuDialog(mContext, "更多", myMenus, new MenuDialog.OnMyMenuItemClickListener() {
+            @Override
+            public void onClick(MenuDialog dialog, int pos, View view, MenuDialog.MyMenu menu) {
+                String photo_src = mDetailList.get(mPos).getPhoto_src();
+                switch (menu.id) {
+                    case 0:
+                        showLoading(true);
+                        ImageHelper.saveToLocal(mContext, photo_src, false, mEndRunnable);
+                        break;
+                    case 1:
+                        showWallpaperSetDialog(photo_src);
+                        break;
+                    case 2:
+                        showLoading(true);
+                        ImageHelper.saveToLocal(mContext, photo_src, true, mEndRunnable);
+                        break;
+                }
+            }
+        });
+        mMoreMenuDialog.show();
+    }
+
     private void updateCenterText() {
         mCenterTv.setText("专辑详情(" + mPos + "/" + mDetailList.size() + ")");
     }
@@ -163,36 +171,40 @@ public class ScanImgListActivity extends BaseReaperActivity {
                 finish();
                 break;
             case R.id.right_tv:
-                mMoreMenuDialog.show();
+                showMoreMenuDialog();
                 break;
         }
     }
 
-
-    private void dialogToSetWallPaper(final String photo_src) {
-        if (mWallPaperMenuDialog == null) {
-            List<MenuDialog.MyMenu> menus = new ArrayList<>();
-            menus.add(new MenuDialog.MyMenu(0, "锁屏壁纸"));
-            menus.add(new MenuDialog.MyMenu(1, "桌面壁纸"));
-            menus.add(new MenuDialog.MyMenu(2, "同时设置"));
-            mWallPaperMenuDialog = new MenuDialog(mContext, "设置壁纸", menus, new MenuDialog.OnMyMenuItemClickListener() {
-                @Override
-                public void onClick(MenuDialog dialog, int pos, View view, MenuDialog.MyMenu menu) {
-                    showLoading(true);
-                    switch (menu.id) {
-                        case 0:
-                            ImageHelper.setWallPaper(mContext, false, true, photo_src, mEndRunnable);
-                            break;
-                        case 1:
-                            ImageHelper.setWallPaper(mContext, true, false, photo_src, mEndRunnable);
-                            break;
-                        case 2:
-                            ImageHelper.setWallPaper(mContext, true, true, photo_src, mEndRunnable);
-                            break;
-                    }
+    /**
+     * 显示设置壁纸的dialog
+     *
+     * @param photo_src 资源
+     */
+    private void showWallpaperSetDialog(final String photo_src) {
+        if (checkDialog2Show(mWallPaperMenuDialog))
+            return;
+        List<MenuDialog.MyMenu> menus = new ArrayList<>();
+        menus.add(new MenuDialog.MyMenu(0, "锁屏壁纸"));
+        menus.add(new MenuDialog.MyMenu(1, "桌面壁纸"));
+        menus.add(new MenuDialog.MyMenu(2, "同时设置"));
+        mWallPaperMenuDialog = new MenuDialog(mContext, "设置壁纸", menus, new MenuDialog.OnMyMenuItemClickListener() {
+            @Override
+            public void onClick(MenuDialog dialog, int pos, View view, MenuDialog.MyMenu menu) {
+                showLoading(true);
+                switch (menu.id) {
+                    case 0:
+                        ImageHelper.setWallPaper(mContext, false, true, photo_src, mEndRunnable);
+                        break;
+                    case 1:
+                        ImageHelper.setWallPaper(mContext, true, false, photo_src, mEndRunnable);
+                        break;
+                    case 2:
+                        ImageHelper.setWallPaper(mContext, true, true, photo_src, mEndRunnable);
+                        break;
                 }
-            });
-        }
+            }
+        });
         mWallPaperMenuDialog.show();
     }
 
@@ -257,10 +269,9 @@ public class ScanImgListActivity extends BaseReaperActivity {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             View inflate = getLayoutInflater().inflate(R.layout.scan_img_list_item, mImgListVp, false);
-            LeProgressView processView = (LeProgressView) inflate.findViewById(R.id.lpv_progress);
-            processView.startLoadingWithPrepare();
-            Detail detail = mDetailList.get(position);
-            PhotoView iv = (PhotoView) inflate.findViewById(R.id.scan_iv);
+            final LeProgressView processView = (LeProgressView) inflate.findViewById(R.id.lpv_progress);
+            final Detail detail = mDetailList.get(position);
+            final PhotoView iv = (PhotoView) inflate.findViewById(R.id.scan_iv);
             iv.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
                 @Override
                 public void onPhotoTap(View view, float v, float v1) {
@@ -272,8 +283,20 @@ public class ScanImgListActivity extends BaseReaperActivity {
                     toggleTitleBar();
                 }
             });
+            iv.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    showMoreMenuDialog();
+                    return false;
+                }
+            });
+            processView.startLoadingWithPrepare(new Runnable() {
+                @Override
+                public void run() {
+                    ImageHelper.loadImgProgress(mActivity, detail.getPhoto_src(), iv, processView);
+                }
+            });
             mCachePhotoView.put(position, iv);
-            ImageHelper.loadImgProgress(mContext, detail.getPhoto_src(), iv, processView);
             container.addView(inflate);
             return inflate;
         }

@@ -1,8 +1,10 @@
 package com.march.reaper.helper;
 
+import android.app.Activity;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -12,6 +14,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.ImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.march.lib.core.common.Logger;
 import com.march.lib.core.common.Toaster;
 import com.march.lib.support.helper.FileHelper;
 import com.march.lib.support.helper.ShareHelper;
@@ -51,7 +54,11 @@ public class ImageHelper {
         Glide.with(context).load(url).override(w, h).crossFade().into(iv);
     }
 
-    public static void loadImgProgress(Context context, String url, ImageView iv, final View loadingView) {
+    public static void loadImgProgress(Activity context, String url, ImageView iv, final View loadingView) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && context.isDestroyed()) {
+            Logger.e("load image after activity on destroy");
+            return;
+        }
         Glide.with(context).load(url).into(new ImageViewTarget<GlideDrawable>(iv) {
             @Override
             protected void setResource(GlideDrawable resource) {
@@ -66,12 +73,14 @@ public class ImageHelper {
                 }
             }
         });
+
     }
 
     public interface OnDownloadOverHandler {
         void onSuccess(Bitmap bitmap);
     }
 
+    // 设置壁纸，锁屏壁纸和桌面壁纸
     public static void setWallPaper(final Context context, final boolean isScreen, final boolean isLockScreen, String url, final Runnable endRunnable) {
         downloadPic(context, url, new OnDownloadOverHandler() {
             @Override
@@ -108,9 +117,9 @@ public class ImageHelper {
         Class class1 = mWallManager.getClass();//获取类名
         Method setWallPaperMethod = class1.getMethod("setBitmapToLockWallpaper", Bitmap.class);//获取设置锁屏壁纸的函数
         setWallPaperMethod.invoke(mWallManager, bitmap);//调用锁屏壁纸的函数，并指定壁纸的路径imageFilesPath
-        Toast.makeText(context, "锁屏壁纸设置成功", Toast.LENGTH_SHORT).show();
     }
 
+    //图片保存到本地和分享
     public static void saveToLocal(final Context context, String url, final boolean isShare, final Runnable endRunnable) {
         downloadPic(context, url, new OnDownloadOverHandler() {
             @Override

@@ -60,9 +60,11 @@ public class LeProgressView extends View {
      */
     private Paint pointPaint;
 
-    private int loadingAnimDuration = 1000;
+    private int loadingAnimDuration = 500;
     private int prepareAnimDuration = 1000;
     private int stopAnimDuration = 300;
+
+    private boolean isLoading = false;
 
     public LeProgressView(Context context) {
         this(context, null);
@@ -109,6 +111,8 @@ public class LeProgressView extends View {
 
     // 在开始旋转动画之前小圆点挨个出来的效果
     public void prepareLoading(float percent) {
+        if (isLoading)
+            return;
         this.loadPercent = percent;
         postInvalidateOnAnimation();
     }
@@ -148,7 +152,6 @@ public class LeProgressView extends View {
                 canvas.drawCircle((float) pointAtCircle[0], (float) pointAtCircle[1], pointRadius * (tempLoadPercent / percentLoad4OnePoint), pointPaint);
             }
             tempLoadPercent = tempLoadPercent - percentLoad4OnePoint;
-
         }
     }
 
@@ -180,11 +183,34 @@ public class LeProgressView extends View {
         animator.start();
     }
 
+    // 准备动画之后自动播放加载动画
+    public void startLoadingWithPrepare(final Runnable afterPrepareRunnable) {
+        loadPercent = 0f;
+        ValueAnimator animator = ValueAnimator.ofFloat(0f, 1f).setDuration(prepareAnimDuration);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float animatedValue = (float) animation.getAnimatedValue();
+                prepareLoading(animatedValue);
+            }
+        });
+        animator.addListener(new SimpleAnimListener() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                startLoading();
+                if (afterPrepareRunnable != null) {
+                    afterPrepareRunnable.run();
+                }
+            }
+        });
+        animator.start();
+    }
+
     // 开始加载，没有准备动画
     public void startLoading() {
         completeLoadPercent();
         postInvalidate();
-
+        isLoading = true;
         rotateAnim = ObjectAnimator.ofFloat(this, "rotation", 0f, 360f).setDuration(loadingAnimDuration);
         rotateAnim.setRepeatCount(ValueAnimator.INFINITE);
         rotateAnim.setInterpolator(new LinearInterpolator());
@@ -214,6 +240,7 @@ public class LeProgressView extends View {
             }
         });
         animator.start();
+        isLoading = false;
     }
 
     // 停止加载动画

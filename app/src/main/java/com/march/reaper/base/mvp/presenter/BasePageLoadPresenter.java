@@ -61,6 +61,7 @@ public abstract class BasePageLoadPresenter<V extends BaseView, D, A extends Abs
      * @param list 获取到的数据
      */
     protected void handleDatasAfterQueryReady(List<D> list) {
+        getRgv().setEnabled(false);
         if (list.size() <= 0) {
             offset = -1;
             Logger.e("没有数据了");
@@ -94,6 +95,8 @@ public abstract class BasePageLoadPresenter<V extends BaseView, D, A extends Abs
             mAdapter.getLoadMoreModule().finishLoad();
         completeRefresh();
         isLoadEnd = true;
+        getRgv().setEnabled(true);
+
     }
 
     protected abstract RecyclerGroupView getRgv();

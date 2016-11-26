@@ -15,6 +15,7 @@ import com.march.lib.adapter.core.BaseViewHolder;
 import com.march.lib.adapter.core.SimpleRvAdapter;
 import com.march.lib.adapter.module.HFModule;
 import com.march.lib.adapter.module.LoadMoreModule;
+import com.march.lib.core.common.Logger;
 import com.march.lib.core.common.Toaster;
 import com.march.reaper.R;
 import com.march.reaper.base.mvp.presenter.BasePageLoadPresenter;
@@ -59,8 +60,16 @@ public class AlbumDetailPresenter2
 
 
     @Override
+    public void detachView() {
+        super.detachView();
+        Logger.e("detachView");
+
+    }
+
+    @Override
     public void attachView(AlbumDetailView view) {
         super.attachView(view);
+        Logger.e("attachView");
         Bundle intent = mView.getData();
         mGridDecoration = SpaceDecoration.gridWithHeader(10, 2, true);
 
