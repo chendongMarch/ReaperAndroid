@@ -1,18 +1,20 @@
 package com.march.reaper.widget;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.march.lib.core.common.DimensionHelper;
 import com.march.reaper.R;
 
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
-import in.srain.cube.views.ptr.header.StoreHouseHeader;
 
 /**
  * Created by march on 16/7/10.
@@ -20,6 +22,7 @@ import in.srain.cube.views.ptr.header.StoreHouseHeader;
  */
 public class RecyclerGroupView extends FrameLayout {
     private Context mContext;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private FloatingActionButton mFloatBtn;
     private PtrFrameLayout mPtrLy;
@@ -46,11 +49,13 @@ public class RecyclerGroupView extends FrameLayout {
 
 
     private void initViews() {
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe);
         mPtrLy = (PtrFrameLayout) findViewById(R.id.widget_rgv_ptr);
         mFloatBtn = (FloatingActionButton) findViewById(R.id.widget_rgv_fab);
         mRecyclerView = (RecyclerView) findViewById(R.id.widget_rgv_rv);
         mDefaultHeader = mPtrLy.getHeaderView();
     }
+
 
 
     private void initFabPart() {
@@ -62,9 +67,23 @@ public class RecyclerGroupView extends FrameLayout {
         });
     }
 
+    private void initSwipeRefreshLayout() {
+        swipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.CYAN, Color.YELLOW);
+
+        swipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
+
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.WHITE);
+
+        // 从start开始出现，到end停止，可以出现在中间
+//        swipeRefreshLayout.setProgressViewOffset(true, 0, 300);
+
+        swipeRefreshLayout.setDistanceToTriggerSync(DimensionHelper.getScreenHeight(mContext) / 5);
+//
+//        swipeRefreshLayout.setProgressViewEndTarget(true, 100);
+    }
 
     private void initRefreshPart() {
-
+        initSwipeRefreshLayout();
         //    mPtrFrame.setResistance(1.7f);
 //    mPtrFrame.setRatioOfHeaderHeightToRefresh(1.2f);
 //    mPtrFrame.setDurationToClose(200);
@@ -98,11 +117,16 @@ public class RecyclerGroupView extends FrameLayout {
                 }
             }
         });
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (mOnRefreshBeginListener != null) {
+                    mOnRefreshBeginListener.onRefreshBegin();
+                }
+            }
+        });
     }
 
-    public void enableHeader() {
-        mPtrLy.setHeaderView(mDefaultHeader);
-    }
 
     public void setOnRefreshBeginListener(OnRefreshBeginListener mOnRefreshBeginListener) {
         this.mOnRefreshBeginListener = mOnRefreshBeginListener;
@@ -121,11 +145,13 @@ public class RecyclerGroupView extends FrameLayout {
     }
 
     public void refreshComplete() {
-        mPtrLy.refreshComplete();
+//        mPtrLy.refreshComplete();
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     public void autoRefresh() {
-        mPtrLy.autoRefresh();
+        swipeRefreshLayout.setRefreshing(true);
+//        mPtrLy.autoRefresh();
     }
 
     public void setAdapter(RecyclerView.Adapter adapter) {

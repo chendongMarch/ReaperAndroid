@@ -16,13 +16,13 @@ import android.widget.TextView;
 import com.march.lib.core.common.DimensionHelper;
 import com.march.lib.core.common.Toaster;
 import com.march.lib.core.mvp.presenter.BasePresenter;
+import com.march.lib.view.LeProgressView;
 import com.march.reaper.R;
 import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.reaper.common.Constant;
 import com.march.reaper.helper.ImageHelper;
 import com.march.reaper.imodel.bean.Detail;
 import com.march.reaper.iview.dialog.MenuDialog;
-import com.march.reaper.widget.LeProgressView;
 
 import java.util.ArrayList;
 import java.util.List;

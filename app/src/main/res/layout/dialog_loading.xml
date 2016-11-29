@@ -7,11 +7,11 @@
     android:background="@drawable/shape_loading_dialog"
     android:orientation="vertical">
 
-    <com.march.reaper.widget.LeProgressView
+    <com.march.lib.view.LeProgressView
         android:id="@+id/lpv_progress"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        app:pointRadius="4dp"
-        app:radius="23dp" />
+        app:le_pointRadius="4dp"
+        app:le_radius="23dp" />
 
 </LinearLayout>

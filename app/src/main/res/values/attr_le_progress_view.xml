@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <declare-styleable name="LeProgressView">
-        <attr name="radius" format="dimension"/>
-        <attr name="pointRadius" format="dimension"/>
-
-        <attr name="pointCount" format="integer"/>
-    </declare-styleable>
-</resources>

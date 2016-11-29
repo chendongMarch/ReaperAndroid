@@ -71,7 +71,7 @@ dependencies {
     compile project(':lib-videoplayer')
 
     compile(rootProject.ext.support.lib_core, {
-        exclude group: 'com.android.support'
+        exclude group: 'com.android.support', module: 'support-annotations'
     })
 
     compile(rootProject.ext.support.lib_support, {
@@ -79,7 +79,11 @@ dependencies {
     })
 
     compile(rootProject.ext.support.lib_adapter, {
-        exclude group: 'com.android.support'
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    compile(rootProject.ext.support.lib_view, {
+        exclude group: 'com.android.support', module: 'support-annotations'
     })
 
     compile rootProject.ext.support.design
@@ -114,8 +118,6 @@ dependencies {
     compile rootProject.ext.support.glide
 
     compile rootProject.ext.support.disklrucache
-    compile rootProject.ext.support.blot
 
-    compile 'com.jude:swipebackhelper:3.1.2'
-    compile 'com.r0adkll:slidableactivity:2.0.5'
+    compile rootProject.ext.support.blot
 }

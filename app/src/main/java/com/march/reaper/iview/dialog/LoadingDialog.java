@@ -4,8 +4,8 @@ import android.content.Context;
 import android.view.Gravity;
 
 import com.march.lib.core.dialog.BaseDialog;
+import com.march.lib.view.LeProgressView;
 import com.march.reaper.R;
-import com.march.reaper.widget.LeProgressView;
 
 /**
  * Project  : Reaper

@@ -18,9 +18,9 @@ import com.march.lib.core.common.Logger;
 import com.march.lib.core.common.Toaster;
 import com.march.lib.support.helper.FileHelper;
 import com.march.lib.support.helper.ShareHelper;
+import com.march.lib.view.LeProgressView;
 import com.march.reaper.base.ReaperApplication;
 import com.march.reaper.widget.GlideRoundTransform;
-import com.march.reaper.widget.LeProgressView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -48,7 +48,6 @@ public class ImageHelper {
     public static void loadImg(Context context, String url, ImageView iv) {
         Glide.with(context).load(url).thumbnail(0.1f).crossFade().into(iv);
     }
-
 
     public static void loadImg(Context context, String url, int w, int h, ImageView iv) {
         Glide.with(context).load(url).override(w, h).crossFade().into(iv);
