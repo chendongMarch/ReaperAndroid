@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.march.lib.platform.Platform;
 import com.march.lib.platform.exception.PlatformException;
-import com.march.lib.platform.helper.Util;
 import com.march.lib.platform.impl.QQPlatform;
 import com.march.lib.platform.impl.WbPlatform;
 import com.march.lib.platform.impl.WxPlatform;
@@ -27,6 +26,7 @@ import com.march.lib.platform.listener.OnWxLoginListener;
 import com.march.lib.platform.listener.OnWxShareListener;
 import com.march.lib.platform.tencent.QQUserInfo;
 import com.march.lib.platform.weibo.WbUserInfo;
+import com.march.lib.platform.weibo.WeiboEntryActivity;
 import com.march.lib.platform.wx.WxUserInfo;
 import com.march.reaper.helper.ImageHelper;
 import com.sina.weibo.sdk.api.share.BaseResponse;
@@ -79,7 +79,7 @@ public class TestPlatformActivity extends Activity implements IWeiboHandler.Resp
         mContext = getApplicationContext();
         mActivity = this;
         onInitDatas();
-        mWbPlatform.handleWeiboResponse(mActivity, savedInstanceState, this);
+        mWbPlatform.onCreate(mActivity, savedInstanceState, this);
     }
 
     @Override
@@ -361,7 +361,8 @@ public class TestPlatformActivity extends Activity implements IWeiboHandler.Resp
                 });
                 break;
             case R.id.wb_share_text:
-                mWbPlatform.shareText(mActivity, "test");
+//                mWbPlatform.shareText(mActivity, "test");
+                startActivity(new Intent(mContext, WeiboEntryActivity.class));
                 break;
             case R.id.wb_share_web:
                 mWbPlatform.shareWebpage(mActivity, "textContent", "title", "desc", res2Bitmap(), testWebUrl);

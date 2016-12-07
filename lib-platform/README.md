@@ -6,7 +6,7 @@
 所以我使用原生的SDK封装了一个Library，实现了登录和分享的相关功能，并尽可能的简化了调用API，
 希望能简化三方接入的流程的同时实现高度的自定义，当然也有一些接入的时候遇到的坑，分享一下。
 
-目前支持微信、微博、QQ，SDK已经集成在Lib里面，下载之后直接以来module即可
+目前支持微信、微博、QQ，SDK已经集成在Lib里面，下载之后直接依赖module即可
 
 
 ## 目录
@@ -323,7 +323,7 @@ protected void onCreate(Bundle savedInstanceState) {
     setContentView(R.layout.activity_test_platform);
 
     // 在这里实现是在Activity被销毁时接受数据，这里的this参数接受的是类型是IWeiboHandler.Response
-    mWbPlatform.handleWeiboResponse(mActivity, savedInstanceState, this);
+    mWbPlatform.onCreate(mActivity, savedInstanceState, this);
     ... 此处省略若干代码
 }
 

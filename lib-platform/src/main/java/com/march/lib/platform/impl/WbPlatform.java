@@ -113,7 +113,7 @@ public class WbPlatform extends BasePlatform {
     }
 
     // 分享时在onCreate方法中使用
-    public void handleWeiboResponse(Activity activity, Bundle savedInstanceState, IWeiboHandler.Response responseListener) {
+    public void onCreate(Activity activity, Bundle savedInstanceState, IWeiboHandler.Response responseListener) {
         if (!(responseListener instanceof Activity)) {
             Platform.log(TAG, "微博接受回调的IWeiboHandler.Response必须是发起分享的Activity");
             return;
