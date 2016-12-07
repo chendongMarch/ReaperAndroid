@@ -235,10 +235,79 @@ mQqPlatform.login(mActivity, new OnQQLoginListener() {
                 });
 ```
 ## 微博快速接入
-
+- 微博接入比较麻烦，需要配置的地方很多，坑也特别多。
+- 需要注意的地方是有个回调的url,会在微博管理台那里配置，请使用默认的那个url
 
 ### 微博分享
+- 1.首先在`AndroidManifest.xml`中配置你的发起分享的Activity，如下,不然没办法接收到成功或者失败的回调
 
+```java
+<activity
+    android:name=".TestPlatformActivity"
+    android:configChanges="keyboardHidden|orientation"
+    android:screenOrientation="portrait">
+    <intent-filter>
+        <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+        <category android:name="android.intent.category.DEFAULT" />
+    </intent-filter>
+</activity>
+```
+
+- 2.设置监听
+
+```java
+mWbPlatform.setWbShareListener(new OnWbShareListener() {
+            @Override
+            public void onSuccess() {
+                toast("分享成功");
+            }
+
+            @Override
+            public void onFailure(PlatformException e) {
+                toast("分享失败");
+                e.getWbError().printStackTrace();
+            }
+
+            @Override
+            public void onCancel() {
+                toast("分享取消");
+            }
+        });
+```
+
+- 3.微博分享需要发起分享的Activity实现`IWeiboHandler.Response`接口，这里要说一下为什么没有把这个监听拿到类库里面，因为必须是Activity实现这个监听，不然没办法获取到分享的结果，真的很坑，所以只能拿出来自己实现啦，不过处理的方法我已经写在类库里面只要调用一下就好了，代码如下
+
+```java
+public class TestPlatformActivity extends Activity implements IWeiboHandler.Response {
+	... 此处省略若干代码
+	@Override
+    public void onResponse(BaseResponse baseResponse) {
+        mWbPlatform.handleWbResponse(baseResponse);
+    }
+	... 此处省略若干代码
+}
+```
+
+- 4.然后需要在`onCreate()`和`onNewIntent()`方法中实现如下代码接受数据
+
+```java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_test_platform);
+
+    // 在这里实现是在Activity被销毁时接受数据，这里的this参数接受的是类型是IWeiboHandler.Response
+    mWbPlatform.handleWeiboResponse(mActivity, savedInstanceState, this);
+    ... 此处省略若干代码
+}
+
+@Override
+protected void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+    // Activity返回时被调用，这里的this参数接受的是类型是IWeiboHandler.Response
+    mWbPlatform.onNewIntent(intent, this);
+}
+```
 
 ### 微博 openApi 分享
 
