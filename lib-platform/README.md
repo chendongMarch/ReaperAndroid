@@ -362,7 +362,7 @@ mWbPlatform.shareGif(mActivity, "text", localGifPath);
 ```
 
 ### 微博登录
-- 微博登录授权需要在`onActivityResult()`接受授权的结果，，比起微信和QQ配置的地方太多啦，主要原因还是微信和QQ是有自己的Activity注册上啦，回头可以模仿微信和QQ的方式写个Activity接受数据，再返回给调用的Activity就不需要做如此多的配置啦。遗憾代码登录
+- 微博登录授权需要在`onActivityResult()`接受授权的结果，，比起微信和QQ配置的地方太多啦，主要原因还是微信和QQ是有自己的Activity注册上啦，回头可以模仿微信和QQ的方式写个Activity接受数据，再返回给调用的Activity就不需要做如此多的配置啦。一行代码登录
 
 ```java
 @Override
