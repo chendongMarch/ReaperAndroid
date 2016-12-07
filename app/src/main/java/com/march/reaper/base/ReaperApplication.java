@@ -55,10 +55,16 @@ public class ReaperApplication extends Application {
         API.init();
         VideoThumbImageHelper.get().init(mInst);
 
+        String qqAppId = "1105571460";
+        String wxAppId = "wx87fa4edcc9bb3e84";
+        String wbAppId = "3699350615";
+
         Platform.newInst(this);
-        Platform.getInst().initWx(this, "wx87fa4edcc9bb3e84");
-        Platform.getInst().initQQ(this, "1105571460");
-        Platform.getInst().initWb(this, "3699350615");
+        Platform.getInst().initWx(this, wxAppId);
+        Platform.getInst().initQQ(this, qqAppId);
+        Platform.getInst().initWb(this, wbAppId);
+
+        Platform.getInst().init(this, qqAppId,wxAppId,wbAppId);
     }
 
 

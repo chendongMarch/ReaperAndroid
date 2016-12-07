@@ -13,5 +13,4 @@ import com.march.lib.platform.wx.AbsWXEntryActivity;
 
 public class WXEntryActivity extends AbsWXEntryActivity {
 
-
 }

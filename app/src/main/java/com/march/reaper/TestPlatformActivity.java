@@ -106,6 +106,7 @@ public class TestPlatformActivity extends Activity implements IWeiboHandler.Resp
 
     private int wxShareType() {
         return wx_toZone.isChecked() ? WxPlatform.ZONE : WxPlatform.CHAT;
+
     }
 
     private int qqShareType() {
