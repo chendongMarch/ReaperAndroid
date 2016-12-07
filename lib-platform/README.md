@@ -29,7 +29,7 @@
 - [结束](#结束)
 
 
-------
+
 
 ## 开始
 - 首先你应该去每个平台申请appId或者appKey,这个是免不了的，每个平台不一样这里统称AppId
@@ -54,8 +54,6 @@ mWbPlatform = Platform.getInst().wb();
 mQqPlatform = Platform.getInst().qq();
 ```
 
-
-------
 
 
 ## 微信快速接入
@@ -154,7 +152,7 @@ mWxPlatform.login(mContext, secretKey, new OnWxLoginListener() {
 
 
 
-------
+
 
 
 ## QQ快速接入
@@ -249,7 +247,7 @@ mQqPlatform.login(mActivity, new OnQQLoginListener() {
 ```
 
 
-------
+
 
 
 
