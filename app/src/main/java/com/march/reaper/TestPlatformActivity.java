@@ -361,8 +361,8 @@ public class TestPlatformActivity extends Activity implements IWeiboHandler.Resp
                 });
                 break;
             case R.id.wb_share_text:
-//                mWbPlatform.shareText(mActivity, "test");
-                startActivity(new Intent(mContext, WeiboEntryActivity.class));
+                mWbPlatform.shareText(mActivity, "test");
+//                startActivity(new Intent(mContext, WeiboEntryActivity.class));
                 break;
             case R.id.wb_share_web:
                 mWbPlatform.shareWebpage(mActivity, "textContent", "title", "desc", res2Bitmap(), testWebUrl);
