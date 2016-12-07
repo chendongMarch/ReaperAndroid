@@ -364,27 +364,26 @@ public class TestPlatformActivity extends Activity implements IWeiboHandler.Resp
                 mWbPlatform.shareText(mActivity, "test");
                 break;
             case R.id.wb_share_web:
-                mWbPlatform.shareWebpage(mActivity, "textContent", "title", "desc", res2Bitmap(), testWebUrl, "defaultText");
+                mWbPlatform.shareWebpage(mActivity, "textContent", "title", "desc", res2Bitmap(), testWebUrl);
                 break;
             case R.id.wb_share_music:
-                mWbPlatform.shareWebpage(mActivity, "textContent", "title", "desc", res2Bitmap(), netMusicPath, "defaultText");
+                mWbPlatform.shareMusic(mActivity, "textContent", "title", "desc", res2Bitmap(), netMusicPath, netMusicPath, 10);
                 break;
             case R.id.wb_share_video:
-                mWbPlatform.shareWebpage(mActivity, "textContent", "title", "desc", res2Bitmap(), netVideoPath, "defaultText");
+                mWbPlatform.shareVideo(mActivity, "textContent", "title", "desc", res2Bitmap(), netVideoPath, netVideoPath, 10);
                 break;
             case R.id.wb_share_voice:
-                mWbPlatform.shareWebpage(mActivity, "textContent", "title", "desc", res2Bitmap(), netMusicPath, "defaultText");
+                mWbPlatform.shareVoice(mActivity, "textContent", "title", "desc", res2Bitmap(), netMusicPath, netMusicPath, 10);
                 break;
             case R.id.wb_share_image_local:
-                mWbPlatform.shareImage(mActivity, "text", res2Bitmap());
+                mWbPlatform.shareImage(mActivity, "text" + netMusicPath, res2Bitmap());
                 break;
             case R.id.wb_share_image_net:
                 // 需要申请高级权限
                 mWbPlatform.shareNetImage(mActivity, "text", netImagePath);
                 break;
             case R.id.wb_share_file:
-                File file = new File(localGifPath);
-                mWbPlatform.shareFile(mActivity, "text", Util.getOutputStreamFromFile(file));
+                mWbPlatform.shareGif(mActivity, "text", localGifPath);
                 break;
         }
     }

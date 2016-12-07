@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.march.lib.platform.Platform;
 import com.march.lib.platform.exception.PlatformException;
+import com.march.lib.platform.helper.Util;
 import com.march.lib.platform.listener.OnWbLoginListener;
 import com.march.lib.platform.listener.OnWbShareListener;
 import com.march.lib.platform.weibo.StatusesAPI;
@@ -33,7 +34,7 @@ import com.sina.weibo.sdk.exception.WeiboException;
 import com.sina.weibo.sdk.net.RequestListener;
 import com.sina.weibo.sdk.utils.Utility;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
 
 /**
  * Project  : Reaper
@@ -205,11 +206,13 @@ public class WbPlatform extends BasePlatform {
     }
 
     //分享文件，视频，gif等
-    public void shareFile(final Activity activity, final String text, final ByteArrayOutputStream stream) {
+    public void shareGif(final Activity activity, final String text, final String filePath) {
         justAuth(activity, new Runnable() {
             @Override
             public void run() {
-                mStatusesAPI.upload(text, stream, requestListener);
+                File file = new File(filePath);
+                if (file.exists())
+                    mStatusesAPI.upload(text, Util.getOutputStreamFromFile(file), requestListener);
             }
         });
     }
@@ -241,12 +244,12 @@ public class WbPlatform extends BasePlatform {
                              final String title,// 网页的标题
                              final String desc,// 网页描述
                              final Bitmap bitmap,// 左边缩略图
-                             final String actionUrl,// 点击之后的url
-                             final String defaultText) {
+                             final String actionUrl// 点击之后的url
+    ) {
         shareToWeiboClient(new WeiboShareCreator(weiboShareAPI, activity) {
             @Override
             public WebpageObject _getWebObj() {
-                return getWebpageObj(title, desc, bitmap, actionUrl, defaultText);
+                return getWebpageObj(title, desc, bitmap, actionUrl);
             }
 
             @Override
@@ -257,11 +260,11 @@ public class WbPlatform extends BasePlatform {
     }
 
     // 分享网页
-    public void shareMusic(Activity activity, final String textContent, final String title, final String desc, final Bitmap bitmap, final String actionUrl, final String defaultText, final String dataUrl, final String hdDataUrl, final int duration) {
+    public void shareMusic(Activity activity, final String textContent, final String title, final String desc, final Bitmap bitmap, final String actionUrl, final String dataUrl, final int duration) {
         shareToWeiboClient(new WeiboShareCreator(weiboShareAPI, activity) {
             @Override
             public MusicObject _getMusicObj() {
-                return getMusicObj(title, desc, bitmap, actionUrl, defaultText, dataUrl, hdDataUrl, duration);
+                return getMusicObj(title, desc, bitmap, actionUrl, dataUrl, duration);
             }
 
             @Override
@@ -272,13 +275,14 @@ public class WbPlatform extends BasePlatform {
     }
 
     // 分享视频
-    public void shareVideo(Activity activity, final String textContent, final String title, final String desc, final Bitmap bitmap, final String actionUrl, final String defaultText, final String dataUrl, final String hdDataUrl, final int duration) {
+    public void shareVideo(Activity activity, final String textContent, final String title, final String desc, final Bitmap bitmap, final String actionUrl, final String dataUrl, final int duration) {
         shareToWeiboClient(new WeiboShareCreator(weiboShareAPI, activity) {
             @Override
             public VideoObject _getVideoObj() {
-                return getVideoObj(title, desc, bitmap, actionUrl, defaultText, dataUrl, hdDataUrl, duration);
+                return getVideoObj(title, desc, bitmap, actionUrl, dataUrl, duration);
             }
 
+            //
             @Override
             public TextObject _getTextObj() {
                 return getTextObj(textContent);
@@ -287,12 +291,12 @@ public class WbPlatform extends BasePlatform {
     }
 
     // 分享声音
-    public void shareVoice(Activity activity, final String textContent, final String title, final String desc, final Bitmap bitmap, final String actionUrl, final String defaultText, final String dataUrl, final String hdDataUrl, final int duration) {
+    public void shareVoice(Activity activity, final String textContent, final String title, final String desc, final Bitmap bitmap, final String actionUrl, final String dataUrl, final int duration) {
         shareToWeiboClient(new WeiboShareCreator(weiboShareAPI, activity) {
 
             @Override
             public VoiceObject _getVoiceObj() {
-                return getVoiceObj(title, desc, bitmap, actionUrl, defaultText, dataUrl, hdDataUrl, duration);
+                return getVoiceObj(title, desc, bitmap, actionUrl, dataUrl, duration);
             }
 
             @Override
@@ -318,22 +322,21 @@ public class WbPlatform extends BasePlatform {
     }
 
 
-    private WebpageObject getWebpageObj(String title, String desc, Bitmap bitmap, String actionUrl, String defaultText) {
+    private WebpageObject getWebpageObj(String title, String desc, Bitmap bitmap, String actionUrl) {
         WebpageObject mediaObject = new WebpageObject();
         mediaObject.identify = Utility.generateGUID();
         mediaObject.title = title;
         mediaObject.description = desc;
-
         // 设置 Bitmap 类型的图片到视频对象里
         // 设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
         mediaObject.setThumbImage(bitmap);
         mediaObject.actionUrl = actionUrl;
-        mediaObject.defaultText = defaultText;
+        mediaObject.defaultText = "网页分享";
         return mediaObject;
     }
 
 
-    private MusicObject getMusicObj(String title, String desc, Bitmap bitmap, String actionUrl, String defaultText, String dataUrl, String hdDataUrl, int duration) {
+    private MusicObject getMusicObj(String title, String desc, Bitmap bitmap, String actionUrl, String dataUrl, int duration) {
         // 创建媒体消息
         MusicObject musicObject = new MusicObject();
         musicObject.identify = Utility.generateGUID();
@@ -345,13 +348,13 @@ public class WbPlatform extends BasePlatform {
         musicObject.setThumbImage(bitmap);
         musicObject.actionUrl = actionUrl;
         musicObject.dataUrl = dataUrl;
-        musicObject.dataHdUrl = hdDataUrl;
+        musicObject.dataHdUrl = dataUrl;
         musicObject.duration = duration;
-        musicObject.defaultText = defaultText;
+        musicObject.defaultText = "音乐分享";
         return musicObject;
     }
 
-    private VideoObject getVideoObj(String title, String desc, Bitmap bitmap, String actionUrl, String defaultText, String dataUrl, String hdDataUrl, int duration) {
+    private VideoObject getVideoObj(String title, String desc, Bitmap bitmap, String actionUrl, String dataUrl, int duration) {
         // 创建媒体消息
         VideoObject videoObject = new VideoObject();
         videoObject.identify = Utility.generateGUID();
@@ -360,25 +363,25 @@ public class WbPlatform extends BasePlatform {
         videoObject.setThumbImage(bitmap);
         videoObject.actionUrl = actionUrl;
         videoObject.dataUrl = dataUrl;
-        videoObject.dataHdUrl = hdDataUrl;
+        videoObject.dataHdUrl = dataUrl;
         videoObject.duration = duration;
-        videoObject.defaultText = defaultText;
+        videoObject.defaultText = "视频分享";
         return videoObject;
     }
 
 
-    private VoiceObject getVoiceObj(String title, String desc, Bitmap bitmap, String actionUrl, String defaultText, String dataUrl, String hdDataUrl, int duration) {
+    private VoiceObject getVoiceObj(String title, String desc, Bitmap bitmap, String actionUrl, String dataUrl, int duration) {
         // 创建媒体消息
         VoiceObject voiceObject = new VoiceObject();
         voiceObject.identify = Utility.generateGUID();
         voiceObject.title = title;
-        voiceObject.description = defaultText;
+        voiceObject.description = desc;
         voiceObject.setThumbImage(bitmap);
         voiceObject.actionUrl = actionUrl;
         voiceObject.dataUrl = dataUrl;
-        voiceObject.dataHdUrl = hdDataUrl;
+        voiceObject.dataHdUrl = dataUrl;
         voiceObject.duration = duration;
-        voiceObject.defaultText = defaultText;
+        voiceObject.defaultText = "声音分享";
         return voiceObject;
     }
 

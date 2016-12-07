@@ -309,7 +309,61 @@ protected void onNewIntent(Intent intent) {
 }
 ```
 
-### 微博 openApi 分享
+- 5.分享的API，这里分享有两种方式，一种是不需要登录的，也就是下面介绍的这几种方式，另外一种使用openApi来分享，需要用户授权，为什么要引入这种方式呢，因为微博分享图片大小有限制，不能大于32kb,就有点鸡肋啦，32kb的图片根本不够看。在下面的分享中很多字段分享到微博是看不到效果的，都是文字+网页链接，真的挺难看的，因为title,desc，bitmap这些字段都是显示在LinkCard上的，就是显示为卡片的样式，但是想能这样显示需要进行商业合作才可以,另外在textContent参数中的内容如果有网页链接，会自动隐藏替换为`网页链接`四个字是不会显示url的
 
+```java
+// 分享文字
+mWbPlatform.shareText(mActivity, "test");
+// 分享网页
+mWbPlatform.shareWebpage(mActivity, "textContent", "title", "desc", bitmap, testWebUrl);
+// 分享音乐
+mWbPlatform.shareMusic(mActivity, "textContent", "title", "desc", bitmap, netMusicPath, netMusicPath, 10);
+// 分享视频
+mWbPlatform.shareVideo(mActivity, "textContent", "title", "desc", bitmap, netVideoPath, netVideoPath, 10);
+// 分享声音
+mWbPlatform.shareVoice(mActivity, "textContent", "title", "desc", bitmap, netMusicPath, netMusicPath, 10);
+```
+### 微博 openApi 分享
+- 使用openApi分享需要先进行授权，也就是会弹起微博客户端授权界面点击登陆之后获得授权，当然，也已经封装好啦，只要调用分享的代码就可以啦。就直接贴代码啦
+
+```java
+// 分享图片bitmap
+mWbPlatform.shareImage(mActivity, "text", bitmapThumb);
+// 分享网络图片，这里是高级接口需要在微博后台申请的
+mWbPlatform.shareNetImage(mActivity, "text", netImagePath);
+// 分享GIF，这个分享出来是会有预览效果的
+mWbPlatform.shareGif(mActivity, "text", localGifPath);
+```
 
 ### 微博登录
+- 微博登录授权需要在`onActivityResult()`接受授权的结果，，比起微信和QQ配置的地方太多啦，主要原因还是微信和QQ是有自己的Activity注册上啦，回头可以模仿微信和QQ的方式写个Activity接受数据，再返回给调用的Activity就不需要做如此多的配置啦。遗憾代码登录
+
+```java
+@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    mWbPlatform.onActivityResult(requestCode, resultCode, data);
+    super.onActivityResult(requestCode, resultCode, data);
+}
+
+
+
+mWbPlatform.login(mActivity, new OnWbLoginListener() {
+                    @Override
+                    public void onSucceed(WbUserInfo info) {
+                        log(info.toString());
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        toast("取消");
+                    }
+
+                    @Override
+                    public void onException(PlatformException e) {
+                        e.getWbError().printStackTrace();
+                    }
+                });
+```
+
+## 结束
+就这么多内容，这三个平台是目前接入最多的吧，提取这个Lib出来以后再做第三方登录分享就简单多啦，还有很多地方不足，API也不够简单，配置的地方太多，继续完善吧，加油
