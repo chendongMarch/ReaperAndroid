@@ -67,7 +67,6 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
     compile project(':lib-videoplayer')
-    compile project(':lib-platform')
 
     compile(rootProject.ext.support.lib_core, {
         exclude group: 'com.android.support', module: 'support-annotations'
