@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.TextView;
 
-import com.march.lib.core.common.Logger;
 import com.march.lib.core.common.Toaster;
 import com.march.lib.core.mvp.presenter.BasePresenter;
 import com.march.reaper.R;
@@ -22,8 +21,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.OnClick;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
-
-//import com.march.lib.core.common.FragmentHelper;
 
 /**
  * 主页分为四个fragment ,第一个fragment是viewpager(包含多个fragment)

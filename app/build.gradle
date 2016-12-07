@@ -69,54 +69,77 @@ dependencies {
     compile project(':lib-videoplayer')
     compile project(':lib-platform')
 
+    /**
+     * 自己的库
+     */
+    // 核心库
     compile(rootProject.ext.support.lib_core, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
+    // 支持库
     compile(rootProject.ext.support.lib_support, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
+    // 适配器库
     compile(rootProject.ext.support.lib_adapter, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
+    // 控件库
     compile(rootProject.ext.support.lib_view, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
+    // design
     compile rootProject.ext.support.design
-
+    // appcompat
     compile rootProject.ext.support.appcompat_v7
-
+    // recyclerview
     compile rootProject.ext.support.recyclerView_v7
-
+    //card view
     //compile rootProject.ext.support.cardView_v7
 
+    /**
+     *网络请求相关库
+     */
+    // retrofit
     compile rootProject.ext.support.net_retrofit
+    // 网络chrome测试
     compile rootProject.ext.support.net_stetho
+    // 网络chrome测试
     compile rootProject.ext.support.net_stetho_okhttp3
+    // 日志
     compile rootProject.ext.support.net_logging
+    // gson
     compile rootProject.ext.support.net_gson_converter
+    // rxjava adapter
     compile rootProject.ext.support.net_rxjava2_adapter
+    // rxjava
     compile rootProject.ext.support.rxjava2
+    // rxandroid
     compile rootProject.ext.support.rxandroid
 
+    /**
+     * 控件相关
+     */
+    // 下拉刷新
     compile rootProject.ext.support.ultra_ptr
-
-    compile rootProject.ext.support.gson
-
+    // 缩放图片控件
     compile rootProject.ext.support.PhotoView
-
-    compile rootProject.ext.support.butterknife
-
-    compile rootProject.ext.support.greendao3
-
+    // 流式布局
     compile rootProject.ext.support.flowlayout
 
+    /**
+     * 快速开发
+     */
+    // 数据库
+    compile rootProject.ext.support.greendao3
+    // gson
+    compile rootProject.ext.support.gson
+    // 控件注解
+    compile rootProject.ext.support.butterknife
+    // 图片加载
     compile rootProject.ext.support.glide
-
+    // 缓存
     compile rootProject.ext.support.disklrucache
-
+    // 任务
     compile rootProject.ext.support.blot
 }
