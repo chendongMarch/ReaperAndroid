@@ -12,6 +12,7 @@ import com.march.lib.core.mvp.presenter.BasePresenter;
 import com.march.reaper.R;
 import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.reaper.common.FragmentHelper;
+import com.march.reaper.helper.ActivityHelper;
 import com.march.reaper.iview.fragment.HomeBeautyFragment;
 import com.march.reaper.iview.fragment.HomeFunnyFragment;
 import com.march.reaper.iview.fragment.HomeMineFragment;
@@ -129,7 +130,8 @@ public class HomePageActivity extends BaseReaperActivity {
         }
         long currentTimeMillis = System.currentTimeMillis();
         if (currentTimeMillis - lastTryBackTime < 1000) {
-            super.onBackPressed();
+            finish();
+            ActivityHelper.fadeFinish(mActivity);
         } else {
             lastTryBackTime = currentTimeMillis;
             Toaster.get().show(mContext, "再按一下退出");
