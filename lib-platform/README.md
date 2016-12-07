@@ -26,6 +26,10 @@
 	- [微博 openApi 分享](#微博-openapi-分享)
 	- [微博登录](#微博登录)
 
+- [结束](#结束)
+
+
+------
 
 ## 开始
 - 首先你应该去每个平台申请appId或者appKey,这个是免不了的，每个平台不一样这里统称AppId
@@ -49,6 +53,10 @@ mWxPlatform = Platform.getInst().wx();
 mWbPlatform = Platform.getInst().wb();
 mQqPlatform = Platform.getInst().qq();
 ```
+
+
+------
+
 
 ## 微信快速接入
 - 微信接入前需要准备一些工作，按照微信官方的文档来说，你需要在你的app的包下建立一个wxapi的包并创建`WxEntryActivity.class`，比如你的工程包名是`com.test.package`,那就是在`com.test.package.wxapi`包下面建立`WxEntryActivity.class`，并在`AndroidManifest.xml`,注册该Activity,它将作为微信分享的回调页。
@@ -144,6 +152,11 @@ mWxPlatform.login(mContext, secretKey, new OnWxLoginListener() {
                 });
 ```
 
+
+
+------
+
+
 ## QQ快速接入
 - 接入QQ之前的准备工作,在`AndroidMenifest.xml`中注册相关Activity,在`<data android:scheme="tencent11x5x71460" />`要加入tencent(AppId), 注意
 
@@ -234,6 +247,12 @@ mQqPlatform.login(mActivity, new OnQQLoginListener() {
                     }
                 });
 ```
+
+
+------
+
+
+
 ## 微博快速接入
 - 微博接入比较麻烦，需要配置的地方很多，坑也特别多。
 - 需要注意的地方是有个回调的url,会在微博管理台那里配置，请使用默认的那个url
