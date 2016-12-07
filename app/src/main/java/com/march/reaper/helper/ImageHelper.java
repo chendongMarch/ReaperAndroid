@@ -22,7 +22,6 @@ import com.march.lib.support.helper.FileHelper;
 import com.march.lib.support.helper.ShareHelper;
 import com.march.lib.view.LeProgressView;
 import com.march.reaper.base.ReaperApplication;
-import com.march.reaper.widget.GlideRoundTransform;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,10 +41,6 @@ import java.lang.reflect.Method;
 
 public class ImageHelper {
 
-
-    public static void loadRoundImg(Context context, String url, ImageView iv) {
-        Glide.with(context).load(url).transform(new GlideRoundTransform(context, 50)).crossFade().into(iv);
-    }
 
     public static void loadImg(Context context, String url, ImageView iv) {
         Glide.with(context).load(url).thumbnail(0.1f).crossFade().into(iv);

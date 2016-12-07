@@ -3,7 +3,7 @@ package com.march.reaper.imodel.bean;
 
 import com.march.reaper.common.API;
 import com.march.reaper.common.RequestCallback;
-import com.march.reaper.imodel.VideoFunResponse;
+import com.march.reaper.imodel.VideoFUnResponse;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Keep;
@@ -125,9 +125,9 @@ public class VideoFun {
 
 
     public static void getVideoFunData(int offset, int limit,
-                                       final RequestCallback<VideoFunResponse> callback) {
+                                       final RequestCallback<VideoFUnResponse> callback) {
 
-        Flowable<VideoFunResponse> funVideo = API.api().getFunVideo(limit, offset);
+        Flowable<VideoFUnResponse> funVideo = API.api().getFunVideo(limit, offset);
         API.enqueue(funVideo, callback);
     }
 

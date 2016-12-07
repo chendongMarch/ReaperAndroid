@@ -5,10 +5,8 @@ import android.view.View;
 
 import com.march.lib.core.common.Toaster;
 import com.march.lib.core.mvp.presenter.BasePresenter;
-import com.march.lib.platform.impl.WxPlatform;
 import com.march.lib.view.LockView;
 import com.march.reaper.R;
-import com.march.reaper.base.ReaperApplication;
 import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.reaper.helper.ActivityHelper;
 

@@ -11,7 +11,7 @@ import com.march.reaper.imodel.BaseResponse;
  * @author chendong
  */
 
-public class EmptyRequestCallback<D extends BaseResponse> implements RequestCallback<D> {
+public class EMptyRequestCallback<D extends BaseResponse> implements RequestCallback<D> {
 
     @Override
     public void onSucceed(D data) {

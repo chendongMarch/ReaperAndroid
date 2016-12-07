@@ -67,7 +67,6 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
     compile project(':lib-videoplayer')
-    compile project(':lib-platform')
 
     compile(rootProject.ext.support.lib_core, {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -102,8 +101,6 @@ dependencies {
     compile rootProject.ext.support.rxjava2
     compile rootProject.ext.support.rxandroid
 
-    compile rootProject.ext.support.ultra_ptr
-
     compile rootProject.ext.support.gson
 
     compile rootProject.ext.support.PhotoView
@@ -115,8 +112,6 @@ dependencies {
     compile rootProject.ext.support.flowlayout
 
     compile rootProject.ext.support.glide
-
-    compile rootProject.ext.support.disklrucache
 
     compile rootProject.ext.support.blot
 }

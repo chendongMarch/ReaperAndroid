@@ -10,6 +10,5 @@ import com.march.reaper.imodel.bean.VideoFun;
  *
  * @author chendong
  */
-
-public class VideoFunResponse extends BaseResponse<VideoFun> {
+public class VideoFUnResponse extends BaseResponse<VideoFun> {
 }

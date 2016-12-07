@@ -4,10 +4,9 @@ import com.march.reaper.imodel.bean.BeautyAlbum;
 import com.march.lib.core.mvp.presenter.BasePresenter;
 import com.march.lib.core.mvp.view.BaseView;
 import com.march.reaper.common.API;
-import com.march.reaper.common.EmptyRequestCallback;
+import com.march.reaper.common.EMptyRequestCallback;
 import com.march.reaper.common.RequestCallback;
 import com.march.reaper.helper.SharePreferenceHelper;
-import com.march.reaper.imodel.BaseResponse;
 import com.march.reaper.imodel.BeautyAlbumResponse;
 import com.march.reaper.imodel.UserInfo;
 
@@ -34,12 +33,12 @@ public class AppStartPresenter
 
     //使用deviceId注册
     public void registerByDeviceId(String name) {
-        UserInfo.registerByDeviceId(name, new EmptyRequestCallback<>());
+        UserInfo.registerByDeviceId(name, new EMptyRequestCallback<>());
     }
 
     //向服务器发开启记录
     public void recordStartApp() {
-        UserInfo.recordStartApp(new EmptyRequestCallback<>());
+        UserInfo.recordStartApp(new EMptyRequestCallback<>());
     }
 
     //请求图片
