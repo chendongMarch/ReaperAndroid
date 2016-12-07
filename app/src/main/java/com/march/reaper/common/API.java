@@ -10,7 +10,7 @@ import com.march.reaper.imodel.BaseResponse;
 import com.march.reaper.imodel.BeautyAlbumResponse;
 import com.march.reaper.imodel.UserInfo;
 import com.march.reaper.imodel.VersionResponse;
-import com.march.reaper.imodel.VideoFunResponse;
+import com.march.reaper.imodel.VideoFUnResponse;
 
 import java.util.List;
 
@@ -79,7 +79,7 @@ public class API {
         Flowable<BeautyAlbumResponse> getWholeAlbum(@Query("limit") int limit, @Query("offset") long offset);
 
         @GET(GET_SCAN_VIDEO)
-        Flowable<VideoFunResponse> getFunVideo(@Query("limit") int limit, @Query("offset") long offset);
+        Flowable<VideoFUnResponse> getFunVideo(@Query("limit") int limit, @Query("offset") long offset);
 
         @GET(GET_SCAN_ALBUM_DETAIL)
         Flowable<AlbumDetailResponse> getAlbumDetail(@Query("limit") int limit, @Query("offset") long offset, @Query("albumlink") String albumLink);

@@ -87,7 +87,7 @@ public class TestPlatformActivity extends Activity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        setIntent(intent);
+        log("onNewIntent");
         mWbPlatform.onNewIntent(intent);
     }
 
@@ -112,7 +112,7 @@ public class TestPlatformActivity extends Activity {
 
 
     public void log(Object o) {
-        Log.e("TestPlatformActivity", o.toString());
+        Log.e("TestPlatform", o.toString());
     }
 
     public void toast(String msg) {
@@ -250,23 +250,6 @@ public class TestPlatformActivity extends Activity {
                 mWxPlatform.shareImage(localImagePath, wxShareType());
                 break;
             case R.id.wx_share_image_net:
-//                Picasso.with(mContext).load(netImagePath).into(new Target() {
-//                    @Override
-//                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-//                        mWxPlatform.shareImage(bitmap, wxShareType());
-//                    }
-//
-//                    @Override
-//                    public void onBitmapFailed(Drawable errorDrawable) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-//
-//                    }
-//                });
-
                 ImageHelper.downloadPic(mContext, netImagePath, new ImageHelper.OnDownloadOverHandler() {
                     @Override
                     public void onSuccess(Bitmap bitmap) {
@@ -305,7 +288,6 @@ public class TestPlatformActivity extends Activity {
         switch (view.getId()) {
             case R.id.qq_login:
                 mInfoTv.setText("");
-
                 mQqPlatform.login(mActivity, new OnQQLoginListener() {
                     @Override
                     public void onException(PlatformException e) {

@@ -17,7 +17,7 @@ import com.march.reaper.base.mvp.view.BaseRgvView;
 import com.march.reaper.common.Constant;
 import com.march.reaper.common.RequestCallback;
 import com.march.reaper.helper.CommonHelper;
-import com.march.reaper.imodel.VideoFunResponse;
+import com.march.reaper.imodel.VideoFUnResponse;
 import com.march.reaper.widget.JCVideoPlayerStandard;
 import com.march.reaper.widget.RecyclerGroupView;
 
@@ -73,9 +73,9 @@ public class VideoFunPresenter extends BasePageLoadPresenter<VideoFunPresenter.V
 
     @Override
     protected void queryNetDatas() {
-        RequestCallback<VideoFunResponse> requestCallback = new RequestCallback<VideoFunResponse>() {
+        RequestCallback<VideoFUnResponse> requestCallback = new RequestCallback<VideoFUnResponse>() {
             @Override
-            public void onSucceed(VideoFunResponse rst) {
+            public void onSucceed(VideoFUnResponse rst) {
                 List<VideoFun> data = rst.getData();
                 handleDatasAfterQueryReady(data);
             }

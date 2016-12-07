@@ -31,7 +31,7 @@
         <activity
             android:name=".iview.activity.AppStartActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".iview.activity.HomePageActivity"
             android:screenOrientation="portrait"
@@ -85,7 +85,15 @@
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".TestPlatformActivity"/>
+        <activity
+            android:name=".TestPlatformActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

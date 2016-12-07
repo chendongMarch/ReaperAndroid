@@ -6,7 +6,6 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib-platform/lib-platform.iml" filepath="$PROJECT_DIR$/lib-platform/lib-platform.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib-platform/lib-platform.iml" filepath="$PROJECT_DIR$/lib-platform/lib-platform.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib-platform/lib-platform.iml" filepath="$PROJECT_DIR$/lib-platform/lib-platform.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib-videoplayer/lib-videoplayer.iml" filepath="$PROJECT_DIR$/lib-videoplayer/lib-videoplayer.iml" />
     </modules>
   </component>
