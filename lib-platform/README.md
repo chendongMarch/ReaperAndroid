@@ -3,7 +3,10 @@
 
 ## 前言
 
-简化三方接入的流程，最好能通过简化API一键接入
+第三方登录和分享，一般每个app都会接入这个功能，来简化用户注册登录的流程，现在也有很多集成的平台，
+比如umeng,shareSdk等等，极大的降低了了开发者接入的成本，不过也同样存在一些问题，相信大家也都遇到过，
+所以我使用原生的SDK封装了一个Library，实现了登录和分享的相关功能，并尽可能的简化了调用API，
+希望能简化三方接入的流程的同时实现高度的自定义，当然也有一些接入的时候遇到的坑，分享一下。
 
 
 
@@ -15,7 +18,6 @@
 
 - 微博
 
-- 系统
 
 ## 初始化第三方平台
 
@@ -34,10 +36,6 @@
 ```java
 public class WXEntryActivity extends AbsWXEntryActivity {
 
-    @Override
-    protected WxPlatform getWxPlatform() {
-        return ReaperApplication.api.wxPlatform;
-    }
 }
 
 ```

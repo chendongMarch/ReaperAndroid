@@ -64,27 +64,25 @@ public class WbPlatform extends BasePlatform {
         }
     };
 
-    private IWeiboHandler.Response shareResponse = new IWeiboHandler.Response() {
-        @Override
-        public void onResponse(BaseResponse baseResp) {
-            if (baseResp != null) {
-                switch (baseResp.errCode) {
-                    case WBConstants.ErrorCode.ERR_OK:
-                        // 分享成功
-                        wbShareListener.onSuccess();
-                        break;
-                    case WBConstants.ErrorCode.ERR_CANCEL:
-                        // 分享取消
-                        wbShareListener.onCancel();
-                        break;
-                    case WBConstants.ErrorCode.ERR_FAIL:
-                        // 分享失败
-                        wbShareListener.onFailure(new PlatformException("微博分享失败"));
-                        break;
-                }
+
+    public void handleWbResponse(BaseResponse baseResponse) {
+        if (baseResponse != null) {
+            switch (baseResponse.errCode) {
+                case WBConstants.ErrorCode.ERR_OK:
+                    // 分享成功
+                    wbShareListener.onSuccess();
+                    break;
+                case WBConstants.ErrorCode.ERR_CANCEL:
+                    // 分享取消
+                    wbShareListener.onCancel();
+                    break;
+                case WBConstants.ErrorCode.ERR_FAIL:
+                    // 分享失败
+                    wbShareListener.onFailure(new PlatformException("微博分享失败"));
+                    break;
             }
         }
-    };
+    }
 
     public WbPlatform(Context context, String appId, String appName) {
         super(appId, appName);
@@ -114,18 +112,26 @@ public class WbPlatform extends BasePlatform {
     }
 
     // 分享时在onCreate方法中使用
-    public void handleWeiboResponse(Activity activity, Bundle savedInstanceState) {
+    public void handleWeiboResponse(Activity activity, Bundle savedInstanceState, IWeiboHandler.Response responseListener) {
+        if (!(responseListener instanceof Activity)) {
+            Platform.log(TAG, "微博接受回调的IWeiboHandler.Response必须是发起分享的Activity");
+            return;
+        }
         if (savedInstanceState != null) {
-            weiboShareAPI.handleWeiboResponse(activity.getIntent(), shareResponse);
+            weiboShareAPI.handleWeiboResponse(activity.getIntent(), responseListener);
         }
     }
 
     // 分享时在onNewIntent方法中使用
-    public void onNewIntent(Intent intent) {
+    public void onNewIntent(Intent intent, IWeiboHandler.Response responseListener) {
         // 从当前应用唤起微博并进行分享后，返回到当前应用时，需要在此处调用该函数
         // 来接收微博客户端返回的数据；执行成功，返回 true，并调用
         // {@link IWeiboHandler.Response#onResponse}；失败返回 false，不调用上述回调
-        Platform.log(TAG,weiboShareAPI.handleWeiboResponse(intent, shareResponse));
+        if (!(responseListener instanceof Activity)) {
+            Platform.log(TAG, "微博接受回调的IWeiboHandler.Response必须是发起分享的Activity");
+            return;
+        }
+        Platform.log(TAG, weiboShareAPI.handleWeiboResponse(intent, responseListener));
     }
 
 

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -29,8 +28,9 @@ import com.march.lib.platform.listener.OnWxShareListener;
 import com.march.lib.platform.tencent.QQUserInfo;
 import com.march.lib.platform.weibo.WbUserInfo;
 import com.march.lib.platform.wx.WxUserInfo;
-import com.march.reaper.R;
 import com.march.reaper.helper.ImageHelper;
+import com.sina.weibo.sdk.api.share.BaseResponse;
+import com.sina.weibo.sdk.api.share.IWeiboHandler;
 
 import java.io.File;
 
@@ -38,7 +38,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class TestPlatformActivity extends Activity {
+public class TestPlatformActivity extends Activity implements IWeiboHandler.Response {
 
     @Bind(R.id.wx_ly)
     View wxLy;
@@ -64,7 +64,6 @@ public class TestPlatformActivity extends Activity {
     private String netImagePath;
     private String netVideoPath;
     private String netMusicPath;
-    private String localVideoPath;
     private String localGifPath;
     private String testWebUrl;
     private Bitmap testBit;
@@ -80,15 +79,18 @@ public class TestPlatformActivity extends Activity {
         mContext = getApplicationContext();
         mActivity = this;
         onInitDatas();
-        mWbPlatform.handleWeiboResponse(mActivity, savedInstanceState);
+        mWbPlatform.handleWeiboResponse(mActivity, savedInstanceState, this);
     }
 
+    @Override
+    public void onResponse(BaseResponse baseResponse) {
+        mWbPlatform.handleWbResponse(baseResponse);
+    }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        log("onNewIntent");
-        mWbPlatform.onNewIntent(intent);
+        mWbPlatform.onNewIntent(intent, this);
     }
 
     private Bitmap res2Bitmap() {
@@ -125,7 +127,6 @@ public class TestPlatformActivity extends Activity {
         mQqPlatform = Platform.getInst().qq();
 
         localImagePath = new File(Environment.getExternalStorageDirectory(), "1.jpg").getAbsolutePath();
-        localVideoPath = new File(Environment.getExternalStorageDirectory(), "4.mp4").getAbsolutePath();
         localGifPath = new File(Environment.getExternalStorageDirectory(), "3.gif").getAbsolutePath();
         testBit = res2Bitmap();
         netVideoPath = "http://7xtjec.com1.z0.glb.clouddn.com/export.mp4";
@@ -188,7 +189,6 @@ public class TestPlatformActivity extends Activity {
     }
 
 
-
     @OnClick({R.id.wx, R.id.wb, R.id.qq})
     public void clickTop(View view) {
         switch (view.getId()) {
@@ -211,8 +211,6 @@ public class TestPlatformActivity extends Activity {
     }
 
 
-
-
     @OnClick({R.id.wx_login,
             R.id.wx_share_text,
             R.id.wx_share_image_bit,
@@ -227,7 +225,7 @@ public class TestPlatformActivity extends Activity {
         switch (view.getId()) {
             case R.id.wx_login:
                 mInfoTv.setText("");
-                mWxPlatform.login(mContext,"8bf6536e22dc17e12d04a365502217ab", new OnWxLoginListener() {
+                mWxPlatform.login(mContext, "8bf6536e22dc17e12d04a365502217ab", new OnWxLoginListener() {
                     @Override
                     public void onSucceed(WxUserInfo info) {
                         log(info);
@@ -389,4 +387,6 @@ public class TestPlatformActivity extends Activity {
                 break;
         }
     }
+
+
 }

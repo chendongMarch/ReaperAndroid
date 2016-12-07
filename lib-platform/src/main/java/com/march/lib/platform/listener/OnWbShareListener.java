@@ -10,18 +10,18 @@ import com.march.lib.platform.exception.PlatformException;
  *
  * @author chendong
  */
+public class OnWbShareListener{
 
-public class OnWbShareListener {
     public void onSuccess() {
 
     }
 
-    public void onFailure(PlatformException
-                          e) {
+    public void onFailure(PlatformException e) {
 
     }
 
     public void onCancel() {
 
     }
+
 }
