@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout
+    android:id="@+id/activity_test_platform"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="30dp"
+    tools:context="com.march.reaper.TestPlatformActivity">
+
+    <TextView
+        android:id="@+id/info_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"/>
+    <LinearLayout
+        android:layout_below="@id/info_tv"
+        android:id="@+id/top_tool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/wx"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="微信" />
+
+        <Button
+            android:id="@+id/wb"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="微博" />
+
+        <Button
+            android:id="@+id/qq"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="QQ" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/qq_ly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_tool"
+        android:orientation="vertical">
+
+        <Switch
+            android:id="@+id/qq_to_zone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="分享到空间？" />
+
+        <Button
+            android:id="@+id/qq_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="QQ登录" />
+
+        <Button
+            android:id="@+id/qq_share_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="QQ分享图片" />
+
+        <Button
+            android:id="@+id/qq_share_image_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="QQ分享图文" />
+
+        <Button
+            android:id="@+id/qq_share_audio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="QQ分享音频" />
+
+        <Button
+            android:id="@+id/qq_share_app"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="QQ分享app" />
+
+        <Button
+            android:id="@+id/qzone_share_image_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Qzone分享图文" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/wb_ly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_tool"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/wb_auth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微博授权" />
+
+
+        <Button
+            android:id="@+id/wb_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微博登录" />
+
+        <Button
+            android:id="@+id/wb_share_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微博分享文字" />
+
+
+        <Button
+            android:id="@+id/wb_share_web"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微博分享网页" />
+
+        <Button
+            android:id="@+id/wb_share_music"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微博分享音乐" />
+
+        <Button
+            android:id="@+id/wb_share_video"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微博分享视频" />
+
+        <Button
+            android:id="@+id/wb_share_voice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微博分享voice" />
+
+        <Button
+            android:id="@+id/wb_share_image_net"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微博openApi分享图片net" />
+
+
+        <Button
+            android:id="@+id/wb_share_image_local"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微博openApi分享图片local" />
+        <Button
+            android:id="@+id/wb_share_file"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微博openApi分享动图" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/wx_ly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_tool"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <Switch
+            android:id="@+id/wx_to_zone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="分享到空间？" />
+
+        <Button
+            android:id="@+id/wx_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微信登录" />
+
+        <Button
+            android:id="@+id/wx_share_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微信分享文字" />
+
+        <Button
+            android:id="@+id/wx_share_image_bit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微信分享图片Bitmap" />
+
+        <Button
+            android:id="@+id/wx_share_image_local"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微信分享图片local" />
+
+        <Button
+            android:id="@+id/wx_share_gif_local"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微信分享动图local" />
+
+        <Button
+            android:id="@+id/wx_share_image_net"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微信分享图片net" />
+
+        <Button
+            android:id="@+id/wx_share_music"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微信分享音乐" />
+
+        <Button
+            android:id="@+id/wx_share_video_net"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微信分享视频net" />
+
+        <Button
+            android:id="@+id/wx_share_video_local"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微信分享视频local" />
+
+        <Button
+            android:id="@+id/wx_share_web"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="微信分享网页" />
+    </LinearLayout>
+
+
+</RelativeLayout>
+</ScrollView>
