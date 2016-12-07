@@ -10,7 +10,6 @@ import android.widget.Toast;
 import com.antfortune.freeline.FreelineCore;
 import com.march.lib.core.common.Logger;
 import com.march.lib.core.common.Toaster;
-import com.march.lib.platform.Platform;
 import com.march.reaper.R;
 import com.march.reaper.common.API;
 import com.march.reaper.common.DaoHelper;
@@ -54,10 +53,6 @@ public class ReaperApplication extends Application {
         FreelineCore.init(this);
         API.init();
         VideoThumbImageHelper.get().init(mInst);
-        Platform.newInst(this);
-        Platform.getInst().initWx(this, "wx87fa4edcc9bb3e84");
-        Platform.getInst().initQQ(this, "1105571460");
-        Platform.getInst().initWb(this, "3699350615");
     }
 
 
