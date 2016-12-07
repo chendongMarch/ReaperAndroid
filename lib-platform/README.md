@@ -9,93 +9,51 @@
 希望能简化三方接入的流程的同时实现高度的自定义，当然也有一些接入的时候遇到的坑，分享一下。
 
 
+## 目录
 
-## 目前支持的平台
+- [开始](#开始)
 
-- 微信
+- [微信快速接入](#微信快速接入)
+	- [微信分享](#微信分享)
+	- [微信登录](#微信登录)
 
-- QQ
+- [QQ快速接入](#QQ快速接入)
+	- [QQ分享](#QQ分享)
+	- [QQ登录](#QQ登录)
 
-- 微博
+- [微博快速接入](#微博快速接入)
+	- [微博分享](#微博分享)
+	- [微博 openApi 分享](#微博-openapi-分享)
+	- [微博登录](#微博登录)
 
 
-## 初始化第三方平台
+## 开始
 
-```java
-        public static PlatformApi api;
-        api = new PlatformApi();
-        api.initWx(this, "wx87fa4edcc9bb3e84");
-        api.initQQ(this, "1105571460");
-        api.initWb(this, "3699350615");
-```
+## 微信快速接入
 
-## 快速集成微信分享
 
-- 实现WXEntryActivity
 
-```java
-public class WXEntryActivity extends AbsWXEntryActivity {
+### 微信分享
 
-}
 
-```
+### 微信登录
 
-- 注册
+## QQ快速接入
 
-```java
-        <!-- 微信专用Activity -->
-        <activity
-            android:name=".wxapi.WXEntryActivity"
-            android:exported="true"
-            android:label="@string/app_name" />
-```
 
-- 实现分享监听
+### QQ分享
 
-```java
-mWxPlatform.setWxShareListener(new WxShareListener() {
-            @Override
-            public void onSuccess() {
-                Toaster.get().show(mContext, "分享成功");
-            }
 
-            @Override
-            public void onFailure() {
-                Toaster.get().show(mContext, "分享失败");
-            }
 
-            @Override
-            public void onCancel() {
-                Toaster.get().show(mContext, "分享取消");
-            }
-        });
-```
+### QQ登录
 
-- 开始分享
+## 微博快速接入
 
-注意：无法分享本地视频，会导致点击之后打不开，音乐和网页也是如此
 
-```java
-// 分享文字
-mWxPlatform.shareText("测试", wxShareType());
-// 分享图片
-mWxPlatform.shareImage(testBit, wxShareType());
-// 分享本地图片
-mWxPlatform.shareImage(localImagePath, wxShareType());
-// 分享网络，需要先下载
-ImageHelper.downloadPic(mContext, netImagePath, new ImageHelper.OnDownloadOverHandler() {
-    @Override
-    public void onSuccess(Bitmap bitmap) {
-        mWxPlatform.shareImage(bitmap, wxShareType());
-    }
-});
-// 分享gif动图，使用的是emoji表情
-mWxPlatform.shareGif(localGifPath, wxShareType());
-// 分享网络视频
-mWxPlatform.shareVideo(netVideoPath, "video title", "video desc", res2Bitmap(), wxShareType());
-// 分享网络音乐
-mWxPlatform.shareMusic(netMusicPath, "music title", "music desc", res2Bitmap(), wxShareType());
-// 分享网络网页
-mWxPlatform.shareWebPage(testWebUrl, "web title", "web desc", res2Bitmap(), wxShareType());
-```
+### 微博分享
 
+
+### 微博 openApi 分享
+
+
+### 微博登录
