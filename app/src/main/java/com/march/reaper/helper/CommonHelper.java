@@ -29,6 +29,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
  */
 
 public class CommonHelper {
+
     public static int randomColor() {
         Random random = new Random();
         return Color.rgb(random.nextInt(150), random.nextInt(150), random.nextInt(150));

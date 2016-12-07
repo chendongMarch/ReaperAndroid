@@ -12,6 +12,7 @@ import com.march.reaper.R;
 import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.lib.core.mvp.presenter.BasePresenter;
 import com.march.reaper.common.Constant;
+import com.march.reaper.helper.ActivityHelper;
 import com.march.reaper.iview.adapter.MyFragmentPagerAdapter;
 import com.march.reaper.iview.fragment.BeautyAlbumFragment;
 
@@ -33,6 +34,7 @@ public class MoreBeautyActivity extends BaseReaperActivity {
 
     public static void startMoreBeauty(Activity activity) {
         activity.startActivity(new Intent(activity, MoreBeautyActivity.class));
+        ActivityHelper.translateStart(activity);
     }
 
     @Bind(R.id.tably)
@@ -115,7 +117,7 @@ public class MoreBeautyActivity extends BaseReaperActivity {
     public void clickBtn(View view) {
         switch (view.getId()) {
             case R.id.tv_back:
-                animFinish();
+                onBackPressed();
                 break;
         }
     }

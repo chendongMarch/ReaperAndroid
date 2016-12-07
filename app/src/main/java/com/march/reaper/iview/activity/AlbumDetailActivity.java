@@ -9,6 +9,7 @@ import com.march.lib.core.widget.TitleBarView;
 import com.march.reaper.R;
 import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.reaper.common.Constant;
+import com.march.reaper.helper.ActivityHelper;
 import com.march.reaper.imodel.bean.BeautyAlbum;
 import com.march.reaper.ipresenter.AlbumDetailPresenter2;
 import com.march.reaper.widget.RecyclerGroupView;
@@ -34,6 +35,7 @@ public class AlbumDetailActivity
         Intent intent = new Intent(activity, AlbumDetailActivity.class);
         intent.putExtra(Constant.KEY_DETAIL_TYPE, TYPE_IS_COLLECTION);
         activity.startActivity(intent);
+        ActivityHelper.translateStart(activity);
     }
 
     //展示某一个专辑的详情
@@ -58,12 +60,6 @@ public class AlbumDetailActivity
         mTitleBarView.setLeftBackListener(mActivity);
     }
 
-
-    @Override
-    public void onBackPressed() {
-        animFinish();
-    }
-
     @Override
     public void onStartWorks() {
         super.onStartWorks();
@@ -84,11 +80,6 @@ public class AlbumDetailActivity
     @Override
     public void setModeTvText(String txt) {
         mTitleBarView.get(TitleBarView.POS_Right).setText(txt);
-    }
-
-    @Override
-    public void loadHeaderZoomView(String url) {
-//        ImageHelper.loadImg(mContext, url, mZoomIv);
     }
 
     @Override

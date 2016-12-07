@@ -2,16 +2,16 @@ package com.march.reaper.imodel.bean;
 
 import android.os.Parcel;
 
-import com.march.lib.adapter.common.IAdapterModel;
+import com.march.lib.adapter.common.ITypeAdapterModel;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.Transient;
+import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
-public class DetailCollection implements IAdapterModel, com.march.reaper.imodel.bean.Detail {
+public class DetailCollection implements ITypeAdapterModel, com.march.reaper.imodel.bean.Detail {
 
 
     @Transient

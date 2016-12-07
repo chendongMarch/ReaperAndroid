@@ -11,12 +11,12 @@ import com.march.lib.adapter.core.SimpleRvAdapter;
 import com.march.lib.adapter.module.HFModule;
 import com.march.lib.adapter.module.LoadMoreModule;
 import com.march.lib.core.common.DimensionHelper;
-import com.march.lib.core.common.Logger;
 import com.march.reaper.R;
 import com.march.reaper.base.mvp.presenter.BasePageLoadPresenter;
 import com.march.reaper.base.mvp.view.BaseRgvView;
 import com.march.reaper.common.Constant;
 import com.march.reaper.common.RequestCallback;
+import com.march.reaper.helper.ActivityHelper;
 import com.march.reaper.helper.CommonHelper;
 import com.march.reaper.imodel.BeautyAlbumResponse;
 import com.march.reaper.imodel.bean.BeautyAlbum;
@@ -35,11 +35,11 @@ import java.util.List;
  */
 
 public class BeautyAlbumPresenter
-        extends BasePageLoadPresenter<BeautyAlbumPresenter.BeautyRecommendView, BeautyAlbum, SimpleRvAdapter<BeautyAlbum>> {
+        extends BasePageLoadPresenter<BeautyAlbumPresenter.BeautyAlbumView, BeautyAlbum, SimpleRvAdapter<BeautyAlbum>> {
     private int mAlbumType;
     private String mRecommendAlbumType;
 
-    public interface BeautyRecommendView extends BaseRgvView {
+    public interface BeautyAlbumView extends BaseRgvView {
 
     }
 
@@ -49,9 +49,8 @@ public class BeautyAlbumPresenter
     }
 
     @Override
-    public void attachView(BeautyRecommendView view) {
+    public void attachView(BeautyAlbumView view) {
         super.attachView(view);
-//        getRgv().getRecyclerView().setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         getRgv().getRecyclerView().setLayoutManager(new GridLayoutManager(mView.getContext(), 1, LinearLayoutManager.VERTICAL, false));
         Bundle data = mView.getData();
         mAlbumType = data.getInt(Constant.KEY_BEAUTY_ALBUM_TYPE);
@@ -113,6 +112,7 @@ public class BeautyAlbumPresenter
             @Override
             public void onClick(int pos, BaseViewHolder holder, BeautyAlbum data) {
                 AlbumDetailActivity.loadActivity4DetailShow(getActivity(), data);
+                ActivityHelper.translateStart(getActivity());
             }
         });
         mAdapter.addLoadMoreModule(new LoadMoreModule(mPreLoadNum, new OnLoadMoreListener() {

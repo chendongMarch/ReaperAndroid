@@ -11,9 +11,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.ImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.march.lib.core.common.Logger;
 import com.march.lib.core.common.Toaster;
 import com.march.lib.support.helper.FileHelper;
@@ -116,6 +118,18 @@ public class ImageHelper {
         Class class1 = mWallManager.getClass();//获取类名
         Method setWallPaperMethod = class1.getMethod("setBitmapToLockWallpaper", Bitmap.class);//获取设置锁屏壁纸的函数
         setWallPaperMethod.invoke(mWallManager, bitmap);//调用锁屏壁纸的函数，并指定壁纸的路径imageFilesPath
+
+        Glide.with(context).load("").listener(new RequestListener<String, GlideDrawable>() {
+            @Override
+            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                return false;
+            }
+        });
     }
 
     //图片保存到本地和分享
@@ -150,7 +164,7 @@ public class ImageHelper {
         });
     }
 
-    private static void downloadPic(Context context, String url, final OnDownloadOverHandler handler) {
+    public static void downloadPic(Context context, String url, final OnDownloadOverHandler handler) {
         Glide.with(context).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap resource,

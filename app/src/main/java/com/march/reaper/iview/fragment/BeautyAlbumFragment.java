@@ -1,12 +1,7 @@
 package com.march.reaper.iview.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.march.lib.core.common.Logger;
 import com.march.reaper.R;
 import com.march.reaper.base.fragment.BaseReaperFragment;
 import com.march.reaper.common.Constant;
@@ -25,7 +20,7 @@ import butterknife.Bind;
  */
 public class BeautyAlbumFragment
         extends BaseReaperFragment<BeautyAlbumPresenter>
-        implements BeautyAlbumPresenter.BeautyRecommendView {
+        implements BeautyAlbumPresenter.BeautyAlbumView {
 
     @Bind(R.id.rgv)
     RecyclerGroupView mRgv;
@@ -44,19 +39,6 @@ public class BeautyAlbumFragment
     @Override
     public boolean forceLoad() {
         return false;
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        Logger.e("onCreateView");
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-//        Logger.e("setUserVisibleHint");
-        super.setUserVisibleHint(isVisibleToUser);
     }
 
     @Override
@@ -85,9 +67,9 @@ public class BeautyAlbumFragment
         return beautyAlbumFragment;
     }
 
-
     @Override
     public RecyclerGroupView getRgv() {
         return mRgv;
     }
+
 }

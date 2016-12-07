@@ -54,8 +54,6 @@ public class AlbumDetailPresenter2
 
     public interface AlbumDetailView extends BaseRgvView {
         void setModeTvText(String txt);
-
-        void loadHeaderZoomView(String url);
     }
 
 

@@ -42,7 +42,7 @@ ext {
             // 核心支持
             lib_support        : 'com.march.lib-support:lib-support:1.0.0',
             // 适配器
-            lib_adapter        : 'com.march.lib-adapter:lib-adapter:1.0.0',
+            lib_adapter        : 'com.march.lib-adapter:lib-adapter:1.0.1',
             // 控件库
             lib_view           : 'com.march.lib-view:lib-view:1.0.0',
             // 任务

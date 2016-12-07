@@ -2,7 +2,8 @@ package com.march.reaper.imodel.bean;
 
 import android.os.Parcel;
 
-import com.march.lib.adapter.common.IAdapterModel;
+//import com.march.lib.adapter.common.ITypeAdapterModel;
+import com.march.lib.adapter.common.ITypeAdapterModel;
 import com.march.reaper.common.API;
 import com.march.reaper.common.RequestCallback;
 import com.march.reaper.imodel.AlbumDetailResponse;
@@ -15,7 +16,7 @@ import org.greenrobot.greendao.annotation.Transient;
 import io.reactivex.Flowable;
 
 @Entity
-public class AlbumDetail implements IAdapterModel, Detail {
+public class AlbumDetail implements ITypeAdapterModel, Detail {
 
     @Transient
     public static final int TYPE_SHU = 0;

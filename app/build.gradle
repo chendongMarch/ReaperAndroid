@@ -53,22 +53,21 @@ android {
     }
 
     sourceSets {
+        //定义编译时编译文件的路径
         main {
-            java.srcDirs = ['src/main/java']
+            res.srcDirs = ['src/main/res']
+            jniLibs.srcDirs = ['src/main/jniLibs']
         }
     }
-
 }
 
-repositories {
-    flatDir {
-        dirs 'libs' //就是你放aar的目录地址
-    }
-}
 
 dependencies {
+
     compile fileTree(include: ['*.jar'], dir: 'libs')
+
     compile project(':lib-videoplayer')
+    compile project(':lib-platform')
 
     compile(rootProject.ext.support.lib_core, {
         exclude group: 'com.android.support', module: 'support-annotations'

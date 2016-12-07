@@ -20,6 +20,7 @@ import com.march.lib.view.LeProgressView;
 import com.march.reaper.R;
 import com.march.reaper.base.activity.BaseReaperActivity;
 import com.march.reaper.common.Constant;
+import com.march.reaper.helper.ActivityHelper;
 import com.march.reaper.helper.ImageHelper;
 import com.march.reaper.imodel.bean.Detail;
 import com.march.reaper.iview.dialog.MenuDialog;
@@ -68,6 +69,7 @@ public class ScanImgListActivity extends BaseReaperActivity {
         intent.putExtra(Constant.KEY_ALBUM_DETAIL_LIST_SCAN, details);
         intent.putExtra(Constant.KEY_POS, pos);
         activity.startActivity(intent);
+        ActivityHelper.translateStart(activity);
     }
 
 
@@ -168,7 +170,13 @@ public class ScanImgListActivity extends BaseReaperActivity {
     public void clickBtn(View view) {
         switch (view.getId()) {
             case R.id.back_tv:
-                finish();
+                if (mWallPaperMenuDialog!=null&&mWallPaperMenuDialog.isShowing()) {
+                    mWallPaperMenuDialog.dismiss();
+                } else if (mMoreMenuDialog!=null && mMoreMenuDialog.isShowing()) {
+                    mMoreMenuDialog.dismiss();
+                } else {
+                   onBackPressed();
+                }
                 break;
             case R.id.right_tv:
                 showMoreMenuDialog();

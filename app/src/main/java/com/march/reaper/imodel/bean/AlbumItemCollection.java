@@ -1,6 +1,6 @@
 package com.march.reaper.imodel.bean;
 import com.march.reaper.imodel.bean.BeautyAlbum;
-import com.march.lib.adapter.common.IAdapterModel;
+import com.march.lib.adapter.common.ITypeAdapterModel;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
@@ -8,7 +8,7 @@ import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
-public class AlbumItemCollection implements IAdapterModel, java.io.Serializable {
+public class AlbumItemCollection implements ITypeAdapterModel, java.io.Serializable {
 
 
     @Id

@@ -1,20 +1,19 @@
 package com.march.reaper.iview.activity;
 
-import android.animation.FloatEvaluator;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
-import android.os.Handler;
+import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.march.reaper.R;
-import com.march.reaper.base.activity.BaseReaperActivity;
-import com.march.reaper.helper.ImageHelper;
 import com.march.lib.core.common.Toaster;
+import com.march.reaper.R;
+import com.march.reaper.TestPlatformActivity;
+import com.march.reaper.base.ReaperApplication;
+import com.march.reaper.base.activity.BaseReaperActivity;
+import com.march.reaper.helper.ActivityHelper;
+import com.march.reaper.helper.ImageHelper;
 import com.march.reaper.ipresenter.AppStartPresenter;
-import com.march.reaper.helper.SharePreferenceHelper;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -39,46 +38,50 @@ public class AppStartActivity
         return R.layout.app_start_activity;
     }
 
+
     @Override
     public void onStartWorks() {
         super.onStartWorks();
-        //加载图片
-        mPresenter.queryAppStartFlashImg();
-        final View tempView;
-        Handler handler = new Handler();
-        if (SharePreferenceHelper.get().getIsLogin()) {
-            mTitleTv.setVisibility(View.VISIBLE);
-            mTitleTv.setText("Welcome    " + SharePreferenceHelper.get().getUserName());
-            //已经登录过了直接过,并且记录一次开启
-            mPresenter.recordStartApp();
-//            tempView = mTitleTv;
-            //2.5秒后开启页面
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    startHomePage();
-                }
-            }, 2500);
-        } else {
-            //没有登录过，devideid注册
-            tempView = mFirstStartView;
-            //1秒后动画开始
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    ValueAnimator fade_in = ObjectAnimator.ofFloat(tempView, "alpha", 0.0f, 1.0f);
-                    fade_in.setDuration(1500);
-                    fade_in.setEvaluator(new FloatEvaluator());
-                    fade_in.start();
-                }
-            }, 500);
-        }
+        startActivity(new Intent(mContext, TestPlatformActivity.class));
+//
+//        //加载图片
+//        mPresenter.queryAppStartFlashImg();
+//        final View tempView;
+//        Handler handler = new Handler();
+//        if (SharePreferenceHelper.get().getIsLogin()) {
+//            mTitleTv.setVisibility(View.VISIBLE);
+//            mTitleTv.setText("Welcome    " + SharePreferenceHelper.get().getUserName());
+//            //已经登录过了直接过,并且记录一次开启
+//            mPresenter.recordStartApp();
+////            tempView = mTitleTv;
+//            //2.5秒后开启页面
+//            handler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    startHomePage();
+//                }
+//            }, 2500);
+//        } else {
+//            //没有登录过，devideid注册
+//            tempView = mFirstStartView;
+//            //1秒后动画开始
+//            handler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    ValueAnimator fade_in = ObjectAnimator.ofFloat(tempView, "alpha", 0.0f, 1.0f);
+//                    fade_in.setDuration(1500);
+//                    fade_in.setEvaluator(new FloatEvaluator());
+//                    fade_in.start();
+//                }
+//            }, 500);
+//        }
     }
 
 
     private void startHomePage() {
         startActivity(HomePageActivity.class);
-        animFinish();
+        ActivityHelper.fadeStart(mActivity);
+        finish();
     }
 
     @Override

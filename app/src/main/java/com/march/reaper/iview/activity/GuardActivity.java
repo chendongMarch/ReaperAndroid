@@ -5,9 +5,12 @@ import android.view.View;
 
 import com.march.lib.core.common.Toaster;
 import com.march.lib.core.mvp.presenter.BasePresenter;
+import com.march.lib.platform.impl.WxPlatform;
 import com.march.lib.view.LockView;
 import com.march.reaper.R;
+import com.march.reaper.base.ReaperApplication;
 import com.march.reaper.base.activity.BaseReaperActivity;
+import com.march.reaper.helper.ActivityHelper;
 
 import butterknife.Bind;
 
@@ -35,14 +38,14 @@ public class GuardActivity extends BaseReaperActivity {
         mLockView.setListener(new LockView.OnLockFinishListener() {
             @Override
             public boolean onFinish(LockView lockView, String passWd, int passWsLength) {
-                if(passWsLength<4){
+                if (passWsLength < 4) {
                     Toaster.get().show(mContext, "请至少绘制四个点～");
                     return false;
-                }else if(passWd.equals(passWd2Check)){
+                } else if (passWd.equals(passWd2Check)) {
 //                    Toaster.get().show(mContext, "请再次确认～");
                     startAppStart();
                     return true;
-                }else {
+                } else {
                     Toaster.get().show(mContext, "密码错误请重新输入～");
                     return false;
                 }
@@ -50,9 +53,15 @@ public class GuardActivity extends BaseReaperActivity {
         });
     }
 
+    @Override
+    public void onStartWorks() {
+        super.onStartWorks();
+    }
+
     private void startAppStart() {
         startActivity(AppStartActivity.class);
-        animFinish();
+        ActivityHelper.fadeStart(mActivity);
+        finish();
     }
 
 

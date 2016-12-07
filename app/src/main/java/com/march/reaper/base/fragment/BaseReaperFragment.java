@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.march.lib.core.mvp.presenter.BasePresenter;
 import com.march.lib.core.mvp.view.impl.BaseMVPFragment;
+import com.march.reaper.helper.ActivityHelper;
 
 import butterknife.ButterKnife;
 
@@ -34,4 +35,9 @@ public abstract class BaseReaperFragment<P extends BasePresenter> extends BaseMV
         ButterKnife.bind(this, view);
         super.onInitViews(view, saveData);
     }
+
+    protected void animStart(){
+        ActivityHelper.translateStart(getActivity());
+    }
+
 }

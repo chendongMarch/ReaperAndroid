@@ -64,6 +64,7 @@ public class HomeBeautyFragment extends BaseReaperFragment {
         mFragments.add(BeautyAlbumFragment.newInst(Constant.ALBUM_WHOLE, null));
     }
 
+
     @Override
     public void onInitViews(View view, Bundle save) {
         super.onInitViews(view, save);
@@ -74,7 +75,7 @@ public class HomeBeautyFragment extends BaseReaperFragment {
         mBeautyVp.setOffscreenPageLimit(2);
         mBeautyVp.setAdapter(
                 new MyFragmentPagerAdapter(
-                        getFragmentManager(), mFragments));
+                        getChildFragmentManager(), mFragments));
     }
 
     @OnClick({R.id.tv_more_album})

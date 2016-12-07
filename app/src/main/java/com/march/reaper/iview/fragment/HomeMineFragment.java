@@ -20,6 +20,7 @@ import com.march.reaper.base.fragment.BaseReaperFragment;
 import com.march.reaper.common.API;
 import com.march.reaper.common.Constant;
 import com.march.reaper.common.RequestCallback;
+import com.march.reaper.helper.ActivityHelper;
 import com.march.reaper.helper.CommonHelper;
 import com.march.reaper.imodel.VersionResponse;
 import com.march.reaper.iview.activity.AboutActivity;
@@ -106,6 +107,7 @@ public class HomeMineFragment extends BaseReaperFragment {
             case 5:
                 //关于
                 startActivity(new Intent(getActivity(), AboutActivity.class));
+                animStart();
                 break;
         }
     }

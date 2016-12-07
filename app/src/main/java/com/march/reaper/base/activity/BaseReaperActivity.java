@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.march.lib.core.mvp.presenter.BasePresenter;
 import com.march.lib.core.mvp.view.impl.BaseMVPActivity;
-import com.march.reaper.helper.SharePreferenceHelper;
+import com.march.reaper.helper.ActivityHelper;
 import com.march.reaper.iview.dialog.LoadingDialog;
 
 import butterknife.ButterKnife;
@@ -46,13 +46,9 @@ public abstract class BaseReaperActivity<P extends BasePresenter> extends BaseMV
         return tv.getText().toString().trim();
     }
 
-    //授权
-    protected void authority() {
-        SharePreferenceHelper.get().putIsLogin(true);
-    }
-
-    protected void animFinish() {
+    @Override
+    public void onBackPressed() {
         finish();
+        ActivityHelper.translateFinish(mActivity);
     }
-
 }
