@@ -54,6 +54,7 @@ public class ReaperApplication extends Application {
         FreelineCore.init(this);
         API.init();
         VideoThumbImageHelper.get().init(mInst);
+
         Platform.newInst(this);
         Platform.getInst().initWx(this, "wx87fa4edcc9bb3e84");
         Platform.getInst().initQQ(this, "1105571460");

@@ -38,7 +38,9 @@ public class WbAuthHelper {
         } else {
             // 创建微博实例
             // 快速授权时，请不要传入 SCOPE，否则可能会授权不成功
+            Platform.log("wb_auth", "开始授权");
             mSsoHandler.authorize(new MyWeiboAuthListener(activity, listener));
+//            mSsoHandler.authorizeClientSso(new MyWeiboAuthListener(activity,listener));
         }
     }
 
@@ -57,6 +59,7 @@ public class WbAuthHelper {
          */
         @Override
         public void onComplete(Bundle values) {
+            Platform.log("wb_auth", "complete " + values.toString());
             // 从 Bundle 中解析 Token
             Oauth2AccessToken mAccessToken = Oauth2AccessToken.parseAccessToken(values);
             //从这里获取用户输入的 电话号码信息
@@ -72,7 +75,7 @@ public class WbAuthHelper {
                 // 3. 当您在平台上注册的包名和签名与您当前测试的应用的包名和签名不匹配时。
                 String code = values.getString("code");
                 // 授权失败
-                Platform.log("AuthListener", "授权失败 " + code);
+                Platform.log("wb_auth", "授权失败 " + code);
                 listener.onException(new PlatformException("授权失败 code = " + code));
             }
         }
@@ -81,12 +84,15 @@ public class WbAuthHelper {
         public void onCancel() {
             // 授权取消
             listener.onCancel();
+            Platform.log("wb_auth", "取消");
+
         }
 
         @Override
         public void onWeiboException(WeiboException e) {
             // 授权失败
-            Platform.log("AuthListener", "Auth exception : " + e.getMessage());
+            e.printStackTrace();
+            Platform.log("wb_auth", "Auth exception : " + e.getMessage());
             listener.onException(new PlatformException("授权失败", e));
         }
     }

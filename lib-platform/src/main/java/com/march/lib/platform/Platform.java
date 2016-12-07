@@ -1,6 +1,7 @@
 package com.march.lib.platform;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.march.lib.platform.impl.QQPlatform;
@@ -19,6 +20,10 @@ import com.march.lib.platform.impl.WxPlatform;
 public class Platform {
 
     private String appName;
+
+    private WxPlatform wxPlatform;
+    private QQPlatform qqPlatform;
+    private WbPlatform wbPlatform;
 
     private static Platform mInst;
 
@@ -52,13 +57,22 @@ public class Platform {
         wbPlatform = new WbPlatform(context, appId, appName);
     }
 
+    public void init(Context context,
+                     String qqAppId,
+                     String wxAppId,
+                     String wbAppId) {
+        if (!TextUtils.isEmpty(qqAppId))
+            initQQ(context, qqAppId);
+        if (!TextUtils.isEmpty(wxAppId))
+            initWx(context, wxAppId);
+        if (!TextUtils.isEmpty(wbAppId))
+            initWb(context, wbAppId);
+    }
+
     public static void log(String tag, Object msg) {
         Log.e(tag + "|platform", msg.toString());
     }
 
-    private WxPlatform wxPlatform;
-    private QQPlatform qqPlatform;
-    private WbPlatform wbPlatform;
 
     public WxPlatform wx() {
         return wxPlatform;

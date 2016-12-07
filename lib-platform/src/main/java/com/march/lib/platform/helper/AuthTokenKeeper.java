@@ -3,6 +3,7 @@ package com.march.lib.platform.helper;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.march.lib.platform.R;
 import com.march.lib.platform.tencent.QQAccessToken;
 import com.march.lib.platform.wx.WxAccessToken;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
@@ -18,13 +19,13 @@ import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 
 public class AuthTokenKeeper {
 
-    public static final String TOKEN_STORE = "";
-    public static final String WX_TOKEN_KEY = "";
-    public static final String WB_TOKEN_KEY = "";
-    public static final String QQ_TOKEN_KEY = "";
+    public static final String TOKEN_STORE = "TOKEN_STORE";
+    public static final String WX_TOKEN_KEY = "WX_TOKEN_KEY";
+    public static final String WB_TOKEN_KEY = "WB_TOKEN_KEY";
+    public static final String QQ_TOKEN_KEY = "QQ_TOKEN_KEY";
 
     private static SharedPreferences getSp(Context context) {
-        return context.getSharedPreferences(TOKEN_STORE, Context.MODE_PRIVATE);
+        return context.getSharedPreferences(TOKEN_STORE + context.getString(R.string.app_name), Context.MODE_PRIVATE);
     }
 
     public static WxAccessToken getWxToken(Context context) {

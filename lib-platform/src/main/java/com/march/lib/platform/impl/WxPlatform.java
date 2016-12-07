@@ -59,7 +59,7 @@ public class WxPlatform extends BasePlatform {
         return mWxApi;
     }
 
-    public void login(Context context,OnWxLoginListener loginListener) {
+    public void login(Context context,String secret,OnWxLoginListener loginListener) {
         if (!mWxApi.isWXAppInstalled()) {
             // 客户端没有安装
             return;
@@ -70,7 +70,7 @@ public class WxPlatform extends BasePlatform {
         }
 
         wxLoginHelper = new WxLoginHelper(context,mWxApi,appId);
-        wxLoginHelper.login(loginListener);
+        wxLoginHelper.login(secret,loginListener);
     }
 
 

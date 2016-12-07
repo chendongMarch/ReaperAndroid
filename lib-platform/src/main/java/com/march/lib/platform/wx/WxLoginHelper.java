@@ -2,9 +2,10 @@ package com.march.lib.platform.wx;
 
 import android.content.Context;
 
+import com.march.lib.platform.Platform;
+import com.march.lib.platform.exception.PlatformException;
 import com.march.lib.platform.helper.AuthTokenKeeper;
 import com.march.lib.platform.helper.GsonUtil;
-import com.march.lib.platform.impl.WxPlatform;
 import com.march.lib.platform.listener.OnWxLoginListener;
 import com.tencent.mm.sdk.modelmsg.SendAuth;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -42,6 +43,7 @@ public class WxLoginHelper {
     private Context context;
     private IWXAPI iwxapi;
     private String appId;
+    private String secretKey;
 
 
     private OnWxLoginListener loginListener;
@@ -54,18 +56,20 @@ public class WxLoginHelper {
     }
 
     /**
-     *
      * 开始登录
      */
-    public void login(OnWxLoginListener loginListener) {
+    public void login(String secretKey, OnWxLoginListener loginListener) {
         this.loginListener = loginListener;
+        this.secretKey = secretKey;
         // 检测本地token的机制
         WxAccessToken storeToken = AuthTokenKeeper.getWxToken(context);
         if (storeToken != null && storeToken.getAccess_token() != null) {
+            Platform.log("wx_login", "本地token检测有效性" + storeToken.toString());
             // 检测refresh_token有效期，如果快到期了，强制刷新，换取新的refresh_token
             // 本地有token
             checkAccessTokenValid(storeToken);
         } else {
+            Platform.log("wx_login", "本地没有token,请求");
             // 本地没有token, 发起请求，wxEntry将会获得code，接着获取access_token
             sendAuthReq();
         }
@@ -75,6 +79,7 @@ public class WxLoginHelper {
      * 发起申请
      */
     private void sendAuthReq() {
+        Platform.log("wx_login", "发起登录");
         SendAuth.Req req = new SendAuth.Req();
         req.scope = "snsapi_userinfo";
         req.state = "carjob_wx_login";
@@ -98,8 +103,10 @@ public class WxLoginHelper {
                 WxAccessToken wxGetAccessTokenResp = GsonUtil.getObject(result, WxAccessToken.class);
                 if (wxGetAccessTokenResp.getErrcode() == 40030) {
                     // invalid refresh token
+                    Platform.log("wx_login", "invalid refresh token");
                     sendAuthReq();
                 } else {
+                    Platform.log("wx_login", "获取到新token");
                     resp.initByRefreshToken(wxGetAccessTokenResp);
                     AuthTokenKeeper.saveWxToken(context, resp);
                     // 刷新完成，获取用户信息
@@ -110,6 +117,8 @@ public class WxLoginHelper {
             @Override
             public void onFailure(Exception exception) {
                 // 刷新token失败
+                exception.printStackTrace();
+                loginListener.onException(new PlatformException(exception.getMessage()));
             }
         });
     }
@@ -120,10 +129,10 @@ public class WxLoginHelper {
      * @param code code
      */
     public void getAccessTokenByCode(String code) {
-        String secretCode = "";
+        Platform.log("wx_login", "使用code获取access_token " + code);
         StringBuilder sb = new StringBuilder("https://api.weixin.qq.com/sns/oauth2/access_token")
                 .append("?appid=").append(appId)
-                .append("&secret=").append(secretCode)
+                .append("&secret=").append(secretKey)
                 .append("&code=").append(code)
                 .append("&grant_type=").append("authorization_code");
         HttpsUtil.getHttps(sb.toString(), new HttpsUtil.OnResultListener() {
@@ -133,8 +142,9 @@ public class WxLoginHelper {
                 WxAccessToken wxGetAccessTokenResp = GsonUtil.getObject(result, WxAccessToken.class);
                 if (wxGetAccessTokenResp.getErrcode() == 40029) {
                     // invalid code
+                    Platform.log("wx_login", "40029 获取access_token失败");
                 } else {
-                    AuthTokenKeeper.saveWxToken(context,wxGetAccessTokenResp);
+                    AuthTokenKeeper.saveWxToken(context, wxGetAccessTokenResp);
                     getUserInfoByValidToken(wxGetAccessTokenResp);
                 }
             }
@@ -152,6 +162,7 @@ public class WxLoginHelper {
      * @param resp 用来拿access_token
      */
     private void checkAccessTokenValid(final WxAccessToken resp) {
+
         StringBuilder sb = new StringBuilder("https://api.weixin.qq.com/sns/auth")
                 .append("?access_token=").append(resp.getAccess_token())
                 .append("&openid=").append(resp.getOpenid());
@@ -162,6 +173,7 @@ public class WxLoginHelper {
                 // 检测是否有效
                 WxCheckAccessTokenValidResp wxCheckAccessTokenValidResp = GsonUtil.getObject(result, WxCheckAccessTokenValidResp.class);
                 if (wxCheckAccessTokenValidResp.getErrcode() == 0) {
+                    Platform.log("wx_login", "access_token有效，开始获取用户信息");
                     // access_token有效。开始获取用户信息
                     getUserInfoByValidToken(resp);
                 } else {
@@ -173,6 +185,8 @@ public class WxLoginHelper {
             @Override
             public void onFailure(Exception exception) {
                 // 检测access_token有效性失败
+                Platform.log("wx_login", "检测access_token失败");
+
             }
         });
     }
@@ -182,12 +196,13 @@ public class WxLoginHelper {
      *
      * @param resp 用来拿access_token
      */
-    private void getUserInfoByValidToken(WxAccessToken resp) {
+    private void getUserInfoByValidToken(final WxAccessToken resp) {
         String url = "https://api.weixin.qq.com/sns/userinfo?access_token=" + resp.getAccess_token() + "&openid=" + resp.getOpenid();
 
         HttpsUtil.getHttps(url, new HttpsUtil.OnResultListener() {
             @Override
             public void onSuccess(String result) {
+                Platform.log("wx_login", "获取到用户信息" + result.toString());
                 WxUserInfo wxUserInfo = GsonUtil.getObject(result, WxUserInfo.class);
                 if (loginListener != null) {
                     loginListener.onSucceed(wxUserInfo);
@@ -197,6 +212,7 @@ public class WxLoginHelper {
             @Override
             public void onFailure(Exception exception) {
                 // 获取用户信息失败
+                loginListener.onException(new PlatformException(exception.getMessage()));
             }
         });
     }

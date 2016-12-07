@@ -1,17 +1,19 @@
 package com.march.reaper;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.march.lib.core.common.Logger;
-import com.march.lib.core.common.Toaster;
-import com.march.lib.core.mvp.presenter.BasePresenter;
 import com.march.lib.platform.Platform;
 import com.march.lib.platform.exception.PlatformException;
 import com.march.lib.platform.helper.Util;
@@ -27,15 +29,16 @@ import com.march.lib.platform.listener.OnWxShareListener;
 import com.march.lib.platform.tencent.QQUserInfo;
 import com.march.lib.platform.weibo.WbUserInfo;
 import com.march.lib.platform.wx.WxUserInfo;
-import com.march.reaper.base.activity.BaseReaperActivity;
+import com.march.reaper.R;
 import com.march.reaper.helper.ImageHelper;
 
 import java.io.File;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class TestPlatformActivity extends BaseReaperActivity {
+public class TestPlatformActivity extends Activity {
 
     @Bind(R.id.wx_ly)
     View wxLy;
@@ -66,9 +69,57 @@ public class TestPlatformActivity extends BaseReaperActivity {
     private String testWebUrl;
     private Bitmap testBit;
 
+    private Context mContext;
+    private Activity mActivity;
+
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_test_platform);
+        ButterKnife.bind(this);
+        mContext = getApplicationContext();
+        mActivity = this;
+        onInitDatas();
+        mWbPlatform.handleWeiboResponse(mActivity, savedInstanceState);
+    }
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        mWbPlatform.onNewIntent(intent);
+    }
+
+    private Bitmap res2Bitmap() {
+        return BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mQqPlatform.onActivityResult(requestCode, resultCode, data);
+        mWbPlatform.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private int wxShareType() {
+        return wx_toZone.isChecked() ? WxPlatform.ZONE : WxPlatform.CHAT;
+    }
+
+    private int qqShareType() {
+        return qq_toZone.isChecked() ? QQPlatform.ZONE : QQPlatform.CHAT;
+    }
+
+
+    public void log(Object o) {
+        Log.e("TestPlatformActivity", o.toString());
+    }
+
+    public void toast(String msg) {
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+    }
+
     public void onInitDatas() {
-        super.onInitDatas();
         mWxPlatform = Platform.getInst().wx();
         mWbPlatform = Platform.getInst().wb();
         mQqPlatform = Platform.getInst().qq();
@@ -86,88 +137,57 @@ public class TestPlatformActivity extends BaseReaperActivity {
         mWxPlatform.setWxShareListener(new OnWxShareListener() {
             @Override
             public void onSuccess() {
-                Toaster.get().show(mContext, "分享成功");
+                toast("分享成功");
             }
 
             @Override
             public void onFailure(PlatformException e) {
-                Toaster.get().show(mContext, "分享失败");
+                toast("分享失败");
             }
 
             @Override
             public void onCancel() {
-                Toaster.get().show(mContext, "分享取消");
+                toast("分享取消");
             }
         });
 
         mQqPlatform.setOnQQShareListener(new OnQQShareListener() {
             @Override
             public void onSuccess() {
-                Toaster.get().show(mContext, "分享成功");
+                toast("分享成功");
             }
 
             @Override
             public void onFailure(PlatformException e) {
-                Toaster.get().show(mContext, "分享失败 " + e.getQQError().errorDetail);
+                toast("分享失败 " + e.getQQError().errorDetail);
             }
 
             @Override
             public void onCancel() {
-                Toaster.get().show(mContext, "分享取消");
+                toast("分享取消");
             }
 
         });
         mWbPlatform.setWbShareListener(new OnWbShareListener() {
             @Override
             public void onSuccess() {
-                Toaster.get().show(mContext, "分享成功");
+                toast("分享成功");
             }
 
             @Override
             public void onFailure(PlatformException e) {
-                Toaster.get().show(mContext, "分享失败");
+                toast("分享失败");
                 e.getWbError().printStackTrace();
             }
 
             @Override
             public void onCancel() {
-                Toaster.get().show(mContext, "分享取消");
+                toast("分享取消");
             }
         });
     }
 
-    @Override
-    public void onInitViews(View view, Bundle saveData) {
-        super.onInitViews(view, saveData);
-        mWbPlatform.handleWeiboResponse(mActivity, saveData);
-    }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        setIntent(intent);
-        mWbPlatform.onNewIntent(intent);
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_test_platform;
-    }
-
-    @Override
-    protected BasePresenter createPresenter() {
-        return null;
-    }
-
-    @Override
-    protected String[] getPermission2Check() {
-        return new String[0];
-    }
-
-    @Override
-    protected boolean isInitTitle() {
-        return false;
-    }
 
     @OnClick({R.id.wx, R.id.wb, R.id.qq})
     public void clickTop(View view) {
@@ -190,25 +210,7 @@ public class TestPlatformActivity extends BaseReaperActivity {
         }
     }
 
-    private Bitmap res2Bitmap() {
-        return BitmapFactory.decodeResource(getResources(), R.drawable.bg_appstart);
-    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Logger.e(requestCode);
-        mQqPlatform.onActivityResult(requestCode, resultCode, data);
-        mWbPlatform.onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private int wxShareType() {
-        return wx_toZone.isChecked() ? WxPlatform.ZONE : WxPlatform.CHAT;
-    }
-
-    private int qqShareType() {
-        return qq_toZone.isChecked() ? QQPlatform.ZONE : QQPlatform.CHAT;
-    }
 
 
     @OnClick({R.id.wx_login,
@@ -224,15 +226,17 @@ public class TestPlatformActivity extends BaseReaperActivity {
     public void clickWx(View view) {
         switch (view.getId()) {
             case R.id.wx_login:
-                mWxPlatform.login(mContext, new OnWxLoginListener() {
+                mInfoTv.setText("");
+                mWxPlatform.login(mContext,"8bf6536e22dc17e12d04a365502217ab", new OnWxLoginListener() {
                     @Override
                     public void onSucceed(WxUserInfo info) {
-                        Logger.e(info);
+                        log(info);
+                        mInfoTv.setText(info.toString());
                     }
 
                     @Override
                     public void onException(PlatformException e) {
-                        Logger.e(e.getMessage());
+                        log(e.getMessage());
                     }
                 });
                 break;
@@ -246,6 +250,23 @@ public class TestPlatformActivity extends BaseReaperActivity {
                 mWxPlatform.shareImage(localImagePath, wxShareType());
                 break;
             case R.id.wx_share_image_net:
+//                Picasso.with(mContext).load(netImagePath).into(new Target() {
+//                    @Override
+//                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+//                        mWxPlatform.shareImage(bitmap, wxShareType());
+//                    }
+//
+//                    @Override
+//                    public void onBitmapFailed(Drawable errorDrawable) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+//
+//                    }
+//                });
+
                 ImageHelper.downloadPic(mContext, netImagePath, new ImageHelper.OnDownloadOverHandler() {
                     @Override
                     public void onSuccess(Bitmap bitmap) {
@@ -260,7 +281,7 @@ public class TestPlatformActivity extends BaseReaperActivity {
                 mWxPlatform.shareVideo(netVideoPath, "video title", "video desc", res2Bitmap(), wxShareType());
                 break;
             case R.id.wx_share_video_local:
-                Toaster.get().show(mContext, "无法分享本地视频，会导致点击之后打不开，音乐网页也是如此");
+                toast("无法分享本地视频，会导致点击之后打不开，音乐网页也是如此");
 //                mWxPlatform.shareVideo(localVideoPath, "video title", "video desc", res2Bitmap(), WxPlatform.CHAT);
                 break;
             case R.id.wx_share_music:
@@ -283,15 +304,17 @@ public class TestPlatformActivity extends BaseReaperActivity {
     public void clickQQ(View view) {
         switch (view.getId()) {
             case R.id.qq_login:
+                mInfoTv.setText("");
+
                 mQqPlatform.login(mActivity, new OnQQLoginListener() {
                     @Override
                     public void onException(PlatformException e) {
-                        Logger.e(e.getQQError().errorMessage + "  " + e.getQQError().errorDetail);
+                        log(e.getQQError().errorMessage + "  " + e.getQQError().errorDetail);
                     }
 
                     @Override
                     public void onSucceed(QQUserInfo userInfo) {
-                        Logger.e(userInfo);
+                        log(userInfo);
                         mInfoTv.setText(userInfo.toString());
                     }
                 });
@@ -331,27 +354,28 @@ public class TestPlatformActivity extends BaseReaperActivity {
                 mWbPlatform.justAuth(mActivity, new Runnable() {
                     @Override
                     public void run() {
-                        Logger.e("授权成功");
+                        log("授权成功");
                     }
                 });
                 break;
             case R.id.wb_login:
+                mInfoTv.setText("");
+
                 mWbPlatform.login(mActivity, new OnWbLoginListener() {
                     @Override
                     public void onSucceed(WbUserInfo info) {
                         mInfoTv.setText(info.toString());
-                        Logger.e(info.toString());
+                        log(info.toString());
                     }
 
                     @Override
                     public void onCancel() {
-                        Toaster.get().show(mContext, "取消");
-
+                        toast("取消");
                     }
 
                     @Override
                     public void onException(PlatformException e) {
-                        e.printStackTrace();
+                        e.getWbError().printStackTrace();
                     }
                 });
                 break;
