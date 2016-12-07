@@ -1,6 +1,3 @@
-# 第三方登录 + 分享
-
-
 ## 前言
 
 第三方登录和分享，一般每个app都会接入这个功能，来简化用户注册登录的流程，现在也有很多集成的平台，
@@ -46,17 +43,22 @@ Platform.getInst().initWb(this, wbAppId);
 
 // or 一次初始化三个平台
 Platform.getInst().init(this, qqAppId,wxAppId,wbAppId);
+
+// 获取各个平台的API
+mWxPlatform = Platform.getInst().wx();
+mWbPlatform = Platform.getInst().wb();
+mQqPlatform = Platform.getInst().qq();
 ```
 
 ## 微信快速接入
 - 微信接入前需要准备一些工作，按照微信官方的文档来说，你需要在你的app的包下建立一个wxapi的包并创建`WxEntryActivity.class`，比如你的工程包名是`com.test.package`,那就是在`com.test.package.wxapi`包下面建立`WxEntryActivity.class`，并在`AndroidManifest.xml`,注册该Activity,它将作为微信分享的回调页。
 
 ```java
-		<!-- 微信专用Activity -->
-        <activity
-            android:name=".wxapi.WXEntryActivity"
-            android:exported="true"
-            android:label="@string/app_name" />
+<!-- 微信专用Activity -->
+<activity
+     android:name=".wxapi.WXEntryActivity"
+     android:exported="true"
+     android:label="@string/app_name" />
 ```
 
 - 为了简化开发，我已经写好一个`AbsWxEntryActivity`,你可以采用最简单的方式直接继承这个Activity，如下，当然你可能需要所有的Activity都实现你自己写好的的基类，那可以拷贝`AbsWXEntryActivity`里面的内容到你创建的类中即可。
@@ -99,9 +101,9 @@ mWxPlatform.setWxShareListener(new OnWxShareListener() {
 - 分享类型。微信分享支持分享到好友，群，朋友圈，收藏,使用常量来表示
 
 ```java
- WxPlatform.ZONE
- WxPlatform.CHAT
- WxPlatform.FAVORITE
+ WxPlatform.ZONE 朋友圈
+ WxPlatform.CHAT 好友和群
+ WxPlatform.FAVORITE 收藏
 ```
 
 - 直接用代码罗列一下API
@@ -143,14 +145,95 @@ mWxPlatform.login(mContext, secretKey, new OnWxLoginListener() {
 ```
 
 ## QQ快速接入
+- 接入QQ之前的准备工作,在`AndroidMenifest.xml`中注册相关Activity,在`<data android:scheme="tencent11x5x71460" />`要加入tencent(AppId), 注意
 
+```java
+<!-- QQ专用Activity -->
+<activity
+    android:name="com.tencent.tauth.AuthActivity"
+    android:launchMode="singleTask"
+    android:noHistory="true">
+    <intent-filter>
+        <action android:name="android.intent.action.V
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSA
+        <data android:scheme="tencent11x5x71460" />
+    </intent-filter>
+</activity>
+<activity
+    android:name="com.tencent.connect.common.AssistActivity"
+    android:configChanges="orientation|keyboardHidden|screenSize"
+    android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+```
 
 ### QQ分享
+- 在`onActivityResult()`中接受数据进行处理
 
+```java
+@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    mQqPlatform.onActivityResult(requestCode, resultCode, data);
+    super.onActivityResult(requestCode, resultCode, data);
+}
+```
+- 目前支持分享到群，好友，空间
 
+```java
+QQPlatform.ZONE qq空间
+QQPlatform.CHAT 好友和群
+```
 
+- 设置分享的监听事件
+
+```java
+mQqPlatform.setOnQQShareListener(new OnQQShareListener() {
+            @Override
+            public void onSuccess() {
+                toast("分享成功");
+            }
+
+            @Override
+            public void onFailure(PlatformException e) {
+                toast("分享失败 " + e.getQQError().errorDetail);
+            }
+
+            @Override
+            public void onCancel() {
+                toast("分享取消");
+            }
+
+        });
+```
+
+- 列举一下支持的分享类型
+
+```java
+// 分享本地图片
+mQqPlatform.shareLocalImage(mActivity, localImagePath, QQPlatform.CHAT);
+// 分享图文
+mQqPlatform.shareImageText(mActivity, "title", "summary", testWebUrl, localImagePath, QQPlatform.CHAT);
+// 分享app,会打开app在应用宝的下载地址
+mQqPlatform.shareApp(mActivity, "title", "summary", testWebUrl, localImagePath, QQPlatform.CHAT);
+// 分享音乐
+mQqPlatform.shareAudio(mActivity, "title", "summary", testWebUrl, localImagePath, netMusicPath, QQPlatform.CHAT);
+```
 ### QQ登录
+- 一行代码接入
 
+```java
+mQqPlatform.login(mActivity, new OnQQLoginListener() {
+                    @Override
+                    public void onException(PlatformException e) {
+                        log(e.getQQError().errorMessage + "  " + e.getQQError().errorDetail);
+                    }
+
+                    @Override
+                    public void onSucceed(QQUserInfo userInfo) {
+                        log(userInfo);
+
+                    }
+                });
+```
 ## 微博快速接入
 
 
