@@ -8,6 +8,8 @@
 
 目前支持微信、微博、QQ，SDK已经集成在Lib里面，下载之后直接依赖module即可
 
+[GitHub,是在platform_test分支下的代码,要切到platform_test分支才能看到](https://github.com/chendongMarch/Reaper_Android/tree/platform_test/lib-platform)
+
 
 ## 目录
 
